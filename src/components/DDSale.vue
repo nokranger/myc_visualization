@@ -2,6 +2,11 @@
   <div>
     <div v-for="(salers, index) in saler" :key="index">
       นาย {{salers.name}}
+      <div v-for="(salersss, index) in sale" :key="index">
+        <div v-for="(ss, index) in salersss.sale_value" :key="index">
+          bbb{{ss.no}}
+        </div>
+      </div>
       <br>
       <b-container>
         <b-row>
@@ -46,7 +51,14 @@ export default {
         {
           name: 'a',
           value: 20,
-          max: 100
+          max: 100,
+          sale_value: [
+            {
+              no: 1,
+              name: 'aaaaa',
+              price: 200
+            }
+          ]
         },
         {
           name: 'b',
