@@ -1,12 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
+    <app-header></app-header>
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
+    </div> -->
     <router-view/>
   </div>
 </template>
+<script>
+import Header from './components/header'
+export default {
+  components: {
+    'app-header': Header
+  }
+}
+</script>
 
 <style>
 #app {
