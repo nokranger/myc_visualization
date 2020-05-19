@@ -51,6 +51,12 @@ export default {
         }
       ]
     }
+  },
+  metaInfo () {
+    return {
+      title: 'Saler',
+      titleTemplate: '%s - MYC'
+    }
   }
 }
 </script>

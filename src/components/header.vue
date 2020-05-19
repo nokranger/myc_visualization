@@ -40,12 +40,6 @@ export default {
       symbols: '&#9776;'
     }
   },
-  metaInfo () {
-    return {
-      title: 'Dashboard',
-      titleTemplate: '%s - LPTT'
-    }
-  },
   methods: {
     openNav () {
       var el = document.getElementById('mySidenav')

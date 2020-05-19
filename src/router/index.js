@@ -32,6 +32,21 @@ const routes = [
     component: () => import('../views/DSale.vue')
   },
   {
+    path: '/overdue',
+    name: 'overdue',
+    component: () => import('../views/Overdue')
+  },
+  {
+    path: '/setting',
+    name: 'setting',
+    component: () => import('../views/Setting')
+  },
+  {
+    path: '/map',
+    name: 'map',
+    component: () => import('../views/Map')
+  },
+  {
     path: '/sale/:name',
     name: 'salename',
     component: () => import('../components/DDSale')

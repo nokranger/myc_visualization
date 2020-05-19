@@ -2,11 +2,6 @@
   <div>
     <div v-for="(salers, index) in saler" :key="index">
       นาย {{salers.name}}
-      <div v-for="(salersss, index) in sale" :key="index">
-        <div v-for="(ss, index) in salersss.sale_value" :key="index">
-          bbb{{ss.no}}
-        </div>
-      </div>
       <br>
       <b-container>
         <b-row>
@@ -22,6 +17,12 @@
         </b-row>
       </b-container>
       <b-container>
+        <br>
+        <div v-for="(salersss, index) in sale" :key="index">
+          <div v-for="(ss, index) in salersss.sale_value" :key="index">
+            bbb{{ss.no}}
+          </div>
+        </div>
         <br>
         <table class="table">
           <thead>
@@ -67,6 +68,12 @@ export default {
         }
       ],
       saler: []
+    }
+  },
+  metaInfo () {
+    return {
+      title: 'Detail Saler ' + this.$route.params.name,
+      titleTemplate: '%s - MYC'
     }
   },
   mounted () {
