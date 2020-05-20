@@ -15,5 +15,10 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+div {
+  font-family: 'Kanit', sans-serif;
+  font-size: 30px;
+}
 </style>

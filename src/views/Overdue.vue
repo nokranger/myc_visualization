@@ -1,13 +1,19 @@
 <template>
   <div>
-    Overdue
+    {{timestamp}}
     <b-container>
+      <br>
       <b-row>
-        <b-col cols="2"></b-col>
+        <b-col cols="2">
+          <div>
+          </div>
+        </b-col>
         <b-col cols="8">
           <b-progress :value="value" :max="max" height="3rem" show-progress animated></b-progress>
         </b-col>
-        <b-col cols="2"></b-col>
+        <b-col cols="2">
+          Sale Amount
+        </b-col>
       </b-row>
     </b-container>
   </div>
@@ -17,7 +23,20 @@ export default {
   data () {
     return {
       value: 20,
-      max: 100
+      max: 100,
+      timestamp: ''
+    }
+  },
+  mounted () {
+    setInterval(this.getNow, 1000)
+  },
+  methods: {
+    getNow () {
+      const today = new Date()
+      const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+      const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
+      const dateTime = date + ' ' + time
+      this.timestamp = dateTime
     }
   },
   metaInfo () {
@@ -28,5 +47,10 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+div {
+  font-family: 'Kanit', sans-serif;
+  font-size: 30px;
+}
 </style>
