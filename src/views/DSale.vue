@@ -7,7 +7,7 @@
         <b-col cols="2">Total</b-col>
         <b-col cols="8">
           <div>
-            <b-progress :value="value" :max="max" height="3rem" show-progress animated></b-progress>
+            <b-progress :value="value" height="3rem" show-progress animated></b-progress>
           </div>
         </b-col>
         <b-col cols="2">Monthly Setting</b-col>
@@ -21,7 +21,7 @@
             </b-col>
             <b-col cols="8">
               <router-link :to="'/sale/' + saless.name">
-              <b-progress :value="saless.value" :max="saless.max" height="3rem" show-progress animated></b-progress>
+              <b-progress :value="saless.value" height="3rem" show-progress animated></b-progress>
               </router-link>
             </b-col>
             <b-col cols="2">
@@ -38,22 +38,10 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      value: 45,
-      max: 100,
+      value: 0,
+      max: 0,
       timestamp: '',
-      sales: [],
-      sale: [
-        {
-          name: 'a',
-          value: 20,
-          max: 100
-        },
-        {
-          name: 'b',
-          value: 10,
-          max: 100
-        }
-      ]
+      sales: []
     }
   },
   mounted () {
@@ -67,7 +55,14 @@ export default {
           max: data.max
         }
       })
-      console.log(resSale.data.result.length)
+      for (let i = 0; i < this.sales.length; i++) {
+        console.log('aa')
+        this.value = this.value + this.sales[i].value
+        this.max = this.max + this.sales[i].max
+        console.log(this.max)
+        console.log(this.value)
+      }
+      // console.log(resSale.data.result.length)
     }))
   },
   methods: {
