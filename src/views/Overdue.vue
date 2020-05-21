@@ -9,7 +9,10 @@
           </div>
         </b-col>
         <b-col cols="8">
-          <b-progress :value="value" :max="max" height="3rem" show-progress animated></b-progress>
+          <!-- <b-progress :value="value" :max="max" height="3rem" show-progress animated></b-progress> -->
+          <b-progress :max="max" height="3rem" show-progress animated>
+            <b-progress-bar :value="value" :label="`${((value))}`"></b-progress-bar>
+          </b-progress>
         </b-col>
         <b-col cols="2">
           Sale Amount

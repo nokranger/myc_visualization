@@ -9,7 +9,10 @@
             {{salers.name}}
           </b-col>
           <b-col cols="8">
-            <b-progress :value="salers.value" :max="salers.max" height="3rem" show-progress animated></b-progress>
+            <!-- <b-progress :value="salers.value" :max="salers.max" height="3rem" show-progress animated></b-progress> -->
+            <b-progress :max="salers.max" height="3rem" show-progress animated>
+              <b-progress-bar :value="salers.value" :label="`${((salers.value))}`"></b-progress-bar>
+            </b-progress>
           </b-col>
           <b-col cols="2">
             <!-- {{salers.max}} -->
