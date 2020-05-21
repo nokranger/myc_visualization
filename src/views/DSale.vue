@@ -7,7 +7,9 @@
         <b-col cols="2">Total</b-col>
         <b-col cols="8">
           <div>
-            <b-progress :value="value" height="3rem" show-progress animated></b-progress>
+            <b-progress :max="max" height="3rem" show-progress animated>
+              <b-progress-bar :value="value" :label="`${((value))}`"></b-progress-bar>
+            </b-progress>
           </div>
         </b-col>
         <b-col cols="2">Monthly Setting</b-col>
@@ -21,7 +23,10 @@
             </b-col>
             <b-col cols="8">
               <router-link :to="'/sale/' + saless.name">
-              <b-progress :value="saless.value" height="3rem" show-progress animated></b-progress>
+              <!-- <b-progress :value="saless.value" :max="saless.max" height="3rem" :label="'${(value)}'" show-progress animated></b-progress> -->
+                <b-progress :max="saless.max" height="3rem" show-progress animated>
+                  <b-progress-bar :value="saless.value" :label="`${((saless.value))}`"></b-progress-bar>
+                </b-progress>
               </router-link>
             </b-col>
             <b-col cols="2">
