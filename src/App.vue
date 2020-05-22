@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
-    <app-header></app-header>
+    <div v-if="name === 'login'">
+    </div>
+    <div v-else>
+      <app-header></app-header>
+    </div>
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -14,7 +18,21 @@ import Header from './components/header'
 export default {
   components: {
     'app-header': Header
-  }
+  },
+  data () {
+    return {
+      name: ''
+    }
+  },
+  mounted () {
+    console.log(window.location.pathname)
+    if (window.location.pathname === '/') {
+      this.name = 'login'
+      console.log('login')
+    }
+    // console.log(this.name)
+  },
+  methods: {}
 }
 </script>
 

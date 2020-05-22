@@ -81,7 +81,7 @@ export default {
   metaInfo () {
     return {
       title: 'Login',
-      titleTemplate: '%s - Login'
+      titleTemplate: '%s - MYC'
     }
   },
   created () {
