@@ -31,6 +31,10 @@ export default {
     }
   },
   mounted () {
+    if (localStorage.getItem('login') === null) {
+      location.replace('/')
+      // console.log('testL')
+    }
     setInterval(this.getNow, 1000)
   },
   methods: {

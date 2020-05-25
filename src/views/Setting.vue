@@ -61,6 +61,13 @@ export default {
       ]
     }
   },
+  mounted () {
+    // console.log(localStorage.login)
+    if (localStorage.getItem('login') === null) {
+      location.replace('/')
+      // console.log('testL')
+    }
+  },
   metaInfo () {
     return {
       title: 'Setting',

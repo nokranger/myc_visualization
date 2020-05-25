@@ -4,8 +4,10 @@
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
       <a class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
-      <a class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
+      <a v-if="local === 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
+      <!-- <a v-if="local !== 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
       <a class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
+      <a class="align-left" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
     <div>
       <br>
@@ -37,7 +39,9 @@ export default {
   data () {
     return {
       isTrue: true,
-      symbols: '&#9776;'
+      symbols: '&#9776;',
+      local: '',
+      set: ''
     }
   },
   methods: {
@@ -52,6 +56,13 @@ export default {
         document.getElementById('xx').innerHTML = '<i class="fas fa-align-right"></i>'
       }
     },
+    logOut () {
+      // console.log('log')
+      localStorage.removeItem('login')
+      localStorage.removeItem('set')
+      localStorage.removeItem('jwt')
+      location.replace('/')
+    },
 
     closeNav () {
       document.getElementById('mySidenav').style.width = '0'
@@ -59,6 +70,13 @@ export default {
   },
   mounted () {
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
+    this.local = JSON.parse(localStorage.login)
+    // this.set = JSON.parse(localStorage.set)
+    // console.log('bb', JSON.parse(localStorage.getItem('login')))
+    // if (localStorage.getItem('login') === null) {
+    //   // location.replace('/')
+    //   console.log('testL')
+    // }
   }
 }
 </script>

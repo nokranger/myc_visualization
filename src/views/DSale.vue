@@ -50,6 +50,10 @@ export default {
     }
   },
   mounted () {
+    if (localStorage.getItem('login') === null) {
+      location.replace('/')
+      // console.log('testL')
+    }
     setInterval(this.getNow, 1000)
     // this.getSale()
     axios.all([axios.get('http://127.0.0.1:3000/test')]).then(axios.spread((resSale) => {
@@ -61,14 +65,15 @@ export default {
         }
       })
       for (let i = 0; i < this.sales.length; i++) {
-        console.log('aa')
+        // console.log('aa')
         this.value = this.value + this.sales[i].value
         this.max = this.max + this.sales[i].max
-        console.log(this.max)
-        console.log(this.value)
+        // console.log(this.max)
+        // console.log(this.value)
       }
       // console.log(resSale.data.result.length)
     }))
+    // console.log('ds', localStorage.getItem('login'))
   },
   methods: {
     getSale () {
