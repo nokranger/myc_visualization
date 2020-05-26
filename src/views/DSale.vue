@@ -50,6 +50,7 @@ export default {
     }
   },
   mounted () {
+    // console.log('/sale', this.$route.params.name)
     if (localStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')

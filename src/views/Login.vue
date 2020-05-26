@@ -113,6 +113,7 @@ export default {
             localStorage.setItem('login', JSON.stringify('admin'))
             localStorage.setItem('jwt', JSON.stringify('admin'))
             // localStorage.setItem('set', JSON.stringify('set'))
+            // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
             // if (this.$route.params.nextUrl != null) {
             //   this.$route.push(this.$route.params.nextUrl)
@@ -128,6 +129,7 @@ export default {
             this.error = this.error.toUpperCase()
             localStorage.setItem('login', JSON.stringify('user'))
             localStorage.setItem('jwt', JSON.stringify('user'))
+            // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
           }
         }).catch(e => {

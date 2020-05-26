@@ -7,7 +7,7 @@
       <a v-if="local === 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
       <!-- <a v-if="local !== 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
       <a class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
-      <a class="align-left" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+      <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
     <div>
       <br>
@@ -69,8 +69,16 @@ export default {
     }
   },
   mounted () {
+    console.log('aa', this.$route.params)
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
-    this.local = JSON.parse(localStorage.login)
+    if (localStorage.getItem('login') === null) {
+      // this.local = JSON.parse(localStorage.login)
+      console.log('null')
+    } else if (JSON.parse(localStorage.login) === 'admin') {
+      console.log('admin')
+      this.local = JSON.parse(localStorage.login)
+    }
+    // this.local = this.$route.params.name
     // this.set = JSON.parse(localStorage.set)
     // console.log('bb', JSON.parse(localStorage.getItem('login')))
     // if (localStorage.getItem('login') === null) {
