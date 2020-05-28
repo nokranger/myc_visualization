@@ -7,12 +7,15 @@
         <div>
           <div style="text-align:right">
             Monthly
+            <div style="display:inline-block">
+              <b-form-input></b-form-input>
+            </div>
           </div>
         </div>
       </b-col>
       <b-col>
         <div style="text-align:left">
-          <b-form-select id="month" v-model="selected" :options="options"></b-form-select>
+          <!-- <b-form-select id="month" v-model="selected" :options="options"></b-form-select> -->
         </div>
       </b-col>
       <b-col></b-col>
@@ -20,25 +23,44 @@
     <b-row>
       <b-col>
         <div style="text-align:right">
-          Saler Name
+          Saler
+          <div style="display:inline-block">
+            <b-form-input ref="aa" v-on:change="aa ()"></b-form-input>
+          </div>
+        </div>
+      </b-col>
+      <b-col>
+        <div style="text-align:left;">
+          <!-- <b-form-select id="month" v-model="selected" :options="options"></b-form-select> -->
+          <div v-if="test > 0">Name</div>
+          <div v-for="(tests, index) in test" :key="index">
+            <b-form-input style="display:inline-block"></b-form-input><br>
+          </div>
         </div>
       </b-col>
       <b-col>
         <div style="text-align:left">
-          <b-form-select id="month" v-model="selected" :options="options"></b-form-select>
+          <div v-if="test > 0">
+            Value
+          </div>
+          <div v-for="(tests, index) in test" :key="index">
+            <b-form-input style="display:inline-block"></b-form-input>
+          </div>
         </div>
       </b-col>
-      <b-col></b-col>
     </b-row>
     <b-row>
       <b-col style="text-align:right">
         <div>
           Product
+          <div style="display:inline-block">
+            <b-form-input></b-form-input>
+          </div>
         </div>
       </b-col>
       <b-col style="text-align:left">
         <div>
-          <b-form-select id="month" v-model="selected" :options="options"></b-form-select>
+          <!-- <b-form-select id="month" v-model="selected" :options="options"></b-form-select> -->
         </div>
       </b-col>
       <b-col></b-col>
@@ -58,7 +80,8 @@ export default {
         {
           value: 1, text: 'Fab'
         }
-      ]
+      ],
+      test: 0
     }
   },
   mounted () {
@@ -66,6 +89,12 @@ export default {
     if (localStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
+    }
+  },
+  methods: {
+    aa () {
+      console.log(this.$refs.aa.localValue)
+      this.test = parseInt(this.$refs.aa.localValue, 10)
     }
   },
   metaInfo () {
