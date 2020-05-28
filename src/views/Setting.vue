@@ -25,7 +25,7 @@
         <div style="text-align:right">
           Saler
           <div style="display:inline-block">
-            <b-form-input ref="aa" v-on:change="aa ()"></b-form-input>
+            <b-form-input ref="salerno" v-on:change="getSalerNo ()"></b-form-input>
           </div>
         </div>
       </b-col>
@@ -34,7 +34,7 @@
           <!-- <b-form-select id="month" v-model="selected" :options="options"></b-form-select> -->
           <div v-if="test > 0">Name</div>
           <div v-for="(tests, index) in test" :key="index">
-            <b-form-input style="display:inline-block"></b-form-input><br>
+            <b-form-input ref="salername" v-model="salersName[index]" v-on:change="getSalerName ()" style="display:inline-block"></b-form-input><br>
           </div>
         </div>
       </b-col>
@@ -44,7 +44,7 @@
             Value
           </div>
           <div v-for="(tests, index) in test" :key="index">
-            <b-form-input style="display:inline-block"></b-form-input>
+            <b-form-input ref="salervalue" v-model="salersValue[index]" v-on:change="getSalerValue ()" style="display:inline-block"></b-form-input>
           </div>
         </div>
       </b-col>
@@ -81,7 +81,9 @@ export default {
           value: 1, text: 'Fab'
         }
       ],
-      test: 0
+      test: 0,
+      salersName: [],
+      salersValue: []
     }
   },
   mounted () {
@@ -89,12 +91,23 @@ export default {
     if (localStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
+      // console.log(this.$refs.bb.localValue)
     }
   },
   methods: {
-    aa () {
-      console.log(this.$refs.aa.localValue)
-      this.test = parseInt(this.$refs.aa.localValue, 10)
+    getSalerNo () {
+      console.log(this.$refs.salerno.localValue)
+      // console.log(this.$refs.aa)
+      this.test = parseInt(this.$refs.salerno.localValue, 10)
+    },
+    getSalerName () {
+      console.log('bb', this.salersName[0])
+      // console.log(this.$refs.bb[0].localValue)
+      // console.log(this.$refs.bb[1].localValue)
+      // console.log('aa', parseInt(this.$refs.aa.localValue, 10))
+    },
+    getSalerValue () {
+      console.log('cc', this.salersValue[0])
     }
   },
   metaInfo () {
