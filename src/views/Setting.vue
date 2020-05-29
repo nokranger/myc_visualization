@@ -87,6 +87,7 @@ export default {
     }
   },
   mounted () {
+    setInterval(this.timer, 900000)
     // console.log(localStorage.login)
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')
@@ -108,6 +109,12 @@ export default {
     },
     getSalerValue () {
       console.log('cc', this.salersValue[0])
+    },
+    timer () {
+      console.log('end')
+      sessionStorage.removeItem('login')
+      sessionStorage.removeItem('jwt')
+      window.location.reload()
     }
   },
   metaInfo () {

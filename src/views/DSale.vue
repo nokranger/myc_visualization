@@ -50,10 +50,11 @@ export default {
     }
   },
   created () {
-    window.addEventListener('beforeunload', this.closeTab)
+
   },
   mounted () {
     // console.log('/sale', this.$route.params.name)
+    setInterval(this.timer, 900000)
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
@@ -80,9 +81,6 @@ export default {
     // console.log('ds', localStorage.getItem('login'))
   },
   methods: {
-    closeTab () {
-      // localStorage.removeItem('login')
-    },
     getSale () {
     },
     getNow () {
@@ -91,6 +89,12 @@ export default {
       const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
       const dateTime = date + ' ' + time
       this.timestamp = dateTime
+    },
+    timer () {
+      console.log('end')
+      sessionStorage.removeItem('login')
+      sessionStorage.removeItem('jwt')
+      window.location.reload()
     }
   },
   metaInfo () {

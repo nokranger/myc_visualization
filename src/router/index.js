@@ -52,11 +52,6 @@ const routes = [
     component: () => import('../components/DDSale')
   },
   {
-    path: '/page-not-found',
-    name: 'pagenotfound',
-    component: () => import('../views/Pagenotfound')
-  },
-  {
     path: '*',
     redirect: '/'
   }

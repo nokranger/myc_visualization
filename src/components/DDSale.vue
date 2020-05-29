@@ -83,6 +83,7 @@ export default {
     }
   },
   mounted () {
+    setInterval(this.timer, 900000)
     // console.log(this.$route.params.name)
     // console.log(this.sale[1].name)
     // console.log(this.$route.params.name)
@@ -147,6 +148,12 @@ export default {
         // })
         // console.log(this.sales)
       }))
+    },
+    timer () {
+      console.log('end')
+      sessionStorage.removeItem('login')
+      sessionStorage.removeItem('jwt')
+      window.location.reload()
     }
   }
 }

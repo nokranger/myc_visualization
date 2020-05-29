@@ -14,11 +14,20 @@ export default {
     }
   },
   mounted () {
+    setInterval(this.timer, 900000)
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
     }
     this.local = JSON.parse(sessionStorage.login)
+  },
+  methods: {
+    timer () {
+      console.log('end')
+      sessionStorage.removeItem('login')
+      sessionStorage.removeItem('jwt')
+      window.location.reload()
+    }
   },
   metaInfo () {
     return {
