@@ -23,7 +23,7 @@
                 <b-form-input
                   id="input-1"
                   v-model="form.email"
-                  type="email"
+                  type="text"
                   required
                   placeholder="Enter username"
                 ></b-form-input>
@@ -46,7 +46,7 @@
               </b-form-checkbox-group>
             </b-form-group> -->
             <div>
-            <b-button class="blue-gradient btn-block" type="button" v-on:click="postLogin ()">LOGIN</b-button><br>
+            <b-button class="blue-gradient btn-block" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br>
             <!-- <label>or Sign in with</label> -->
             </div>
             <div>
@@ -97,7 +97,10 @@ export default {
 
     //   // }
     // }))
-    // console.log(localStorage)
+    console.log()
+    if (JSON.parse(localStorage.getItem('login')) === 'admin' || JSON.parse(localStorage.getItem('login')) === 'user') {
+      location.replace('/sale')
+    }
   },
   methods: {
     postLogin () {
