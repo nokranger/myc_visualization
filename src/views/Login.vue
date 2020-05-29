@@ -98,7 +98,7 @@ export default {
     //   // }
     // }))
     console.log()
-    if (JSON.parse(localStorage.getItem('login')) === 'admin' || JSON.parse(localStorage.getItem('login')) === 'user') {
+    if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
       location.replace('/sale')
     }
   },
@@ -113,9 +113,10 @@ export default {
           } else if (response.data.token[0].login === 'success') {
             this.error = 'it correctly'
             this.error = this.error.toUpperCase()
-            localStorage.setItem('login', JSON.stringify('admin'))
-            localStorage.setItem('jwt', JSON.stringify('admin'))
+            // localStorage.setItem('login', JSON.stringify('admin'))
+            // localStorage.setItem('jwt', JSON.stringify('admin'))
             sessionStorage.setItem('login', JSON.stringify('admin'))
+            sessionStorage.setItem('jwt', JSON.stringify('admin'))
             // localStorage.setItem('set', JSON.stringify('set'))
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
@@ -131,8 +132,10 @@ export default {
             // let is_admin = 0
             this.error = 'it correctly'
             this.error = this.error.toUpperCase()
-            localStorage.setItem('login', JSON.stringify('user'))
-            localStorage.setItem('jwt', JSON.stringify('user'))
+            // localStorage.setItem('login', JSON.stringify('user'))
+            // localStorage.setItem('jwt', JSON.stringify('user'))
+            sessionStorage.setItem('login', JSON.stringify('user'))
+            sessionStorage.setItem('jwt', JSON.stringify('user'))
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
           }

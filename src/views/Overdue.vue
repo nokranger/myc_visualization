@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem('login') === null) {
+    if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
     }

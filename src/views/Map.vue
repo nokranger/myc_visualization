@@ -14,11 +14,11 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem('login') === null) {
+    if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
     }
-    this.local = JSON.parse(localStorage.login)
+    this.local = JSON.parse(sessionStorage.login)
   },
   metaInfo () {
     return {

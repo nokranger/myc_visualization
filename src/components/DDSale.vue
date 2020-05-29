@@ -86,7 +86,7 @@ export default {
     // console.log(this.$route.params.name)
     // console.log(this.sale[1].name)
     // console.log(this.$route.params.name)
-    if (localStorage.getItem('login') === null) {
+    if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
     }

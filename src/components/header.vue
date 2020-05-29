@@ -58,9 +58,9 @@ export default {
     },
     logOut () {
       // console.log('log')
-      localStorage.removeItem('login')
-      localStorage.removeItem('set')
-      localStorage.removeItem('jwt')
+      sessionStorage.removeItem('login')
+      sessionStorage.removeItem('set')
+      sessionStorage.removeItem('jwt')
       location.replace('/')
     },
 
@@ -71,12 +71,12 @@ export default {
   mounted () {
     console.log('aa', this.$route.params)
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
-    if (localStorage.getItem('login') === null) {
-      // this.local = JSON.parse(localStorage.login)
+    if (sessionStorage.getItem('login') === null) {
+      // this.local = JSON.parse(sessionStorage.login)
       console.log('null')
-    } else if (JSON.parse(localStorage.login) === 'admin') {
+    } else if (JSON.parse(sessionStorage.login) === 'admin') {
       console.log('admin')
-      this.local = JSON.parse(localStorage.login)
+      this.local = JSON.parse(sessionStorage.login)
     }
     // this.local = this.$route.params.name
     // this.set = JSON.parse(localStorage.set)

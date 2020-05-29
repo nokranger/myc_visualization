@@ -88,7 +88,7 @@ export default {
   },
   mounted () {
     // console.log(localStorage.login)
-    if (localStorage.getItem('login') === null) {
+    if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
       // console.log(this.$refs.bb.localValue)
