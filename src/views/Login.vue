@@ -115,6 +115,7 @@ export default {
             this.error = this.error.toUpperCase()
             localStorage.setItem('login', JSON.stringify('admin'))
             localStorage.setItem('jwt', JSON.stringify('admin'))
+            sessionStorage.setItem('login', JSON.stringify('admin'))
             // localStorage.setItem('set', JSON.stringify('set'))
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')

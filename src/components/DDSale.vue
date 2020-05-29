@@ -85,6 +85,7 @@ export default {
   mounted () {
     // console.log(this.$route.params.name)
     // console.log(this.sale[1].name)
+    // console.log(this.$route.params.name)
     if (localStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
@@ -129,7 +130,7 @@ export default {
         }
         // this.saler.push(ss)
         // console.log(this.sales[1].sale_value.length)
-        console.log(this.saler)
+        // console.log(this.saler)
         // this.sales = resSale.data.result.map((data, i) => {
         //   return {
         //     name: data.name,

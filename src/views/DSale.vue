@@ -49,6 +49,9 @@ export default {
       sales: []
     }
   },
+  created () {
+    window.addEventListener('beforeunload', this.closeTab)
+  },
   mounted () {
     // console.log('/sale', this.$route.params.name)
     if (localStorage.getItem('login') === null) {
@@ -77,6 +80,9 @@ export default {
     // console.log('ds', localStorage.getItem('login'))
   },
   methods: {
+    closeTab () {
+      // localStorage.removeItem('login')
+    },
     getSale () {
     },
     getNow () {

@@ -59,10 +59,6 @@ const routes = [
   {
     path: '*',
     redirect: '/'
-  },
-  {
-    path: '/sale/:name',
-    redirect: '/'
   }
 ]
 

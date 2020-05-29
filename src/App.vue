@@ -24,6 +24,8 @@ export default {
       name: ''
     }
   },
+  created () {
+  },
   mounted () {
     console.log(window.location.pathname)
     if (window.location.pathname === '/') {
@@ -32,7 +34,11 @@ export default {
     }
     // console.log(this.name)
   },
-  methods: {}
+  methods: {
+    closeTab () {
+      // localStorage.removeItem('login')
+    }
+  }
 }
 </script>
 
