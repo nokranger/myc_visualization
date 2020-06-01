@@ -50,7 +50,7 @@ export default {
     }
   },
   created () {
-
+    this.getNow()
   },
   mounted () {
     // console.log('/sale', this.$route.params.name)

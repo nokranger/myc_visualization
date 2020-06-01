@@ -130,7 +130,7 @@ export default {
           }
         }
         // this.saler.push(ss)
-        // console.log(this.sales[1].sale_value.length)
+        console.log(this.sales[1].sale_value)
         // console.log(this.saler)
         // this.sales = resSale.data.result.map((data, i) => {
         //   return {
