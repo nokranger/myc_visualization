@@ -73,8 +73,8 @@ export default {
             error_desc: data.error_desc,
             data: data.data.map(Overdue => {
               return {
-                paid: 5000,
-                monthly_total_sales: 7000
+                paid: Overdue.paid,
+                monthly_total_sales: Overdue.monthly_total_sales
               }
             })
           }
