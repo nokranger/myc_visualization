@@ -78,6 +78,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -128,8 +129,9 @@ export default {
       window.location.reload()
     },
     patchSetting () {
-      let aa = []
-      aa = [{
+      let setting = []
+      setting = [{
+        session_id: 'c4858a6a-a972-4d01-9b0f-50ebdb42cf3',
         monthly: this.monthly,
         saler: [{
           salerNo: this.saler,
@@ -138,7 +140,10 @@ export default {
         }],
         product: this.product
       }]
-      console.log(aa)
+      console.log(setting)
+      axios.all([axios.patch('http://127.0.0.1:3000/setting/monthly_sales_target', setting)]).then(axios.spread((resSetting) => {
+        console.log(resSetting)
+      }))
     }
   },
   metaInfo () {

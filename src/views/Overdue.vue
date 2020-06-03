@@ -79,29 +79,6 @@ export default {
             })
           }
         })
-        // console.log('ss', this.sales[0].data[0].paid)
-        // for (let i = 0; i < this.sales.length; i++) {
-        //   this.overdue = [{
-        //     error_code: this.sales[i].error_code,
-        //     error_desc: this.sales[i].error_desc,
-        //     data: this.sales[i].data.map(overdueItem => {
-        //       return {
-        //         paid: overdueItem.paid,
-        //         monthly_total_sales: overdueItem.monthly_total_sales
-        //       }
-        //     })
-        //   }]
-        // }
-        // console.log('ov', this.overdue.data)
-        // this.value = this.sales[0].data
-        // for (let i = 0; i < this.sales.length; i++) {
-        //   // console.log('aa')
-        //   this.value = this.value + this.sales[i].value
-        //   this.max = this.max + this.sales[i].max
-        //   // console.log(this.max)
-        //   // console.log(this.value)
-        // }
-        // console.log(resSale.data.result.length)
       }))
     }
   },

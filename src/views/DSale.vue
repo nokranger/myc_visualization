@@ -61,7 +61,7 @@ export default {
     }
     setInterval(this.getNow, 1000)
     // this.getSale()
-    axios.all([axios.get('http://127.0.0.1:3000/test')]).then(axios.spread((resSale) => {
+    axios.all([axios.get('http://127.0.0.1:3000/sale')]).then(axios.spread((resSale) => {
       this.sales = resSale.data.result.map((data, i) => {
         return {
           name: data.name,

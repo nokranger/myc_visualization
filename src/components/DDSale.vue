@@ -111,7 +111,7 @@ export default {
     },
     getSale () {
       // let ss = []
-      axios.all([axios.get('http://127.0.0.1:3000/test')]).then(axios.spread((resSale) => {
+      axios.all([axios.get('http://127.0.0.1:3000/sale')]).then(axios.spread((resSale) => {
         this.sales = resSale.data.result
         for (let i = 0; i < this.sales.length; i++) {
           if (this.$route.params.name === this.sales[i].name) {
