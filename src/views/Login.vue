@@ -39,7 +39,6 @@
                 placeholder="Enter password"
               ></b-form-input>
             </b-form-group>
-
             <!-- <b-form-group id="input-group-4">
               <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
                 <b-form-checkbox value="me">remember me</b-form-checkbox>
@@ -47,17 +46,8 @@
             </b-form-group> -->
             <div>
             <b-button class="blue-gradient btn-block" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br>
-            <!-- <label>or Sign in with</label> -->
             </div>
             <div>
-              <!-- <div style="border-bottom: solid 2px #E0e0e0;">
-                <b-button class="socialb" style="margin-right:5px;" @click="socialGoogleLogin"><i class="fab fa-google"></i></b-button>
-                <b-button class="socialb"><i class="fab fa-facebook" @click="socialFacecbookLogin"></i></b-button>
-              </div> -->
-              <div>
-                <!-- <br> -->
-                <!-- <label class="inputsignup">Not a member ?<router-link to="/signup"> Sign Up</router-link></label> -->
-              </div>
             </div>
           </b-form>
           </b-card>
@@ -86,17 +76,6 @@ export default {
     }
   },
   mounted () {
-    // axios.all([axios.get('http://127.0.0.1:3000/login')]).then(axios.spread((resAdmin) => {
-    //   console.log('aa')
-    //   console.log(this.email)
-    //   if (this.email === resAdmin.data.result[0].id) {
-    //     console.log('log')
-    //   }
-    //   console.log(resAdmin.data.result[0].id)
-    //   // return {
-
-    //   // }
-    // }))
     console.log()
     if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
       location.replace('/sale')
@@ -120,13 +99,6 @@ export default {
             // localStorage.setItem('set', JSON.stringify('set'))
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
-            // if (this.$route.params.nextUrl != null) {
-            //   this.$route.push(this.$route.params.nextUrl)
-            // } else {
-            //   if (is_admin === 1) {
-
-            //   }
-            // }
             console.log('cc')
           } else if (response.data.token[0].login === 'successUser') {
             // let is_admin = 0

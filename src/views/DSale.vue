@@ -99,7 +99,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: 'Saler',
+      title: 'Seller',
       titleTemplate: '%s - MYC'
     }
   }

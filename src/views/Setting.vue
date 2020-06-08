@@ -23,7 +23,7 @@
     <b-row>
       <b-col>
         <div style="text-align:right">
-          Saler
+          Seller
           <div style="display:inline-block">
             <b-form-input ref="salerno" v-model="saler" v-on:change="getSalerNo ()"></b-form-input>
           </div>
@@ -70,7 +70,7 @@
       <b-col></b-col>
       <b-col>
         <div class="align-right">
-          <b-button type="button" variant="outline-primary" v-on:click="patchSetting()">Submit</b-button>
+          <b-button type="button" variant="primary" v-on:click="patchSetting()">Submit</b-button>
         </div>
       </b-col>
     </b-row>

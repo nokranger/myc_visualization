@@ -1,10 +1,12 @@
 <template>
+<div>
   <div v-if="local == 'admin'">
     Map Admin
   </div>
   <div v-else-if="local == 'user'">
     Map User
   </div>
+</div>
 </template>
 <script>
 export default {

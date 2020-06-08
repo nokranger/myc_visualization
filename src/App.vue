@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-bind:style="{background: colors, width: '100%', height: '1200px'}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
     <div v-if="name === 'login'">
     </div>
@@ -21,7 +21,8 @@ export default {
   },
   data () {
     return {
-      name: ''
+      name: '',
+      colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)'
     }
   },
   created () {

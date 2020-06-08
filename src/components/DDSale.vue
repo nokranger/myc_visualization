@@ -22,18 +22,13 @@
       </b-container>
       <b-container>
         <br>
-        <!-- <div v-for="(salersss, index) in sale" :key="index">
-          <div v-for="(ss, index) in salersss.sale_value" :key="index">
-            bbb{{ss.no}}
-          </div>
-        </div> -->
         <br>
         <table class="table">
           <thead>
             <tr class="table-active">
-              <th scope="col">#</th>
-              <th scope="col">name</th>
-              <th scope="col">price</th>
+              <th scope="col">No.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -78,7 +73,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: 'Detail Saler ' + this.$route.params.name,
+      title: 'Detail Seller ' + this.$route.params.name,
       titleTemplate: '%s - MYC'
     }
   },

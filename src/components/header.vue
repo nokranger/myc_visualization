@@ -18,19 +18,6 @@
           <b-col class="align-right" align-self="end"><span style="font-size:30px;cursor:pointer" v-on:click="openNav ()"><div id="xx"></div></span></b-col>
         </b-row>
       </b-container>
-      <!-- <b-container>
-        <b-row>
-          <b-col>
-            aaa
-          </b-col>
-          <b-col>
-            aaa
-          </b-col>
-          <b-col>
-            aaa
-          </b-col>
-        </b-row>
-      </b-container> -->
     </div>
   </div>
 </template>
@@ -78,13 +65,6 @@ export default {
       console.log('admin')
       this.local = JSON.parse(sessionStorage.login)
     }
-    // this.local = this.$route.params.name
-    // this.set = JSON.parse(localStorage.set)
-    // console.log('bb', JSON.parse(localStorage.getItem('login')))
-    // if (localStorage.getItem('login') === null) {
-    //   // location.replace('/')
-    //   console.log('testL')
-    // }
   }
 }
 </script>
