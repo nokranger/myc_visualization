@@ -8,10 +8,10 @@
         <b-col cols="12" sm="12" md="12" lg="6" xl="6">
           <br>
           <div>
-            <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;">Login</strong>
+            <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:50px;color: #777;">LOGIN</strong>
             <br>
             <br>
-            <p v-if="error == 'WRONG ID AND PASSWORD'" style="color:red">{{error}}</p>
+            <p v-if="error == 'USERNAME NOT FOUND'" style="color:red">{{error}}</p>
             <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p>
           </div>
           <br>
@@ -22,7 +22,7 @@
                 <label class="forminput">Username</label>
                 <b-form-input
                   id="input-1"
-                  v-model="form.email"
+                  v-model="form.username"
                   type="text"
                   required
                   placeholder="Enter username"
@@ -45,7 +45,7 @@
               </b-form-checkbox-group>
             </b-form-group> -->
             <div>
-            <b-button class="blue-gradient btn-block" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br>
+            <b-button class="blue-gradient btn-block" v-on:click="postLogin ()">LOGIN</b-button><br>
             </div>
             <div>
             </div>
@@ -64,7 +64,7 @@ export default {
   data () {
     return {
       form: {
-        email: '',
+        username: '',
         password: ''
       },
       show: true,
@@ -72,7 +72,8 @@ export default {
       aa: 55,
       login: [],
       jwt: [],
-      set: []
+      set: [],
+      data: []
     }
   },
   mounted () {
@@ -83,31 +84,41 @@ export default {
   },
   methods: {
     postLogin () {
-      axios.post('http://127.0.0.1:3000/login', this.form)
+      this.data = {
+        session_id: '',
+        data: {
+          username: this.form.username,
+          password: this.form.password
+        }
+      }
+      // console.log(this.data)
+      axios.post('http://192.168.1.46:1308/login', this.data)
         .then(response => {
-          // console.log(response.data)
-          if (response.data.err === 'wrong id and password') {
-            this.error = response.data.err
+          console.log(response.data.data.session_id)
+          if (response.data.error_code === 101) {
+            console.log('ss')
+            this.error = 'Username not found'
             this.error = this.error.toUpperCase()
-          } else if (response.data.token[0].login === 'success') {
+          } else if (response.data.error_code === 0) {
+            console.log('ssssss')
             this.error = 'it correctly'
             this.error = this.error.toUpperCase()
             // localStorage.setItem('login', JSON.stringify('admin'))
             // localStorage.setItem('jwt', JSON.stringify('admin'))
-            sessionStorage.setItem('login', JSON.stringify('admin'))
-            sessionStorage.setItem('jwt', JSON.stringify('admin'))
+            sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
+            sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
             // localStorage.setItem('set', JSON.stringify('set'))
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
             console.log('cc')
-          } else if (response.data.token[0].login === 'successUser') {
+          } else if (response.data.error_code === 0) {
             // let is_admin = 0
             this.error = 'it correctly'
             this.error = this.error.toUpperCase()
             // localStorage.setItem('login', JSON.stringify('user'))
             // localStorage.setItem('jwt', JSON.stringify('user'))
-            sessionStorage.setItem('login', JSON.stringify('user'))
-            sessionStorage.setItem('jwt', JSON.stringify('user'))
+            sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
+            sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
           }

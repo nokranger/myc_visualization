@@ -1,9 +1,9 @@
 <template>
 <div>
-  <div v-if="local == 'admin'">
+  <div v-if="local == '1'">
     Map Admin
   </div>
-  <div v-else-if="local == 'user'">
+  <div v-else-if="local == '0'">
     Map User
   </div>
 </div>
@@ -21,7 +21,7 @@ export default {
       location.replace('/')
       // console.log('testL')
     }
-    this.local = JSON.parse(sessionStorage.login)
+    this.local = JSON.parse(sessionStorage.level)
   },
   methods: {
     timer () {

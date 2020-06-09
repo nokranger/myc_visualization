@@ -79,14 +79,14 @@ export default {
   },
   mounted () {
     setInterval(this.timer, 900000)
-    // console.log(this.$route.params.name)
+    console.log(this.$route.params.name)
     // console.log(this.sale[1].name)
     // console.log(this.$route.params.name)
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
     }
-    this.salers()
+    // this.salers()
     this.getSale()
   },
   methods: {
@@ -106,26 +106,33 @@ export default {
     },
     getSale () {
       // let ss = []
-      axios.all([axios.get('http://127.0.0.1:3000/sale')]).then(axios.spread((resSale) => {
-        this.sales = resSale.data.result
-        for (let i = 0; i < this.sales.length; i++) {
-          if (this.$route.params.name === this.sales[i].name) {
+      axios.all([axios.get('http://192.168.1.46:1308/sales')]).then(axios.spread((resSale) => {
+        console.log(resSale)
+        this.sales = {
+          max: resSale.data.data.sales_target,
+          value: resSale.data.data.total_sales,
+          saler_list: resSale.data.data.saler_list
+        }
+        // this.sales = resSale.data.result
+        for (let i = 0; i < this.sales.saler_list.length; i++) {
+          if (this.$route.params.name === this.sales.saler_list[i].code) {
+            console.log('yes')
             this.saler = [{
-              name: this.sales[i].name,
-              value: this.sales[i].value,
-              max: this.sales[i].max,
-              sale_value: this.sales[i].sale_value.map((saleItem) => {
+              name: this.sales.saler_list[i].name,
+              value: this.sales.saler_list[i].sales_values,
+              max: this.sales.saler_list[i].sales_target,
+              sale_value: this.sales.saler_list[i].sales_value_list.map((saleItem) => {
                 return {
-                  no: saleItem.no,
                   name: saleItem.name,
-                  price: saleItem.price
+                  price: saleItem.value
                 }
               })
             }]
           }
         }
+        console.log(this.saler)
         // this.saler.push(ss)
-        console.log(this.sales[1].sale_value)
+        // console.log(this.sales[1].sale_value)
         // console.log(this.saler)
         // this.sales = resSale.data.result.map((data, i) => {
         //   return {

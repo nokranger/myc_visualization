@@ -4,7 +4,7 @@
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
       <a class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
-      <a v-if="local === 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
+      <a v-if="local === '1'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
       <!-- <a v-if="local !== 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
       <a class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
@@ -22,13 +22,15 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       isTrue: true,
       symbols: '&#9776;',
       local: '',
-      set: ''
+      set: '',
+      datas: []
     }
   },
   methods: {
@@ -44,11 +46,28 @@ export default {
       }
     },
     logOut () {
-      // console.log('log')
-      sessionStorage.removeItem('login')
-      sessionStorage.removeItem('set')
-      sessionStorage.removeItem('jwt')
-      location.replace('/')
+      // console.log(JSON.parse(sessionStorage.getItem('login')))
+      this.datas = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {}
+      }
+      console.log(this.datas)
+      axios.post('http://192.168.1.46:1308/logout', this.datas)
+        .then(response => {
+          console.log(response)
+          if (response.data.error_code === 0) {
+            console.log('logout')
+            sessionStorage.removeItem('login')
+            sessionStorage.removeItem('level')
+            location.replace('/')
+          } else if (response.data.error_code === 201) {
+            sessionStorage.removeItem('login')
+            sessionStorage.removeItem('level')
+            location.replace('/')
+          }
+        }).catch(e => {
+          // this.error.push(e)
+        })
     },
 
     closeNav () {
@@ -56,14 +75,15 @@ export default {
     }
   },
   mounted () {
+    console.log(JSON.parse(sessionStorage.getItem('login')))
     console.log('aa', this.$route.params)
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
     if (sessionStorage.getItem('login') === null) {
       // this.local = JSON.parse(sessionStorage.login)
       console.log('null')
-    } else if (JSON.parse(sessionStorage.login) === 'admin') {
+    } else if (sessionStorage.getItem('level') === '1') {
       console.log('admin')
-      this.local = JSON.parse(sessionStorage.login)
+      this.local = sessionStorage.getItem('level')
     }
   }
 }

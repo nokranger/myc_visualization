@@ -61,24 +61,24 @@ export default {
       window.location.reload()
     },
     getOverdue () {
-      axios.all([axios.get('http://127.0.0.1:3000/overdue')]).then(axios.spread((resSale) => {
+      axios.all([axios.get('http://192.168.1.46:1308/overdue')]).then(axios.spread((resSale) => {
         console.log('over1')
-        this.overdue = resSale.data.result
-        this.value = this.overdue[0].data[0].paid
-        this.max = this.overdue[0].data[0].monthly_total_sales
+        this.overdue = resSale.data.data
+        this.value = this.overdue.paid
+        this.max = this.overdue.monthly_total_sales
         // console.log(this.overdue[0].data.paid)
-        this.sales = resSale.data.result.map((data, i) => {
-          return {
-            error_code: data.error_code,
-            error_desc: data.error_desc,
-            data: data.data.map(Overdue => {
-              return {
-                paid: Overdue.paid,
-                monthly_total_sales: Overdue.monthly_total_sales
-              }
-            })
-          }
-        })
+        // this.sales = resSale.data.result.map((data, i) => {
+        //   return {
+        //     error_code: data.error_code,
+        //     error_desc: data.error_desc,
+        //     data: data.data.map(Overdue => {
+        //       return {
+        //         paid: Overdue.paid,
+        //         monthly_total_sales: Overdue.monthly_total_sales
+        //       }
+        //     })
+        //   }
+        // })
       }))
     }
   },
