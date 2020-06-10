@@ -78,7 +78,7 @@ export default {
     }
   },
   mounted () {
-    setInterval(this.timer, 900000)
+    // setInterval(this.timer, 900000)
     console.log(this.$route.params.name)
     // console.log(this.sale[1].name)
     // console.log(this.$route.params.name)

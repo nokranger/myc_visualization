@@ -31,8 +31,9 @@ export default {
   mounted () {
     console.log(window.location.pathname)
     if (window.location.pathname === '/') {
+      // console.log(screen.height)
       this.name = 'login'
-      this.heights = '900px'
+      this.heights = screen.height + 'px'
       console.log('login')
     } else if (window.location.pathname === '/sale') {
       this.heights = '4000px'
@@ -40,6 +41,9 @@ export default {
       this.heights = '900px'
     } else if (window.location.pathname === '/map') {
 
+    } else if (window.location.pathname === '/setting') {
+      // console.log(scrollbars.screen)
+      this.heights = '4000px'
     }
     // console.log(this.name)
   },

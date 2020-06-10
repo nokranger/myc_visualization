@@ -92,7 +92,7 @@ export default {
         }
       }
       // console.log(this.data)
-      axios.post('http://192.168.1.46:1308/login', this.data)
+      axios.post('http://192.168.43.190:1308/login', this.data)
         .then(response => {
           console.log(response.data.data.session_id)
           if (response.data.error_code === 101) {

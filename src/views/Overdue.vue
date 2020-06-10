@@ -38,7 +38,7 @@ export default {
     this.getNow()
   },
   mounted () {
-    setInterval(this.timer, 900000)
+    // setInterval(this.timer, 900000)
     setInterval(this.getOverdue, 10000)
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')

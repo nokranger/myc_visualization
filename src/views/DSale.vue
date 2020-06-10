@@ -55,7 +55,7 @@ export default {
   },
   mounted () {
     console.log('sale', this.$route.params)
-    setInterval(this.timer, 900000)
+    // setInterval(this.timer, 900000)
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')

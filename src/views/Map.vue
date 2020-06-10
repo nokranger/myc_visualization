@@ -16,7 +16,7 @@ export default {
     }
   },
   mounted () {
-    setInterval(this.timer, 900000)
+    // setInterval(this.timer, 900000)
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')
       // console.log('testL')
