@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="{background: colors, width: '100%', height: '5000px'}">
+  <div>
     {{timestamp}}
     <b-container>
       <br>

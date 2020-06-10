@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:style="{background: colors, width: '100%', height: '1200px'}">
+  <div id="app" v-bind:style="{background: colors, width: '100%', height: heights}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
     <div v-if="name === 'login'">
     </div>
@@ -22,7 +22,8 @@ export default {
   data () {
     return {
       name: '',
-      colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)'
+      colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
+      heights: '1200px'
     }
   },
   created () {
@@ -31,7 +32,14 @@ export default {
     console.log(window.location.pathname)
     if (window.location.pathname === '/') {
       this.name = 'login'
+      this.heights = '900px'
       console.log('login')
+    } else if (window.location.pathname === '/sale') {
+      this.heights = '4000px'
+    } else if (window.location.pathname === '/overdue') {
+      this.heights = '900px'
+    } else if (window.location.pathname === '/map') {
+
     }
     // console.log(this.name)
   },
