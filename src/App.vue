@@ -38,7 +38,7 @@ export default {
     } else if (window.location.pathname === '/sale') {
       this.heights = '4000px'
     } else if (window.location.pathname === '/overdue') {
-      this.heights = '900px'
+      this.heights = '1200px'
     } else if (window.location.pathname === '/map') {
 
     } else if (window.location.pathname === '/setting') {
