@@ -3,7 +3,7 @@
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
-      <a class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
+      <!-- <a class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a> -->
       <a v-if="local === '1'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
       <!-- <a v-if="local !== 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
       <a class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>

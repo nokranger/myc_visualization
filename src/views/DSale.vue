@@ -1,7 +1,8 @@
 <template>
   <div>
-    {{timestamp}}
-    <b-container>
+    <!-- {{timestamp}} -->
+    <iframe width="800" height="600" :src="iframe.src" frameborder="0" allowFullScreen="true"></iframe>
+    <!-- <b-container>
       <br>
       <b-row>
         <b-col cols="2">Total</b-col>
@@ -23,7 +24,6 @@
             </b-col>
             <b-col cols="8">
               <router-link :to="'/sale/' + saless.code">
-              <!-- <b-progress :value="saless.value" :max="saless.max" height="3rem" :label="'${(value)}'" show-progress animated></b-progress> -->
                 <b-progress :max="saless.sales_target" height="3rem" show-progress animated>
                   <b-progress-bar :value="saless.sales_values" :label="`${((saless.sales_values))}`"></b-progress-bar>
                 </b-progress>
@@ -35,7 +35,7 @@
           </b-row>
         </b-container>
       </div>
-    </b-container>
+    </b-container> -->
   </div>
 </template>
 <script>
@@ -47,7 +47,10 @@ export default {
       max: 0,
       timestamp: '',
       sales: [],
-      colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)'
+      colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
+      iframe: {
+        src: 'https://app.powerbi.com/view?r=eyJrIjoiYzBhYTE3OGMtZTRhZS00YTY2LWE0Y2MtZTljM2RjMDE0N2E2IiwidCI6ImVhYjk2NWRjLTFiMmYtNDFiZC1iNjI4LWNmMmFiOTk4NjJiMiIsImMiOjEwfQ%3D%3D'
+      }
     }
   },
   created () {
