@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
     <div v-if="name === 'login'">
     </div>
+    <div v-else-if="name === 'change'">
+    </div>
     <div v-else>
       <app-header></app-header>
     </div>
@@ -33,17 +35,21 @@ export default {
     if (window.location.pathname === '/') {
       // console.log(screen.height)
       this.name = 'login'
-      this.heights = screen.height + 'px'
+      this.heights = 1024 + 'px'
       console.log('login')
     } else if (window.location.pathname === '/sale') {
-      this.heights = '4000px'
+      this.heights = '1025px'
     } else if (window.location.pathname === '/overdue') {
-      this.heights = '1200px'
+      this.heights = '1024px'
     } else if (window.location.pathname === '/map') {
 
     } else if (window.location.pathname === '/setting') {
       // console.log(scrollbars.screen)
       this.heights = '4000px'
+    } else if (window.location.pathname === '/changepassword') {
+      // console.log(scrollbars.screen)
+      this.heights = '1024px'
+      this.name = 'change'
     }
     // console.log(this.name)
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- {{timestamp}} -->
-    <iframe width="800" height="600" :src="iframe.src" frameborder="0" allowFullScreen="true"></iframe>
+    <iframe width="1020" height="680" :src="iframe.src" frameborder="0" allowFullScreen="true"></iframe>
     <!-- <b-container>
       <br>
       <b-row>

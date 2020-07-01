@@ -92,3 +92,16 @@ outline:none!important;
     width: 100%!important;
     border-radius: 10em!important;
 }
+.align-left{
+    text-align: left;
+  }
+  .align-right{
+    text-align: right;
+  }
+  .align-center{
+    text-align: center;
+  }
+  a:hover{
+    cursor: pointer!important;
+    text-decoration: none;
+  }

@@ -8,7 +8,7 @@
         <b-col cols="12" sm="12" md="12" lg="6" xl="6">
           <br>
           <div>
-            <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:50px;color: #777;">LOGIN</strong>
+            <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:24px;color: #333;">LOGIN</strong>
             <br>
             <br>
             <p v-if="error == 'USERNAME NOT FOUND'" style="color:red">{{error}}</p>
@@ -30,7 +30,18 @@
               </b-form-group>
             </div>
             <b-form-group id="input-group-2">
-              <label class="forminput">Password</label>
+              <b-row>
+                <b-col>
+                  <div class="align-left">
+                    <label>Password</label>
+                  </div>
+                </b-col>
+                <b-col>
+                  <div class="align-right">
+                    <a href="/changepassword">Change Password ?</a>
+                  </div>
+                </b-col>
+              </b-row>
               <b-form-input
                 id="input-2"
                 v-model="form.password"
@@ -45,7 +56,7 @@
               </b-form-checkbox-group>
             </b-form-group> -->
             <div>
-            <b-button class="blue-gradient btn-block" v-on:click="postLogin ()">LOGIN</b-button><br>
+            <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" v-on:click="postLogin ()">LOGIN</b-button><br>
             </div>
             <div>
             </div>

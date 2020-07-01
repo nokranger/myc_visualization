@@ -12,6 +12,7 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.14.0",
     "core-js": "^3.6.4",
+    "md5": "^2.2.1",
     "vue": "^2.6.11",
     "vue-fullpage.js": "^0.1.5",
     "vue-meta": "^2.3.3",
