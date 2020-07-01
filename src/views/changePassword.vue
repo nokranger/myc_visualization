@@ -11,8 +11,6 @@
             <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:24px;color: #333;">Change your password</strong>
             <br>
             <br>
-            <!-- <p v-if="error == 'USERNAME NOT FOUND'" style="color:red">{{error}}</p>
-            <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p> -->
           </div>
           <br>
           <b-card>
@@ -57,11 +55,6 @@
                     <label>New Password</label>
                   </div>
                 </b-col>
-                <!-- <b-col>
-                  <div class="align-right">
-                    <a href="/changepassword">Change Password ?</a>
-                  </div>
-                </b-col> -->
               </b-row>
               <b-form-input
                 id="input-3"
@@ -71,11 +64,6 @@
                 placeholder="Enter New password"
               ></b-form-input>
             </b-form-group>
-            <!-- <b-form-group id="input-group-4">
-              <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-                <b-form-checkbox value="me">remember me</b-form-checkbox>
-              </b-form-checkbox-group>
-            </b-form-group> -->
             <div>
             <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" v-on:click="postChangePassword ()">Change Password</b-button><br>
             </div>
@@ -91,6 +79,7 @@
 </template>
 <script>
 import md5 from 'md5'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -108,6 +97,13 @@ export default {
       titleTemplate: '%s - MYC'
     }
   },
+  mounted () {
+    if (sessionStorage.getItem('login') === null) {
+      location.replace('/')
+      // console.log('testL')
+    }
+    this.form.username = JSON.parse(sessionStorage.getItem('login'))
+  },
   methods: {
     postChangePassword () {
       this.form = {
@@ -115,6 +111,10 @@ export default {
         oldpassword: md5(this.form.oldpassword),
         newpassword: md5(this.form.newpassword)
       }
+      axios.post('http://192.168.43.190:1308/changepassword', this.form).then(response => {
+        console.log('done')
+      }).catch(e => {
+      })
       console.log(this.form)
     }
   }

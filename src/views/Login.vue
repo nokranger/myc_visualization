@@ -36,11 +36,11 @@
                     <label>Password</label>
                   </div>
                 </b-col>
-                <b-col>
+                <!-- <b-col>
                   <div class="align-right">
                     <a href="/changepassword">Change Password ?</a>
                   </div>
-                </b-col>
+                </b-col> -->
               </b-row>
               <b-form-input
                 id="input-2"
@@ -71,6 +71,7 @@
 
 <script>
 import axios from 'axios'
+import md5 from 'md5'
 export default {
   data () {
     return {
@@ -99,7 +100,7 @@ export default {
         session_id: '',
         data: {
           username: this.form.username,
-          password: this.form.password
+          password: md5(this.form.password)
         }
       }
       // console.log(this.data)

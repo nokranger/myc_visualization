@@ -3,8 +3,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
     <div v-if="name === 'login'">
     </div>
-    <div v-else-if="name === 'change'">
-    </div>
+    <!-- <div v-else-if="name === 'change'">
+    </div> -->
     <div v-else>
       <app-header></app-header>
     </div>

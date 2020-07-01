@@ -70,6 +70,7 @@
 </template>
 <script>
 import md5 from 'md5'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -87,10 +88,10 @@ export default {
     }
   },
   mounted () {
-    // if (sessionStorage.getItem('login') === null) {
-    //   location.replace('/')
-    //   // console.log('testL')
-    // }
+    if (sessionStorage.getItem('login') === null) {
+      location.replace('/')
+      // console.log('testL')
+    }
   },
   methods: {
     postRegister () {
@@ -99,6 +100,10 @@ export default {
         oldpassword: md5(this.form.oldpassword),
         newpassword: md5(this.form.newpassword)
       }
+      axios.post('http://192.168.43.190:1308/register', this.form).then(response => {
+        console.log('done')
+      }).catch(e => {
+      })
       console.log(this.form)
     }
   }
