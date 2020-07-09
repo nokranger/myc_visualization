@@ -49,8 +49,9 @@ export default {
       sales: [],
       colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
       iframe: {
-        src: 'https://app.powerbi.com/view?r=eyJrIjoiYzBhYTE3OGMtZTRhZS00YTY2LWE0Y2MtZTljM2RjMDE0N2E2IiwidCI6ImVhYjk2NWRjLTFiMmYtNDFiZC1iNjI4LWNmMmFiOTk4NjJiMiIsImMiOjEwfQ%3D%3D'
-      }
+        src: ''
+      },
+      data: []
     }
   },
   created () {
@@ -64,36 +65,17 @@ export default {
       // console.log('testL')
     }
     setInterval(this.getNow, 1000)
-    // this.getSale()
-    axios.all([axios.get('http://192.168.1.46:1308/sales')]).then(axios.spread((resSale) => {
-      console.log(resSale.data.data)
-      this.sales = {
-        max: resSale.data.data.sales_target,
-        value: resSale.data.data.total_sales,
-        saler_list: resSale.data.data.saler_list
+    this.data = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
+    }
+    axios.post('http://192.168.43.190:1308/sale', this.data).then(response => {
+      console.log('res')
+      console.log(response)
+      this.iframe = {
+        src: response.data.data.link
       }
-      // console.log(this.sale)
-      this.max = this.sales.max
-      this.value = this.sales.value
-      console.log(this.sales.saler_list[0].sales_target)
-      // console.log(this.max)
-      // this.sales = resSale.data.data.map((data, i) => {
-      //   return {
-      //     // name: data.name,
-      //     // value: data.value,
-      //     // max: data.max
-      //   }
-      // })
-      // for (let i = 0; i < this.sales.length; i++) {
-      //   // console.log('aa')
-      //   this.value = this.value + this.sales[i].value
-      //   this.max = this.max + this.sales[i].max
-      //   // console.log(this.max)
-      //   // console.log(this.value)
-      // }
-      // console.log(resSale.data.result.length)
-    }))
-    // console.log('ds', localStorage.getItem('login'))
+    })
   },
   methods: {
     getSale () {
