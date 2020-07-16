@@ -2,17 +2,37 @@
   <div>
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
-    <b-container style="border: solid 5px gray">
-      <div class="align-left" style="font-weight:bolder;color: #4f4f4f!important;font-size:24px;color: #333;">
-        Change Password
-      </div>
-      <b-row style="solid 2px #E0e0e0">
-        <b-col cols="12" sm="12" md="12" lg="3" xl="3">
+    <b-container>
+      <b-row>
+        <b-col cols="12" sm="12" md="12" lg="3" xl="3"></b-col>
+        <b-col cols="12" sm="12" md="12" lg="6" xl="6">
+          <br>
+          <div>
+            <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:24px;color: #333;">Change your password</strong>
+            <br>
+            <br>
+          </div>
+          <br>
+          <b-card>
+          <b-form v-if="show">
+            <div>
+              <!-- <b-form-group id="input-group-1">
+                <label class="forminput">Username</label>
+                <b-form-input
+                  id="input-1"
+                  v-model="form.username"
+                  type="text"
+                  required
+                  placeholder="Enter username"
+                  readonly=""
+                ></b-form-input>
+              </b-form-group> -->
+            </div>
             <b-form-group id="input-group-2">
               <b-row>
                 <b-col>
                   <div class="align-left">
-                    <label style="font-size: 16px;">Old Password</label>
+                    <label>Old Password</label>
                   </div>
                 </b-col>
                 <!-- <b-col>
@@ -29,31 +49,27 @@
                 placeholder="Enter Old password"
               ></b-form-input>
             </b-form-group>
-        </b-col>
-        <b-col cols="12" sm="12" md="12" lg="3" xl="3">
-          <b-form-group id="input-group-3">
+            <b-form-group id="input-group-3">
               <b-row>
                 <b-col>
                   <div class="align-left">
-                    <label style="font-size: 16px;">New Password</label>
+                    <label>New Password</label>
                   </div>
                 </b-col>
               </b-row>
               <b-form-input
-                id="input-4"
+                id="input-3"
                 v-model="form.newpassword"
                 type="password"
                 required
                 placeholder="Enter New password"
               ></b-form-input>
             </b-form-group>
-        </b-col>
-        <b-col cols="12" sm="12" md="12" lg="3" xl="3">
-          <b-form-group id="input-group-4">
+                        <b-form-group id="input-group-3">
               <b-row>
                 <b-col>
                   <div class="align-left">
-                    <label style="font-size: 16px;">New Password</label>
+                    <label>Confirm New Password</label>
                   </div>
                 </b-col>
               </b-row>
@@ -65,13 +81,15 @@
                 placeholder="Enter Confirm New password"
               ></b-form-input>
             </b-form-group>
+            <div>
+            <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" v-on:click="postChangePassword ()">Change Password</b-button><br>
+            </div>
+            <div>
+            </div>
+          </b-form>
+          </b-card>
         </b-col>
-        <b-col cols="12" sm="12" md="12" lg="3" xl="3">
-          <div style="margin-top:-10px;">
-            <br>
-            <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" v-on:click="postChangePassword ()">Change Password</b-button>
-          </div>
-        </b-col>
+        <b-col cols="12" sm="12" md="12" lg="3" xl="3"></b-col>
       </b-row>
     </b-container>
   </div>
@@ -107,6 +125,7 @@ export default {
   methods: {
     postChangePassword () {
       this.form = {
+        username: this.form.username,
         oldpassword: md5(this.form.oldpassword),
         newpassword: md5(this.form.newpassword),
         confirmnewpassword: md5(this.form.confirmnewpassword)
