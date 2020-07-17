@@ -7,6 +7,8 @@
     <app-brands></app-brands>
     <br>
     <app-sale></app-sale>
+    <br>
+    <app-account></app-account>
   </div>
   <div v-if="local === '0'">
     <app-changepassword></app-changepassword>
@@ -18,11 +20,13 @@ import axios from 'axios'
 import changePassword from './changePassword'
 import brands from '../components/brands'
 import sales from '../components/sales'
+import account from '../components/account'
 export default {
   components: {
     'app-changepassword': changePassword,
     'app-brands': brands,
-    'app-sale': sales
+    'app-sale': sales,
+    'app-account': account
   },
   data () {
     return {

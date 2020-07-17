@@ -31,13 +31,13 @@
                 <div>
                   Name
                 </div>
-                <b-input ref="brandsname" type="text"></b-input>
+                <b-input ref="sellername" type="text"></b-input>
               </b-col>
               <b-col>
                 <div>
                   Target
                 </div>
-                <b-input ref="brandstarget" type="text"></b-input>
+                <b-input ref="sellertarget" type="text"></b-input>
               </b-col>
               <b-col>
                 <!-- <div>
@@ -80,8 +80,8 @@ export default {
     addData () {
       console.log('addData')
       this.newItems = {
-        _name: this.$refs.brandsname.localValue,
-        target: this.$refs.brandstarget.localValue
+        _name: this.$refs.sellername.localValue,
+        target: this.$refs.sellertarget.localValue
       }
       // console.log(this.items)
       // var obj = JSON.parse(this.items)

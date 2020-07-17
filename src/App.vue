@@ -45,7 +45,7 @@ export default {
 
     } else if (window.location.pathname === '/setting') {
       // console.log(scrollbars.screen)
-      this.heights = '4000px'
+      this.heights = 'auto'
     } else if (window.location.pathname === '/changepassword') {
       // console.log(scrollbars.screen)
       this.heights = '1024px'
