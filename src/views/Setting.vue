@@ -5,6 +5,8 @@
       Setting
     </div>
     <app-brands></app-brands>
+    <br>
+    <app-sale></app-sale>
   </div>
   <div v-if="local === '0'">
     <app-changepassword></app-changepassword>
@@ -15,10 +17,12 @@
 import axios from 'axios'
 import changePassword from './changePassword'
 import brands from '../components/brands'
+import sales from '../components/sales'
 export default {
   components: {
     'app-changepassword': changePassword,
-    'app-brands': brands
+    'app-brands': brands,
+    'app-sale': sales
   },
   data () {
     return {
@@ -50,7 +54,7 @@ export default {
       // console.log(this.$refs.bb.localValue)
     }
     this.local = sessionStorage.getItem('level')
-    setTimeout(this.getSetting, 3000)
+    // setTimeout(this.getSetting, 3000)
   },
   methods: {
     getSetting () {

@@ -55,6 +55,27 @@
                 <b-form-checkbox value="me">remember me</b-form-checkbox>
               </b-form-checkbox-group>
             </b-form-group> -->
+            <b-form-group id="input-group-3">
+              <b-row>
+                <b-col>
+                  <div class="align-left">
+                    <label>Confirm password <label style="color:red">*</label></label>
+                  </div>
+                </b-col>
+                <!-- <b-col>
+                  <div class="align-right">
+                    <a href="/changepassword">Change Password ?</a>
+                  </div>
+                </b-col> -->
+              </b-row>
+              <b-form-input
+                id="input-3"
+                v-model="form.confirmpassword"
+                type="password"
+                required
+                placeholder="Enter comfirm password"
+              ></b-form-input>
+            </b-form-group>
             <div>
             <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" v-on:click="postRegister ()">Create account</b-button><br>
             </div>
@@ -76,7 +97,8 @@ export default {
     return {
       form: {
         username: '',
-        password: ''
+        password: '',
+        confirmpassword: ''
       },
       show: true
     }
@@ -97,8 +119,8 @@ export default {
     postRegister () {
       this.form = {
         username: this.form.username,
-        oldpassword: md5(this.form.oldpassword),
-        newpassword: md5(this.form.newpassword)
+        password: md5(this.form.password),
+        confirmpassword: md5(this.form.confirmpassword)
       }
       axios.post('http://192.168.43.190:1308/register', this.form).then(response => {
         console.log('done')

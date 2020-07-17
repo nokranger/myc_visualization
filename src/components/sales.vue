@@ -2,7 +2,7 @@
   <div>
     <b-container style="border-bottom: solid 3px gray">
       <div>
-        Brands
+        Seller
       </div>
       <b-table ref="table" :items="items" :fields="fields" class="mt-3" outlined>
         <template v-slot:cell(target)="data">
@@ -18,12 +18,12 @@
         </template>
       </b-table>
       <div>
-        <b-button style="width:100%" v-b-modal.modal-brands>Add Data</b-button>
+        <b-button style="width:100%" v-b-modal.modal-sell>Add Data</b-button>
         <br>
         <br>
       </div>
-      <b-modal id="modal-brands" hide-footer>
-        <p class="my-4">Add your brands</p>
+      <b-modal id="modal-sell" hide-footer>
+        <p class="my-4">Add your Seller</p>
         <div>
           <b-container>
             <b-row>
