@@ -2,48 +2,47 @@
   <div>
     <b-container style="border-bottom: solid 3px gray">
       <div>
-        Seller
+        Brands group
       </div>
       <b-table ref="table" :items="items" :fields="fields" class="mt-3" outlined>
-        <template v-slot:cell(target)="data">
+        <!-- <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
-        </template>
+        </template> -->
         <template v-slot:cell(function)="data">
-          <b-button
-            variant="danger"
-            size="sm"
-            class="mr-2"
-            v-b-modal="'sale-modal-delete' + data.index"
-          >Delete</b-button>
-          <b-modal :id="'sale-modal-delete' + data.index" hide-footer>
-            <div class="align-center">
-              <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
-            </div>
-            <b-container>
-              <b-row>
-                <b-col></b-col>
-                <b-col>
-                </b-col>
-                <b-col>
-                  <div>
-                    <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
-                  </div>
-                </b-col>
-              </b-row>
-            </b-container>
-          </b-modal>
-          <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.index)">
-            Edit
+          <b-button variant="danger" size="sm" class="mr-2" v-b-modal="'brandsG-modal-delete' + data.index">
+            Delete
           </b-button>
+            <b-modal :id="'brandsG-modal-delete' + data.index" hide-footer>
+              <div class="align-center">
+                <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
+              </div>
+              <b-container>
+                <b-row>
+                  <b-col></b-col>
+                  <b-col>
+                  </b-col>
+                  <b-col>
+                    <div>
+                      <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                    </div>
+                  </b-col>
+                </b-row>
+              </b-container>
+            </b-modal>
+          <!-- <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.index)">
+            Edit
+          </b-button> -->
         </template>
       </b-table>
       <div>
-        <b-button style="width:100%" v-b-modal.modal-sell>Add Data</b-button>
+        <b-button style="width:100%" v-b-modal.modal-brands-group>Add Data</b-button>
         <br>
         <br>
       </div>
-      <b-modal id="modal-sell" hide-footer>
-        <p class="my-4">Add your Seller</p>
+      <b-modal id="modal-brands-group" hide-footer>
+        <div class="align-center">
+          <p style="font-weight: bold;font-size:20px;" class="my-4">Add your brands</p>
+        </div>
         <div>
           <b-container>
             <b-row>
@@ -51,13 +50,13 @@
                 <div>
                   Name
                 </div>
-                <b-input ref="sellername" type="text"></b-input>
+                <b-input ref="brandsGname" type="text"></b-input>
               </b-col>
               <b-col>
                 <div>
-                  Target
+                  Brands group
                 </div>
-                <b-input ref="sellertarget" type="text"></b-input>
+                <b-input ref="brandGroup" type="text"></b-input>
               </b-col>
               <b-col>
                 <!-- <div>
@@ -84,12 +83,12 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['_name', 'target', 'date', 'function'],
+      fields: ['_brands_name', 'group', 'function'],
       items: [
-        { _name: 'Dickerson', target: 1100, date: '2020-07-17' },
-        { _name: 'Larsen', target: 1200, date: '2020-07-17' },
-        { _name: 'Geneva', target: 1200, date: '2020-07-17' },
-        { _name: 'Jami', target: 1500, date: '2020-07-17' }
+        { _brands_name: 'Dickerson', group: 1100 },
+        { _brands_name: 'Larsen', group: 1200 },
+        { _brands_name: 'Geneva', group: 1200 },
+        { _brands_name: 'Jami', group: 1500 }
       ],
       newItems: []
     }
@@ -100,8 +99,8 @@ export default {
     addData () {
       console.log('addData')
       this.newItems = {
-        _name: this.$refs.sellername.localValue,
-        target: this.$refs.sellertarget.localValue
+        _name: this.$refs.brandsGname.localValue,
+        target: this.$refs.brandGroup.localValue
       }
       // console.log(this.items)
       // var obj = JSON.parse(this.items)
@@ -124,5 +123,8 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+.align-center {
+  text-align: center;
+}
 </style>

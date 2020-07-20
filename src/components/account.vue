@@ -14,8 +14,21 @@
             v-b-modal="'modal-delete' + data.index"
           >Delete</b-button>
           <b-modal :id="'modal-delete' + data.index" hide-footer>
-            <p class="my-4">Confirm delete</p>
-            <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+            <div class="align-center">
+              <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
+            </div>
+            <b-container>
+              <b-row>
+                <b-col></b-col>
+                <b-col>
+                </b-col>
+                <b-col>
+                  <div>
+                    <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                  </div>
+                </b-col>
+              </b-row>
+            </b-container>
           </b-modal>
           <b-button
             variant="primary"
@@ -68,7 +81,9 @@
         <br />
       </div>
       <b-modal id="modal-account" size="xl" hide-footer>
-        <p class="my-4">Add your account</p>
+        <div class="align-center">
+          <p style="font-weight: bold;font-size:20px;" class="my-4">Add your account</p>
+        </div>
         <div>
           <b-container>
             <b-row>
@@ -167,5 +182,8 @@ export default {
   mounted () {}
 }
 </script>
-<style>
+<style scoped>
+.align-center {
+  text-align: center;
+}
 </style>

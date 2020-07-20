@@ -6,6 +6,8 @@
     </div>
     <app-brands></app-brands>
     <br>
+    <app-brandsg></app-brandsg>
+    <br>
     <app-sale></app-sale>
     <br>
     <app-account></app-account>
@@ -19,12 +21,14 @@
 import axios from 'axios'
 import changePassword from './changePassword'
 import brands from '../components/brands'
+import brandsg from '../components/brandsGroup'
 import sales from '../components/sales'
 import account from '../components/account'
 export default {
   components: {
     'app-changepassword': changePassword,
     'app-brands': brands,
+    'app-brandsg': brandsg,
     'app-sale': sales,
     'app-account': account
   },

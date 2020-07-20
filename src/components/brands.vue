@@ -9,9 +9,26 @@
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template>
         <template v-slot:cell(function)="data">
-          <b-button variant="danger" size="sm" class="mr-2" v-on:click="ondelete (data.index)">
+          <b-button variant="danger" size="sm" class="mr-2" v-b-modal="'brands-modal-delete' + data.index">
             Delete
           </b-button>
+            <b-modal :id="'brands-modal-delete' + data.index" hide-footer>
+              <div class="align-center">
+                <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
+              </div>
+              <b-container>
+                <b-row>
+                  <b-col></b-col>
+                  <b-col>
+                  </b-col>
+                  <b-col>
+                    <div>
+                      <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                    </div>
+                  </b-col>
+                </b-row>
+              </b-container>
+            </b-modal>
           <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.index)">
             Edit
           </b-button>
@@ -22,8 +39,10 @@
         <br>
         <br>
       </div>
-      <b-modal id="modal-brands" hide-footer>
-        <p class="my-4">Add your brands</p>
+      <b-modal id="modal-brands" size="xl" hide-footer>
+        <div class="align-center">
+          <p style="font-weight: bold;font-size:20px;" class="my-4">Add your brands</p>
+        </div>
         <div>
           <b-container>
             <b-row>
@@ -32,6 +51,10 @@
                   Name
                 </div>
                 <b-input ref="brandsname" type="text"></b-input>
+              </b-col>
+              <b-col>
+                Brands group
+                <b-input ref="brandsgroup" type="text"></b-input>
               </b-col>
               <b-col>
                 <div>
@@ -59,19 +82,22 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['_name', 'target', 'date', 'function'],
+      fields: ['brand', 'target', 'last_update', 'function'],
       items: [
-        { _name: 'Dickerson', target: 1100, date: '2020-07-17' },
-        { _name: 'Larsen', target: 1200, date: '2020-07-17' },
-        { _name: 'Geneva', target: 1200, date: '2020-07-17' },
-        { _name: 'Jami', target: 1500, date: '2020-07-17' }
+        { brand: 'Dickerson', group: '', target: 1100, last_update: '2020-07-17' },
+        { brand: 'Larsen', group: '', target: 1200, last_update: '2020-07-17' },
+        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-17' },
+        { brand: 'Jami', group: '', target: 1500, last_update: '2020-07-17' }
       ],
-      newItems: []
+      newItems: [],
+      edit: [],
+      deletebrands: []
     }
   },
   created () {
@@ -79,24 +105,61 @@ export default {
   methods: {
     addData () {
       console.log('addData')
+      // console.log(this.$$refs.brandsgroup.localValue)
       this.newItems = {
-        _name: this.$refs.brandsname.localValue,
-        target: this.$refs.brandstarget.localValue
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          brand: this.$refs.brandsname.localValue,
+          group: this.$refs.brandsgroup.localValue,
+          sales_target: this.$refs.brandstarget.localValue
+        }
       }
+      console.log(this.newItems)
+      axios.post('http://192.168.43.190:1308/setting/brand/add', this.newItems).then(response => {
+        this.items = response.data.data.brand_list
+      })
       // console.log(this.items)
       // var obj = JSON.parse(this.items)
-      this.items.push(this.newItems)
+      // this.items.push(this.newItems)
       this.$refs.table.refresh()
-      console.log(this.items)
-      // console.log(obj)
+      // console.log(this.items)
     },
     onedit (index) {
       console.log(this.items[index].target)
+      this.edit = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          brand: this.items[index].brand,
+          group: this.items[index].target
+        }
+      }
+      console.log(this.edit)
+      axios.post('http://192.168.43.190:1308/setting/brand/update_sales_target', {
+        data: this.edit,
+        _method: 'patch'
+      }).then(response => {
+        console.log(response)
+        this.items = response.data.data.brand_list
+      })
+      this.$refs.table.refresh()
     },
     ondelete (index) {
-      delete this.items[index]
+      // delete this.items[index]
+      this.deletebrands = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          brand: this.items[index].brand
+        }
+      }
+      console.log(this.items[index].brand)
       // console.log(this.items)
-      console.log(this.items)
+      axios.post('http://192.168.43.190:1308/setting/brand/delete', {
+        data: this.deletebrands,
+        _method: 'delete'
+      }).then(response => {
+        this.items = response.data.data.brand_list
+      })
+      // axios.delete()
       this.$refs.table.refresh()
     }
   },
@@ -104,5 +167,8 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+.align-center {
+  text-align: center;
+}
 </style>
