@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:style="{background: colors, width: '100%', height: heights}">
+  <div id="app" v-bind:style="cssProps">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
     <div v-if="name === 'login'">
     </div>
@@ -25,7 +25,13 @@ export default {
     return {
       name: '',
       colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
-      heights: '1200px'
+      heights: '1200px',
+      imgH: '../assets/Page Home_Manoyont.png',
+      cssProps: {
+        backgroundImage: `url(${require('@/assets/Home_Manoyont.png')})`,
+        width: '100%',
+        height: 'auto'
+      }
     }
   },
   created () {
@@ -35,21 +41,25 @@ export default {
     if (window.location.pathname === '/') {
       // console.log(screen.height)
       this.name = 'login'
-      this.heights = 1024 + 'px'
+      this.cssProps.height = 1024 + 'px'
       console.log('login')
     } else if (window.location.pathname === '/sale') {
-      this.heights = '1025px'
+      this.cssProps.height = '1025px'
     } else if (window.location.pathname === '/overdue') {
-      this.heights = '1024px'
+      this.cssProps.height = '1024px'
     } else if (window.location.pathname === '/map') {
-
+      this.cssProps.height = '1024px'
     } else if (window.location.pathname === '/setting') {
       // console.log(scrollbars.screen)
-      this.heights = 'auto'
+      this.cssProps.height = 'auto'
     } else if (window.location.pathname === '/changepassword') {
       // console.log(scrollbars.screen)
-      this.heights = '1024px'
-      this.name = 'change'
+      this.cssProps.height = '1024px'
+      // this.name = 'change'
+    } else if (window.location.pathname === '/register') {
+      // console.log(scrollbars.screen)
+      this.cssProps.height = '1024px'
+      // this.name = 'change'
     }
     // console.log(this.name)
   },

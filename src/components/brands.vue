@@ -4,7 +4,7 @@
       <div>
         Brands
       </div>
-      <b-table ref="table" :items="items" :fields="fields" class="mt-3" outlined>
+      <b-table ref="table" :items="items" :fields="fields" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template>
@@ -97,10 +97,12 @@ export default {
       ],
       newItems: [],
       edit: [],
-      deletebrands: []
+      deletebrands: [],
+      settings: []
     }
   },
   created () {
+    // console.log(this.items)
   },
   methods: {
     addData () {
@@ -164,6 +166,13 @@ export default {
     }
   },
   mounted () {
+    this.settings = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
+    }
+    axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
+      this.items = response.data.data.brand_list
+    })
   }
 }
 </script>

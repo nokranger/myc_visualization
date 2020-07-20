@@ -2,7 +2,7 @@
   <div>
     <b-container style="border-bottom: solid 3px gray">
       <div>Account</div>
-      <b-table ref="table" :items="items" :fields="fields" class="mt-3" outlined>
+      <b-table ref="table" :items="items" :fields="fields" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <!-- <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template>-->
