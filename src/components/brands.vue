@@ -119,11 +119,11 @@ export default {
       console.log(this.newItems)
       axios.post('http://192.168.43.190:1308/setting/brand/add', this.newItems).then(response => {
         this.items = response.data.data.brand_list
+        this.$refs.table.refresh()
       })
       // console.log(this.items)
       // var obj = JSON.parse(this.items)
       // this.items.push(this.newItems)
-      this.$refs.table.refresh()
       // console.log(this.items)
     },
     onedit (index) {
@@ -142,8 +142,8 @@ export default {
       }).then(response => {
         console.log(response)
         this.items = response.data.data.brand_list
+        this.$refs.table.refresh()
       })
-      this.$refs.table.refresh()
     },
     ondelete (index) {
       // delete this.items[index]
@@ -153,16 +153,18 @@ export default {
           brand: this.items[index].brand
         }
       }
-      console.log(this.items[index].brand)
+      // console.log(this.items[index].brand)
       // console.log(this.items)
       axios.post('http://192.168.43.190:1308/setting/brand/delete', {
         data: this.deletebrands,
         _method: 'delete'
       }).then(response => {
         this.items = response.data.data.brand_list
+        // delete this.items[index]
+        this.$refs.table.refresh()
       })
       // axios.delete()
-      this.$refs.table.refresh()
+      // this.$refs.table.refresh()
     }
   },
   mounted () {
@@ -172,6 +174,7 @@ export default {
     }
     axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
       this.items = response.data.data.brand_list
+      this.$refs.table.refresh()
     })
   }
 }

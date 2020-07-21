@@ -8,7 +8,7 @@
       <!-- <a v-if="local !== 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
       <a class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
       <a class="align-left" href="/changepassword"><i class="fas fa-users-cog"></i> Change password</a>
-      <a v-if="local === '1'" class="align-left" href="/register"><i class="fas fa-user-plus"></i> Register</a>
+      <!-- <a v-if="local === '1'" class="align-left" href="/register"><i class="fas fa-user-plus"></i> Register</a> -->
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
     <div>

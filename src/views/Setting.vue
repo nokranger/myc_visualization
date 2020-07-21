@@ -11,6 +11,8 @@
     <app-sale></app-sale>
     <br>
     <app-account></app-account>
+    <br>
+    <app-location></app-location>
   </div>
   <div v-if="local === '0'">
     <app-changepassword></app-changepassword>
@@ -24,13 +26,15 @@ import brands from '../components/brands'
 import brandsg from '../components/brandsGroup'
 import sales from '../components/sales'
 import account from '../components/account'
+import customerlocation from '../components/customerLocation'
 export default {
   components: {
     'app-changepassword': changePassword,
     'app-brands': brands,
     'app-brandsg': brandsg,
     'app-sale': sales,
-    'app-account': account
+    'app-account': account,
+    'app-location': customerlocation
   },
   data () {
     return {

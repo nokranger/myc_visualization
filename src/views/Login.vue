@@ -2,15 +2,18 @@
   <div>
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+    <br>
+    <br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <b-container>
       <b-row>
         <b-col cols="12" sm="12" md="12" lg="3" xl="3"></b-col>
         <b-col cols="12" sm="12" md="12" lg="6" xl="6">
-          <br>
           <div>
             <strong style="text-align:center;font-weight:bolder;color: #4f4f4f!important;font-size:24px;color: #333;">LOGIN</strong>
             <br>
             <br>
+            <br><br>
             <p v-if="error == 'USERNAME NOT FOUND'" style="color:red">{{error}}</p>
             <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p>
           </div>

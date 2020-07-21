@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container style="border-bottom: solid 3px gray">
-      <div>Account</div>
+      <div>Customer location</div>
       <b-table ref="table" :items="items" :fields="fields" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <!-- <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
@@ -11,9 +11,9 @@
             variant="danger"
             size="sm"
             class="mr-2"
-            v-b-modal="'modal-delete' + data.index"
+            v-b-modal="'modal-delete-location' + data.index"
           >Delete</b-button>
-          <b-modal :id="'modal-delete' + data.index" hide-footer>
+          <b-modal :id="'modal-delete-location' + data.index" hide-footer>
             <div class="align-center">
               <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
             </div>
@@ -34,15 +34,10 @@
             variant="primary"
             size="sm"
             class="mr-2"
-            v-b-modal="'modal-edit' + data.index"
+            v-b-modal="'modal-edit-location' + data.index"
           >Edit</b-button>
-          <b-modal :id="'modal-edit' + data.index" size="xl" hide-footer>
-            <div class="align-center">
-              <p style="font-weight: bold;font-size:20px;" class="my-4">Change password and level</p>
-            </div>
-            <div>
-              <p style="color:red">{{checkpassword}}</p>
-            </div>
+          <b-modal :id="'modal-edit-location' + data.index" size="xl" hide-footer>
+            <p class="my-4">Change password and level</p>
             <div>
               <b-container>
                 <b-row>
@@ -56,11 +51,11 @@
                   </b-col>
                   <b-col>
                     <div>Password</div>
-                    <b-input :ref="'upassword' + data.index" type="password" v-model="user.password"></b-input>
+                    <b-input :ref="'upassword' + data.index" type="password"></b-input>
                   </b-col>
                   <b-col>
                     <div>Confirm password</div>
-                    <b-input :ref="'ucpassword' + data.index" type="password" v-model="user.cpassword"></b-input>
+                    <b-input :ref="'ucpassword' + data.index" type="password"></b-input>
                   </b-col>
                   <b-col>
                     <!-- <div>
@@ -81,19 +76,16 @@
         </template>
       </b-table>
       <div>
-        <b-button style="width:100%" v-b-modal.modal-account>Add User</b-button>
+        <b-button style="width:100%" v-b-modal.modal-location>Add User</b-button>
         <br />
         <br />
       </div>
-      <b-modal id="modal-account" size="xl" hide-footer>
+      <b-modal id="modal-location" size="xl" hide-footer>
         <div class="align-center">
-          <p style="font-weight: bold;font-size:20px;" class="my-4">Add your account</p>
+          <p style="font-weight: bold;font-size:20px;" class="my-4">Add your location</p>
         </div>
         <div>
           <b-container>
-            <div>
-              <p style="color:red">{{checkpassword}}</p>
-            </div>
             <b-row>
               <b-col>
                 <div>User name</div>
@@ -101,11 +93,11 @@
               </b-col>
               <b-col>
                 <div>Password</div>
-                <b-input ref="password" type="password" v-model="user.password"></b-input>
+                <b-input ref="password" type="password"></b-input>
               </b-col>
               <b-col>
                 <div>Confirm password</div>
-                <b-input ref="cpassword" type="password" v-model="user.cpassword"></b-input>
+                <b-input ref="cpassword" type="password"></b-input>
               </b-col>
               <b-col>
                 <!-- <div>
@@ -128,53 +120,38 @@
 </template>
 <script>
 import axios from 'axios'
-import md5 from 'md5'
 export default {
   data () {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['username', 'level', 'lastupdate', 'function'],
+      fields: ['_username', 'level', 'lastupdate', 'function'],
       items: [
-        { username: 'Dickerson', level: 0, lastupdate: '2020-07-17' },
-        { username: 'Larsen', level: 1, lastupdate: '2020-07-17' },
-        { username: 'Geneva', level: 1, lastupdate: '2020-07-17' },
-        { username: 'Jami', level: 1, lastupdate: '2020-07-17' }
+        { _username: 'Dickerson', level: 0, lastupdate: '2020-07-17' },
+        { _username: 'Larsen', level: 1, lastupdate: '2020-07-17' },
+        { _username: 'Geneva', level: 1, lastupdate: '2020-07-17' },
+        { _username: 'Jami', level: 1, lastupdate: '2020-07-17' }
       ],
       newItems: [],
       edit: [],
       deletebrands: [],
-      settings: [],
-      user: [{
-        password: '',
-        cpassword: ''
-      }
-      ],
-      search: ''
+      settings: []
     }
   },
   created () {},
   methods: {
-    test () {
-      console.log('test c')
-    },
     addData () {
       console.log('addData')
       this.newItems = {
-        session_id: JSON.parse(sessionStorage.getItem('login')),
-        data: {
-          username: this.$refs.username.localValue,
-          password: md5(this.$refs.password.localValue)
-        }
+        _username: this.$refs.username.localValue,
+        password: this.$refs.password.localValue,
+        cpassword: this.$refs.cpassword.localValue
       }
-      axios.post('http://192.168.43.190:1308/register', this.newItems).then(respone => {
-        console.log(respone)
-      })
       // console.log(this.items)
       // var obj = JSON.parse(this.items)
-      // this.items.push(this.newItems)
-      // this.$refs.table.refresh()
-      // console.log(this.items)
+      this.items.push(this.newItems)
+      this.$refs.table.refresh()
+      console.log(this.items)
       // console.log(obj)
     },
     onedit (index) {
@@ -199,11 +176,6 @@ export default {
       // console.log(this.$refs[index2])
     }
   },
-  watch: {
-    search (value) {
-      console.log('test check')
-    }
-  },
   mounted () {
     this.settings = {
       session_id: JSON.parse(sessionStorage.getItem('login')),
@@ -213,18 +185,6 @@ export default {
       this.items = response.data.data.account_list
       this.$refs.table.refresh()
     })
-  },
-  computed: {
-    checkpassword () {
-      console.log(typeof (this.user.password))
-      if (this.user.cpassword !== this.user.password) {
-        console.log('not same')
-        return '** Passwords not match.'
-      } else if (this.user.cpassword === this.user.password) {
-        return ''
-      }
-      return ''
-    }
   }
 }
 </script>

@@ -78,19 +78,22 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['_brands_name', 'group', 'function'],
+      fields: ['brand', 'group', 'function'],
       items: [
-        { _brands_name: 'Dickerson', group: 1100 },
-        { _brands_name: 'Larsen', group: 1200 },
-        { _brands_name: 'Geneva', group: 1200 },
-        { _brands_name: 'Jami', group: 1500 }
+        { brand: 'Dickerson', group: 1100 },
+        { brand: 'Larsen', group: 1200 },
+        { brand: 'Geneva', group: 1200 },
+        { brand: 'Jami', group: 1500 }
       ],
-      newItems: []
+      newItems: [],
+      deletebrands: [],
+      settings: []
     }
   },
   created () {
@@ -99,27 +102,51 @@ export default {
     addData () {
       console.log('addData')
       this.newItems = {
-        _name: this.$refs.brandsGname.localValue,
-        target: this.$refs.brandGroup.localValue
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          brand: this.$refs.brandsGname.localValue,
+          group: this.$refs.brandGroup.localValue
+        }
       }
-      // console.log(this.items)
+      axios.post('http://192.168.43.190:1308/setting/brand_group/add', this.newItems).then(response => {
+        this.items = response.data.data.brand_group_list
+        this.$refs.table.refresh()
+      })
+      // console.log(this.newItems)
       // var obj = JSON.parse(this.items)
-      this.items.push(this.newItems)
-      this.$refs.table.refresh()
-      console.log(this.items)
+      // this.items.push(this.newItems)
+      // this.$refs.table.refresh()
+      // console.log(this.items)
       // console.log(obj)
     },
-    onedit (index) {
-      console.log(this.items[index].target)
-    },
     ondelete (index) {
-      delete this.items[index]
+      // delete this.items[index]
       // console.log(this.items)
-      console.log(this.items)
-      this.$refs.table.refresh()
+      // console.log(this.items)
+      this.deletebrands = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          brand: this.items[index].brand
+        }
+      }
+      axios.post('http://192.168.43.190:1308/setting/brand_group/delete', {
+        data: this.deletebrands,
+        _method: 'delete'
+      }).then(response => {
+        this.items = response.data.data.brand_group_list
+        this.$refs.table.refresh()
+      })
     }
   },
   mounted () {
+    this.settings = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
+    }
+    axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
+      this.items = response.data.data.brand_group_list
+      this.$refs.table.refresh()
+    })
   }
 }
 </script>
