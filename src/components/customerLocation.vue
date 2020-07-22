@@ -37,25 +37,23 @@
             v-b-modal="'modal-edit-location' + data.index"
           >Edit</b-button>
           <b-modal :id="'modal-edit-location' + data.index" size="xl" hide-footer>
-            <p class="my-4">Change password and level</p>
+            <div class="align-center">
+              <p style="font-weight: bold;font-size:20px;" class="my-4">Update Location</p>
+            </div>
             <div>
               <b-container>
                 <b-row>
                   <b-col>
-                    <div>User name</div>
-                    <b-input :ref="'uusername' + data.index" type="text" v-model="items[data.index]._username" readonly></b-input>
+                    <div>Customers code</div>
+                    <b-input :ref="'cus_code' + data.index" type="text" v-model="items[data.index].customers_code" readonly></b-input>
                   </b-col>
                   <b-col>
-                    <div>Level</div>
-                    <b-input :ref="'ulevel' + data.index" type="text"></b-input>
+                    <div>Latitude</div>
+                    <b-input :ref="'uplat' + data.index" type="text"></b-input>
                   </b-col>
                   <b-col>
-                    <div>Password</div>
-                    <b-input :ref="'upassword' + data.index" type="password"></b-input>
-                  </b-col>
-                  <b-col>
-                    <div>Confirm password</div>
-                    <b-input :ref="'ucpassword' + data.index" type="password"></b-input>
+                    <div>Longtitude</div>
+                    <b-input :ref="'uplng' + data.index" type="text"></b-input>
                   </b-col>
                   <b-col>
                     <!-- <div>
@@ -66,7 +64,7 @@
                       <div style="margin-top:-1px;">
                         <br />
                       </div>
-                      <b-button variant="success" v-on:click="updateuser ('uusername' + data.index, 'ulevel' + data.index, 'upassword' + data.index, 'ucpassword' + data.index, data.index)">Update</b-button>
+                      <b-button variant="success" v-on:click="updatecustomer ('cus_code' + data.index, 'uplat' + data.index, 'uplng' + data.index, data.index)">Update</b-button>
                     </div>
                   </b-col>
                 </b-row>
@@ -76,7 +74,7 @@
         </template>
       </b-table>
       <div>
-        <b-button style="width:100%" v-b-modal.modal-location>Add User</b-button>
+        <b-button style="width:100%" v-b-modal.modal-location>Add Customer</b-button>
         <br />
         <br />
       </div>
@@ -88,16 +86,24 @@
           <b-container>
             <b-row>
               <b-col>
-                <div>User name</div>
-                <b-input ref="username" type="text"></b-input>
+                <div>
+                  Customers
+                </div>
+                <b-input list="customberscode" ref="customerscodes" type="text"></b-input>
+                <b-datalist id="customberscode">
+                  <option v-for="(item, index) in new_cus" :key="index" :value="item.code">{{item.name}}</option>
+                </b-datalist>
+                <!-- <div id="aa" v-for="(item, index) in items" :key="index">
+                  {{index}}
+                </div> -->
               </b-col>
               <b-col>
-                <div>Password</div>
-                <b-input ref="password" type="password"></b-input>
+                <div>Latitude</div>
+                <b-input ref="latitude" type="text"></b-input>
               </b-col>
               <b-col>
-                <div>Confirm password</div>
-                <b-input ref="cpassword" type="password"></b-input>
+                <div>Longtitude</div>
+                <b-input ref="longtitude" type="text"></b-input>
               </b-col>
               <b-col>
                 <!-- <div>
@@ -108,7 +114,7 @@
                   <div style="margin-top:-1px;">
                     <br />
                   </div>
-                  <b-button variant="success" v-on:click="addData ()">Register</b-button>
+                  <b-button variant="success" v-on:click="addData ()">Add data</b-button>
                 </div>
               </b-col>
             </b-row>
@@ -125,67 +131,188 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['_username', 'level', 'lastupdate', 'function'],
+      fields: ['customers_code', 'latitude', 'longtitude', 'function'],
       items: [
-        { _username: 'Dickerson', level: 0, lastupdate: '2020-07-17' },
-        { _username: 'Larsen', level: 1, lastupdate: '2020-07-17' },
-        { _username: 'Geneva', level: 1, lastupdate: '2020-07-17' },
-        { _username: 'Jami', level: 1, lastupdate: '2020-07-17' }
+        { customers_code: 'Dickerson', latitude: 0, longtitude: '2020-07-17' },
+        { customers_code: 'Larsen', latitude: 1, longtitude: '2020-07-17' },
+        { customers_code: 'Geneva', latitude: 1, longtitude: '2020-07-17' },
+        { customers_code: 'Jami', latitude: 1, longtitude: '2020-07-17' }
       ],
       newItems: [],
       edit: [],
-      deletebrands: [],
-      settings: []
+      deletecustomer: [],
+      settings: [],
+      cus_code_location: [],
+      cus_name_location: [],
+      cus_location_list: [
+        {
+          Code: 'C1110',
+          Latitude: 4.2010,
+          Longtitude: 13.2200
+        },
+        {
+          Code: 'C1115',
+          Latitude: 5.3010,
+          Longtitude: 14.2300
+        }
+      ],
+      cus_name_list: [
+        {
+          CustomerCode: 'C1110',
+          Name: 'มโนยนต์'
+        },
+        {
+          CustomerCode: 'C1115',
+          Name: 'โลจิโปรเทค'
+        }
+      ],
+      new_cus: []
     }
   },
-  created () {},
-  methods: {
-    addData () {
-      console.log('addData')
-      this.newItems = {
-        _username: this.$refs.username.localValue,
-        password: this.$refs.password.localValue,
-        cpassword: this.$refs.cpassword.localValue
-      }
-      // console.log(this.items)
-      // var obj = JSON.parse(this.items)
-      this.items.push(this.newItems)
-      this.$refs.table.refresh()
-      console.log(this.items)
-      // console.log(obj)
-    },
-    onedit (index) {
-      console.log(this.items[index].target)
-    },
-    ondelete (index) {
-      delete this.items[index]
-      // console.log(this.items)
-      console.log(this.items)
-      this.$refs.table.refresh()
-    },
-    updateuser (uusername, ulevel, upassword, ucpassword, index) {
-      console.log(this.items[index]._username === this.$refs[uusername].localValue)
-      for (let i = 0; i < this.items.length; i++) {
-        if (this.items[index]._username === this.$refs[uusername].localValue) {
-          this.items[index].level = this.$refs[ulevel].localValue
+  created () {
+    for (let i = 0; i < this.cus_location_list.length; i++) {
+      // console.log('lllllllllllllll')
+      if (this.cus_location_list[i].Code === this.cus_name_list[i].CustomerCode) {
+        // console.log('sssssssssssssssssss')
+        this.new_cus[i] = {
+          code: this.cus_location_list[i].Code,
+          name: this.cus_name_list[i].Name,
+          latitude: this.cus_location_list[i].Latitude,
+          longtitude: this.cus_location_list[i].Longtitude
         }
       }
-      this.$refs.table.refresh()
-      // const user = 'this.$refs' + '.' + 'uusername' + index + '.' + 'localValue'
-      // console.log(JSON.parse(user))
-      // console.log(this.$refs[index2])
+      // this.new_cus = {}
     }
-  },
-  mounted () {
     this.settings = {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
     axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
-      this.items = response.data.data.account_list
+      this.cus_code_location = response.data.data.cus_location_list
+      this.cus_name_location = response.data.data.cus_name_list
+      for (let i = 0; i < this.cus_code_location.length; i++) {
+        // console.log('lllllllllllllll')
+        if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+          // console.log('sssssssssssssssssss')
+          this.new_cus[i] = {
+            customers_code: this.this.cus_code_locationt[i].Code,
+            name: this.cus_name_location[i].Name,
+            latitude: this.this.cus_code_locationt[i].Latitude,
+            longtitude: this.this.cus_code_locationt[i].Longtitude
+          }
+        }
+        // this.new_cus = {}
+      }
       this.$refs.table.refresh()
     })
+  },
+  methods: {
+    addData () {
+      console.log('addData')
+      // console.log(this.$refs.customerscodes.localValue)
+      this.newItems = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          cus_code: this.$refs.customerscodes.localValue,
+          lat: this.$refs.latitude.localValue,
+          lng: this.$refs.longtitude.localValue
+        }
+      }
+      console.log(this.newItems)
+      axios.post('http://192.168.43.190:1308/setting/cus_location/add', this.newItems).then(response => {
+        this.cus_code_location = response.data.data.cus_location_list
+        for (let i = 0; i < this.cus_code_location.length; i++) {
+          // console.log('lllllllllllllll')
+          if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+            // console.log('sssssssssssssssssss')
+            this.new_cus[i] = {
+              customers_code: this.this.cus_code_locationt[i].Code,
+              name: this.cus_name_location[i].Name,
+              latitude: this.this.cus_code_locationt[i].Latitude,
+              longtitude: this.this.cus_code_locationt[i].Longtitude
+            }
+          }
+          // this.new_cus = {}
+        }
+        this.$refs.table.refresh()
+      })
+    },
+    onedit (index) {
+      // console.log(this.items[index].target)
+    },
+    ondelete (index) {
+      // delete this.items[index]
+      // console.log(this.items)
+      // console.log(this.items)
+      this.deletecustomer = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          cus_code: this.items.customers_code
+        }
+      }
+      axios.post('http://192.168.43.190:1308/setting/cus_location/delete', {
+        data: this.deletecustomer,
+        _method: 'delete'
+      }).then(response => {
+        this.cus_code_location = response.data.data.cus_location_list
+        for (let i = 0; i < this.cus_code_location.length; i++) {
+          // console.log('lllllllllllllll')
+          if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+            // console.log('sssssssssssssssssss')
+            this.new_cus[i] = {
+              customers_code: this.this.cus_code_locationt[i].Code,
+              name: this.cus_name_location[i].Name,
+              latitude: this.this.cus_code_locationt[i].Latitude,
+              longtitude: this.this.cus_code_locationt[i].Longtitude
+            }
+          }
+          // this.new_cus = {}
+        }
+        this.$refs.table.refresh()
+      })
+    },
+    updatecustomer (customCode, uplat, uplng, index) {
+      // console.log(this.items[index].customers_code === this.$refs[customCode].localValue)
+      // for (let i = 0; i < this.items.length; i++) {
+      //   if (this.items[index].customers_code === this.$refs[customCode].localValue) {
+      //     this.items[index].latitude = this.$refs[uplat].localValue
+      //   }
+      // }
+      this.edit = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          cus_code: this.$refs[customCode].localValue,
+          lat: this.$refs[uplat].localValue,
+          lng: this.$refs[uplng].localValue
+        }
+      }
+      axios.post('http://192.168.43.190:1308/setting/cus_location/update_location', {
+        data: this.edit,
+        _method: 'patch'
+      }).then(response => {
+        this.cus_code_location = response.data.data.cus_location_list
+        for (let i = 0; i < this.cus_code_location.length; i++) {
+          // console.log('lllllllllllllll')
+          if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+            // console.log('sssssssssssssssssss')
+            this.new_cus[i] = {
+              customers_code: this.this.cus_code_locationt[i].Code,
+              name: this.cus_name_location[i].Name,
+              latitude: this.this.cus_code_locationt[i].Latitude,
+              longtitude: this.this.cus_code_locationt[i].Longtitude
+            }
+          }
+          // this.new_cus = {}
+        }
+        this.$refs.table.refresh()
+      })
+    }
+  },
+  mounted () {
+    // console.log('cus', this.new_cus)
+    // console.log(typeof (this.new_cus))
   }
+
 }
 </script>
 <style scoped>

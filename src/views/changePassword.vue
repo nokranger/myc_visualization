@@ -6,6 +6,7 @@
       <div class="align-left" style="font-weight:bolder;color: #4f4f4f!important;font-size:24px;color: #333;">
         Change Password
       </div>
+      <p style="color:red">{{checkpassword}}</p>
       <b-row style="solid 2px #E0e0e0">
         <b-col cols="12" sm="12" md="12" lg="3" xl="3">
             <b-form-group id="input-group-2">
@@ -53,7 +54,7 @@
               <b-row>
                 <b-col>
                   <div class="align-left">
-                    <label style="font-size: 16px;">New Password</label>
+                    <label style="font-size: 16px;">Confirm Password</label>
                   </div>
                 </b-col>
               </b-row>
@@ -88,6 +89,7 @@ export default {
         newpassword: '',
         confirmnewpassword: ''
       },
+      edit: [],
       show: true
     }
   },
@@ -106,16 +108,30 @@ export default {
   },
   methods: {
     postChangePassword () {
-      this.form = {
+      this.edit = {
         oldpassword: md5(this.form.oldpassword),
-        newpassword: md5(this.form.newpassword),
-        confirmnewpassword: md5(this.form.confirmnewpassword)
+        newpassword: md5(this.form.newpassword)
       }
-      axios.post('http://192.168.43.190:1308/changepassword', this.form).then(response => {
+      axios.post('http://192.168.43.190:1308/change_password', {
+        data: this.edit,
+        _method: 'patch'
+      }).then(response => {
         console.log('done')
       }).catch(e => {
       })
       console.log(this.form)
+    }
+  },
+  computed: {
+    checkpassword () {
+      console.log(typeof (this.form.newpassword))
+      if (this.form.confirmnewpassword !== this.form.newpassword) {
+        console.log('not same')
+        return '** Passwords not match.'
+      } else if (this.form.confirmnewpassword === this.form.newpassword) {
+        return ''
+      }
+      return ''
     }
   }
 }

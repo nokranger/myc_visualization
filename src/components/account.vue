@@ -47,15 +47,19 @@
               <b-container>
                 <b-row>
                   <b-col>
-                    <div>User name</div>
-                    <b-input :ref="'uusername' + data.index" type="text" v-model="items[data.index]._username" readonly></b-input>
+                    <div>Username</div>
+                    <b-input :ref="'uusername' + data.index" type="text" v-model="items[data.index].username" readonly></b-input>
                   </b-col>
                   <b-col>
                     <div>Level</div>
                     <b-input :ref="'ulevel' + data.index" type="text"></b-input>
                   </b-col>
                   <b-col>
-                    <div>Password</div>
+                    <div>Old password</div>
+                    <b-input :ref="'oldpassword' + data.index" type="password"></b-input>
+                  </b-col>
+                  <b-col>
+                    <div>New assword</div>
                     <b-input :ref="'upassword' + data.index" type="password" v-model="user.password"></b-input>
                   </b-col>
                   <b-col>
@@ -71,7 +75,7 @@
                       <div style="margin-top:-1px;">
                         <br />
                       </div>
-                      <b-button variant="success" v-on:click="updateuser ('uusername' + data.index, 'ulevel' + data.index, 'upassword' + data.index, 'ucpassword' + data.index, data.index)">Update</b-button>
+                      <b-button variant="success" v-on:click="updateuser ('uusername' + data.index, 'ulevel' + data.index, 'oldpassword' + data.index, 'upassword' + data.index, 'ucpassword' + data.index, data.index)">Update</b-button>
                     </div>
                   </b-col>
                 </b-row>
@@ -143,21 +147,18 @@ export default {
       ],
       newItems: [],
       edit: [],
-      deletebrands: [],
+      deleteaccount: [],
       settings: [],
       user: [{
         password: '',
         cpassword: ''
       }
       ],
-      search: ''
+      level: []
     }
   },
   created () {},
   methods: {
-    test () {
-      console.log('test c')
-    },
     addData () {
       console.log('addData')
       this.newItems = {
@@ -167,8 +168,10 @@ export default {
           password: md5(this.$refs.password.localValue)
         }
       }
-      axios.post('http://192.168.43.190:1308/register', this.newItems).then(respone => {
-        console.log(respone)
+      axios.post('http://192.168.43.190:1308/register', this.newItems).then(response => {
+        console.log(response)
+        this.items = response.data.data.account_list
+        this.$refs.table.refresh()
       })
       // console.log(this.items)
       // var obj = JSON.parse(this.items)
@@ -181,27 +184,79 @@ export default {
       console.log(this.items[index].target)
     },
     ondelete (index) {
-      delete this.items[index]
+      // delete this.items[index]
+      console.log(this.items[index].username)
       // console.log(this.items)
-      console.log(this.items)
-      this.$refs.table.refresh()
-    },
-    updateuser (uusername, ulevel, upassword, ucpassword, index) {
-      console.log(this.items[index]._username === this.$refs[uusername].localValue)
-      for (let i = 0; i < this.items.length; i++) {
-        if (this.items[index]._username === this.$refs[uusername].localValue) {
-          this.items[index].level = this.$refs[ulevel].localValue
+      this.deleteaccount = {
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          username: this.items[index].username
         }
       }
-      this.$refs.table.refresh()
-      // const user = 'this.$refs' + '.' + 'uusername' + index + '.' + 'localValue'
-      // console.log(JSON.parse(user))
-      // console.log(this.$refs[index2])
-    }
-  },
-  watch: {
-    search (value) {
-      console.log('test check')
+      axios.post('http://192.168.43.190:1308/account/delete', {
+        data: this.deleteaccount,
+        _method: 'delete'
+      }).then(response => {
+        this.items = response.data.data.account_list
+        this.$refs.table.refresh()
+      })
+    },
+    updateuser (uusername, ulevel, oldpasswords, upassword, ucpassword, index) {
+      // console.log(this.items[index]._username === this.$refs[uusername].localValue)
+      // for (let i = 0; i < this.items.length; i++) {
+      //   if (this.items[index]._username === this.$refs[uusername].localValue) {
+      //     this.items[index].level = this.$refs[ulevel].localValue
+      //   }
+      // }
+      // console.log(this.$refs[ulevel].localValue)
+      if (this.$refs[ulevel].localValue === '') {
+        this.edit = {
+          session_id: JSON.parse(sessionStorage.getItem('login')),
+          data: {
+            username: this.$refs[uusername].localValue,
+            password: md5(this.$refs[upassword].localValue)
+          }
+        }
+        console.log(this.edit)
+        axios.post('http://192.168.43.190:1308/account/change_password', {
+          data: this.edit,
+          _method: 'patch'
+        }).then(response => {
+          this.items = response.data.data.account_list
+          this.$refs.table.refresh()
+        })
+      } else if (this.$refs[oldpasswords].localValue === '' && this.$refs[upassword].localValue === '' && this.$refs[ucpassword].localValue === '') {
+        console.log('null password')
+        this.level = {
+          session_id: JSON.parse(sessionStorage.getItem('login')),
+          data: {
+            username: this.$refs[uusername].localValue,
+            level: this.$refs[ulevel].localValue
+          }
+        }
+        axios.post('http://192.168.43.190:1308/ccount/change_level', {
+          data: this.level,
+          _method: 'patch'
+        }).then(response => {
+          this.items = response.data.data.account_list
+        })
+        console.log(this.level)
+      }
+      // this.edit = {
+      //   session_id: JSON.parse(sessionStorage.getItem('login')),
+      //   data: {
+      //     username: this.$refs[uusername].localValue,
+      //     password: md5(this.$refs[upassword].localValue)
+      //   }
+      // }
+      // // console.log(this.edit)
+      // axios.post('http://192.168.43.190:1308/account/change_password', {
+      //   data: this.edit,
+      //   _method: 'patch'
+      // }).then(response => {
+      //   this.items = response.data.data.account_list
+      //   this.$refs.table.refresh()
+      // })
     }
   },
   mounted () {
@@ -216,7 +271,7 @@ export default {
   },
   computed: {
     checkpassword () {
-      console.log(typeof (this.user.password))
+      // console.log(typeof (this.user.password))
       if (this.user.cpassword !== this.user.password) {
         console.log('not same')
         return '** Passwords not match.'
