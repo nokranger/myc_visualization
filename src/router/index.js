@@ -42,6 +42,11 @@ const routes = [
     component: () => import('../views/Map')
   },
   {
+    path: '/overdue',
+    name: 'overdue',
+    component: () => import('../views/Overdue')
+  },
+  {
     path: '/changepassword',
     name: 'changepassword',
     component: () => import('../views/changePassword')
