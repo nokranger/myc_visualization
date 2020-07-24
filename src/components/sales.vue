@@ -4,7 +4,40 @@
       <div>
         Seller
       </div>
-      <b-table ref="table" :items="items" :fields="fields" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
+      <b-row>
+        <b-col class="my-1">
+          <div style="margin-top:-9.5px;">
+            <b-form-select
+              v-model="perPage"
+              id="perPageSelect"
+              size="sm"
+              :options="pageOptions"
+            ></b-form-select>
+          </div>
+          <!-- <b-input></b-input> -->
+        </b-col>
+        <b-col class="my-1">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            align="fill"
+            size="sm"
+            class="my-0"
+          ></b-pagination>
+        </b-col>
+        <b-col class="my-1">
+          <b-form-input
+            v-model="filter"
+            type="search"
+            id="filterInput"
+            size="sm"
+            placeholder="Type to Search"
+          ></b-form-input>
+        </b-col>
+      </b-row>
+      <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
+      :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <template v-slot:cell(sales_target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].sales_target"></b-input>
         </template>
@@ -92,16 +125,16 @@ export default {
       isactive: [],
       isBusy: false,
       fields: ['code', 'name', 'sales_target', 'function'],
-      items: [
-        { code: 'Dickerson', name: 1100, sales_target: '2020-07-17' },
-        { code: 'Larsen', name: 1200, sales_target: '2020-07-17' },
-        { code: 'Geneva', name: 1200, sales_target: '2020-07-17' },
-        { code: 'Jami', name: 1500, sales_target: '2020-07-17' }
-      ],
+      items: [],
       newItems: [],
       edit: [],
       deleteseller: [],
-      settings: []
+      settings: [],
+      filter: null,
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [5, 10, 15]
     }
   },
   created () {

@@ -2,7 +2,39 @@
   <div>
     <b-container style="border-bottom: solid 3px gray">
       <div>Customer location</div>
-      <b-table ref="table" :items="items" :fields="fields" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
+      <b-row>
+        <b-col class="my-1">
+          <div style="margin-top:-9.5px;">
+            <b-form-select
+              v-model="perPage"
+              id="perPageSelect"
+              size="sm"
+              :options="pageOptions"
+            ></b-form-select>
+          </div>
+          <!-- <b-input></b-input> -->
+        </b-col>
+        <b-col class="my-1">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            align="fill"
+            size="sm"
+            class="my-0"
+          ></b-pagination>
+        </b-col>
+        <b-col class="my-1">
+          <b-form-input
+            v-model="filter"
+            type="search"
+            id="filterInput"
+            size="sm"
+            placeholder="Type to Search"
+          ></b-form-input>
+        </b-col>
+      </b-row>
+      <b-table ref="table" :items="items" :fields="fields"  class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <!-- <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template>-->
@@ -139,54 +171,39 @@ export default {
       settings: [],
       cus_code_location: [],
       cus_name_location: [],
-      cus_location_list: [
-        {
-          Code: 'C1110',
-          Latitude: 4.2010,
-          Longtitude: 13.2200
-        },
-        {
-          Code: 'C1115',
-          Latitude: 5.3010,
-          Longtitude: 14.2300
-        }
-      ],
-      cus_name_list: [
-        {
-          CustomerCode: 'C1110',
-          Name: 'มโนยนต์'
-        },
-        {
-          CustomerCode: 'C1115',
-          Name: 'โลจิโปรเทค'
-        }
-      ],
-      new_cus: []
+      cus_location_list: [],
+      new_cus: [],
+      filter: null,
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [5, 10, 15]
     }
   },
   created () {
-    for (let i = 0; i < this.cus_location_list.length; i++) {
-      // console.log('lllllllllllllll')
-      if (this.cus_location_list[i].Code === this.cus_name_list[i].CustomerCode) {
-        // console.log('sssssssssssssssssss')
-        this.new_cus[i] = {
-          code: this.cus_location_list[i].Code,
-          name: this.cus_name_list[i].Name,
-          latitude: this.cus_location_list[i].Latitude,
-          longtitude: this.cus_location_list[i].Longtitude
-        }
-      }
-      // this.new_cus = {}
-    }
+    // for (let i = 0; i < this.cus_location_list.length; i++) {
+    //   // console.log('lllllllllllllll')
+    //   if (this.cus_location_list[i].Code === this.cus_name_list[i].CustomerCode) {
+    //     // console.log('sssssssssssssssssss')
+    //     this.new_cus[i] = {
+    //       code: this.cus_location_list[i].Code,
+    //       name: this.cus_name_list[i].Name,
+    //       latitude: this.cus_location_list[i].Latitude,
+    //       longtitude: this.cus_location_list[i].Longtitude
+    //     }
+    //   }
+    //   // this.new_cus = {}
+    // }
     this.settings = {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
     axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
       this.items = response.data.data.cus_location_list
+      this.totalRows = this.items.length
       this.cus_name_location = response.data.data.cus_name_list
     })
-    console.log(this.items)
+    // console.log(this.items)
   },
   methods: {
     addData () {
@@ -202,20 +219,20 @@ export default {
       }
       console.log(this.newItems)
       axios.post('http://192.168.10.2:1308/setting/cus_location/add', this.newItems).then(response => {
-        this.cus_code_location = response.data.data.cus_location_list
-        for (let i = 0; i < this.cus_code_location.length; i++) {
-          // console.log('lllllllllllllll')
-          if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
-            // console.log('sssssssssssssssssss')
-            this.new_cus[i] = {
-              customers_code: this.this.cus_code_locationt[i].Code,
-              name: this.cus_name_location[i].Name,
-              latitude: this.this.cus_code_locationt[i].Latitude,
-              longtitude: this.this.cus_code_locationt[i].Longtitude
-            }
-          }
-          // this.new_cus = {}
-        }
+        this.items = response.data.data.cus_location_list
+        // for (let i = 0; i < this.cus_code_location.length; i++) {
+        //   // console.log('lllllllllllllll')
+        //   if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+        //     // console.log('sssssssssssssssssss')
+        //     this.new_cus[i] = {
+        //       customers_code: this.this.cus_code_locationt[i].Code,
+        //       name: this.cus_name_location[i].Name,
+        //       latitude: this.this.cus_code_locationt[i].Latitude,
+        //       longtitude: this.this.cus_code_locationt[i].Longtitude
+        //     }
+        //   }
+        //   // this.new_cus = {}
+        // }
         this.$refs.table.refresh()
       })
     },
@@ -236,20 +253,20 @@ export default {
         data: this.deletecustomer,
         method: 'delete'
       }).then(response => {
-        this.cus_code_location = response.data.data.cus_location_list
-        for (let i = 0; i < this.cus_code_location.length; i++) {
-          // console.log('lllllllllllllll')
-          if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
-            // console.log('sssssssssssssssssss')
-            this.new_cus[i] = {
-              customers_code: this.this.cus_code_locationt[i].Code,
-              name: this.cus_name_location[i].Name,
-              latitude: this.this.cus_code_locationt[i].Latitude,
-              longtitude: this.this.cus_code_locationt[i].Longtitude
-            }
-          }
-          // this.new_cus = {}
-        }
+        this.items = response.data.data.cus_location_list
+        // for (let i = 0; i < this.cus_code_location.length; i++) {
+        //   // console.log('lllllllllllllll')
+        //   if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+        //     // console.log('sssssssssssssssssss')
+        //     this.new_cus[i] = {
+        //       customers_code: this.this.cus_code_locationt[i].Code,
+        //       name: this.cus_name_location[i].Name,
+        //       latitude: this.this.cus_code_locationt[i].Latitude,
+        //       longtitude: this.this.cus_code_locationt[i].Longtitude
+        //     }
+        //   }
+        //   // this.new_cus = {}
+        // }
         this.$refs.table.refresh()
       })
     },
@@ -272,20 +289,20 @@ export default {
         data: this.edit,
         method: 'patch'
       }).then(response => {
-        this.cus_code_location = response.data.data.cus_location_list
-        for (let i = 0; i < this.cus_code_location.length; i++) {
-          // console.log('lllllllllllllll')
-          if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
-            // console.log('sssssssssssssssssss')
-            this.new_cus[i] = {
-              customers_code: this.this.cus_code_locationt[i].Code,
-              name: this.cus_name_location[i].Name,
-              latitude: this.this.cus_code_locationt[i].Latitude,
-              longtitude: this.this.cus_code_locationt[i].Longtitude
-            }
-          }
-          // this.new_cus = {}
-        }
+        this.items = response.data.data.cus_location_list
+        // for (let i = 0; i < this.cus_code_location.length; i++) {
+        //   // console.log('lllllllllllllll')
+        //   if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+        //     // console.log('sssssssssssssssssss')
+        //     this.new_cus[i] = {
+        //       customers_code: this.this.cus_code_locationt[i].Code,
+        //       name: this.cus_name_location[i].Name,
+        //       latitude: this.this.cus_code_locationt[i].Latitude,
+        //       longtitude: this.this.cus_code_locationt[i].Longtitude
+        //     }
+        //   }
+        //   // this.new_cus = {}
+        // }
         this.$refs.table.refresh()
       })
     }

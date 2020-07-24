@@ -2,7 +2,40 @@
   <div>
     <b-container style="border-bottom: solid 3px gray">
       <div>Account</div>
-      <b-table ref="table" :items="items" :fields="fields" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
+      <b-row>
+        <b-col class="my-1">
+          <div style="margin-top:-9.5px;">
+            <b-form-select
+              v-model="perPage"
+              id="perPageSelect"
+              size="sm"
+              :options="pageOptions"
+            ></b-form-select>
+          </div>
+          <!-- <b-input></b-input> -->
+        </b-col>
+        <b-col class="my-1">
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            align="fill"
+            size="sm"
+            class="my-0"
+          ></b-pagination>
+        </b-col>
+        <b-col class="my-1">
+          <b-form-input
+            v-model="filter"
+            type="search"
+            id="filterInput"
+            size="sm"
+            placeholder="Type to Search"
+          ></b-form-input>
+        </b-col>
+      </b-row>
+      <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
+      :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <!-- <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template>-->
@@ -139,12 +172,7 @@ export default {
       isactive: [],
       isBusy: false,
       fields: ['Username', 'Level', 'Lastupdate', 'function'],
-      items: [
-        { username: 'Dickerson', level: 0, lastupdate: '2020-07-17' },
-        { username: 'Larsen', level: 1, lastupdate: '2020-07-17' },
-        { username: 'Geneva', level: 1, lastupdate: '2020-07-17' },
-        { username: 'Jami', level: 1, lastupdate: '2020-07-17' }
-      ],
+      items: [],
       newItems: [],
       edit: [],
       deleteaccount: [],
@@ -154,7 +182,12 @@ export default {
         cpassword: ''
       }
       ],
-      level: []
+      level: [],
+      filter: null,
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [5, 10, 15]
     }
   },
   // beforeCreate () {
@@ -259,6 +292,7 @@ export default {
     }
     axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
       this.items = response.data.data.account_list
+      this.totalRows = this.items.length
       this.$refs.table.refresh()
     })
   },
