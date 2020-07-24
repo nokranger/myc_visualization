@@ -39,13 +39,13 @@
       <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <template v-slot:cell(sales_target)="data">
-          <b-input style="text-align:center" type="text" v-model="items[data.index].sales_target"></b-input>
+          <b-input style="text-align:center" type="text" v-model="data.item.sales_target"></b-input>
         </template>
         <template v-slot:cell(function)="data">
-          <b-button variant="danger" size="sm" class="mr-2" v-b-modal="'brands-modal-delete' + data.index">
+          <b-button variant="danger" size="sm" class="mr-2" v-b-modal="'brands-modal-delete' + data.item.brand">
             Delete
           </b-button>
-            <b-modal :id="'brands-modal-delete' + data.index" hide-footer>
+            <b-modal :id="'brands-modal-delete' + data.item.brand" hide-footer>
               <div class="align-center">
                 <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
               </div>
@@ -56,13 +56,13 @@
                   </b-col>
                   <b-col>
                     <div>
-                      <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                      <b-button variant="danger" v-on:click="ondelete (data.item.brand)">Confirm</b-button>
                     </div>
                   </b-col>
                 </b-row>
               </b-container>
             </b-modal>
-          <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.index)">
+          <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.item.brand, data.item.sales_target)">
             Edit
           </b-button>
         </template>
@@ -152,16 +152,17 @@ export default {
       console.log(this.newItems)
       axios.post('http://192.168.10.2:1308/setting/brand/add', this.newItems).then(response => {
         this.items = response.data.data.brand_list
+        this.totalRows = this.items.length
         this.$refs.table.refresh()
       })
     },
-    onedit (index) {
-      console.log(this.items[index].sales_target)
+    onedit (indexbrand, indexsale) {
+      // console.log(this.items[index].sales_target)
       this.edit = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          brand: this.items[index].brand,
-          sales_target: this.items[index].sales_target
+          brand: indexbrand,
+          sales_target: indexsale
         }
       }
       console.log(this.edit)
@@ -171,6 +172,7 @@ export default {
       }).then(response => {
         console.log(response)
         this.items = response.data.data.brand_list
+        this.totalRows = this.items.length
         this.$refs.table.refresh()
       })
     },
@@ -179,7 +181,7 @@ export default {
       this.deletebrands = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          brand: this.items[index].brand
+          brand: index
         }
       }
       // console.log(this.items[index].brand)
@@ -189,6 +191,7 @@ export default {
         method: 'delete'
       }).then(response => {
         this.items = response.data.data.brand_list
+        this.totalRows = this.items.length
         // delete this.items[index]
         this.$refs.table.refresh()
       })

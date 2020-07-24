@@ -42,10 +42,10 @@
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template> -->
         <template v-slot:cell(function)="data">
-          <b-button variant="danger" size="sm" class="mr-2" v-b-modal="'brandsG-modal-delete' + data.index">
+          <b-button variant="danger" size="sm" class="mr-2" v-b-modal="'brandsG-modal-delete' + data.item.brand">
             Delete
           </b-button>
-            <b-modal :id="'brandsG-modal-delete' + data.index" hide-footer>
+            <b-modal :id="'brandsG-modal-delete' + data.item.brand" hide-footer>
               <div class="align-center">
                 <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
               </div>
@@ -56,7 +56,7 @@
                   </b-col>
                   <b-col>
                     <div>
-                      <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                      <b-button variant="danger" v-on:click="ondelete (data.item.brand)">Confirm</b-button>
                     </div>
                   </b-col>
                 </b-row>
@@ -143,6 +143,7 @@ export default {
       }
       axios.post('http://192.168.10.2:1308/setting/brand_group/add', this.newItems).then(response => {
         this.items = response.data.data.brand_group_list
+        this.totalRows = this.items.length
         this.$refs.table.refresh()
       })
       // console.log(this.newItems)
@@ -152,14 +153,14 @@ export default {
       // console.log(this.items)
       // console.log(obj)
     },
-    ondelete (index) {
+    ondelete (indexbrand) {
       // delete this.items[index]
       // console.log(this.items)
       // console.log(this.items)
       this.deletebrands = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          brand: this.items[index].brand
+          brand: indexbrand
         }
       }
       axios('http://192.168.10.2:1308/setting/brand_group/delete', {
@@ -167,6 +168,7 @@ export default {
         method: 'delete'
       }).then(response => {
         this.items = response.data.data.brand_group_list
+        this.totalRows = this.items.length
         this.$refs.table.refresh()
       })
     }
