@@ -50,7 +50,7 @@ export default {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
-    axios.post('http://192.168.43.190:1308/map', this.data).then(response => {
+    axios.post('http://192.168.10.2:1308/map', this.data).then(response => {
       this.iframe = {
         src: response.data.data.link
       }

@@ -176,7 +176,7 @@ export default {
           password: md5(this.$refs.password.localValue)
         }
       }
-      axios.post('http://192.168.43.190:1308/register', this.newItems).then(response => {
+      axios.post('http://192.168.10.2:1308/register', this.newItems).then(response => {
         console.log(response)
         this.items = response.data.data.account_list
         this.$refs.table.refresh()
@@ -201,7 +201,7 @@ export default {
           username: this.items[index].username
         }
       }
-      axios('http://192.168.43.190:1308/account/delete', {
+      axios('http://192.168.10.2:1308/account/delete', {
         data: this.deleteaccount,
         method: 'delete'
       }).then(response => {
@@ -226,7 +226,7 @@ export default {
           }
         }
         console.log(this.edit)
-        axios('http://192.168.43.190:1308/account/change_password', {
+        axios('http://192.168.10.2:1308/account/change_password', {
           data: this.edit,
           method: 'patch'
         }).then(response => {
@@ -242,7 +242,7 @@ export default {
             level: this.$refs[ulevel].localValue
           }
         }
-        axios('http://192.168.43.190:1308/ccount/change_level', {
+        axios('http://192.168.10.2:1308/ccount/change_level', {
           data: this.level,
           method: 'patch'
         }).then(response => {
@@ -257,7 +257,7 @@ export default {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
-    axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
       this.items = response.data.data.account_list
       this.$refs.table.refresh()
     })

@@ -117,7 +117,7 @@ export default {
           target: this.$refs.sellertarget.localValue
         }
       }
-      axios.post('http://192.168.43.190:1308/setting/saler/add', this.newItems).then(response => {
+      axios.post('http://192.168.10.2:1308/setting/saler/add', this.newItems).then(response => {
         this.items = response.data.data.saler_list
         this.$refs.table.refresh()
       })
@@ -138,7 +138,7 @@ export default {
         }
       }
       // console.log(this.edit)
-      axios('http://192.168.43.190:1308/setting/saler/update_sales_target', {
+      axios('http://192.168.10.2:1308/setting/saler/update_sales_target', {
         data: this.edit,
         method: 'patch'
       }).then(response => {
@@ -156,7 +156,7 @@ export default {
           code: this.items[index].code
         }
       }
-      axios('http://192.168.43.190:1308/setting/saler/delete', {
+      axios('http://192.168.10.2:1308/setting/saler/delete', {
         data: this.deleteseller,
         method: 'delete'
       }).then(response => {
@@ -170,7 +170,7 @@ export default {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
-    axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
       this.items = response.data.data.saler_list
       this.$refs.table.refresh()
     })

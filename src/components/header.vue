@@ -54,7 +54,7 @@ export default {
         data: {}
       }
       console.log(this.datas)
-      axios.post('http://192.168.1.46:1308/logout', this.datas)
+      axios.post('http://192.168.10.2:1308/logout', this.datas)
         .then(response => {
           console.log(response)
           if (response.data.error_code === 0) {

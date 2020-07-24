@@ -130,7 +130,7 @@ export default {
         password: md5(this.form.password),
         confirmpassword: md5(this.form.confirmpassword)
       }
-      axios.post('http://192.168.43.190:1308/register', this.form).then(response => {
+      axios.post('192.168.10.2:1308/register', this.form).then(response => {
         console.log('done')
       }).catch(e => {
       })

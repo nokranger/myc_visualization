@@ -108,7 +108,7 @@ export default {
           group: this.$refs.brandGroup.localValue
         }
       }
-      axios.post('http://192.168.43.190:1308/setting/brand_group/add', this.newItems).then(response => {
+      axios.post('http://192.168.10.2:1308/setting/brand_group/add', this.newItems).then(response => {
         this.items = response.data.data.brand_group_list
         this.$refs.table.refresh()
       })
@@ -129,7 +129,7 @@ export default {
           brand: this.items[index].brand
         }
       }
-      axios('http://192.168.43.190:1308/setting/brand_group/delete', {
+      axios('http://192.168.10.2:1308/setting/brand_group/delete', {
         data: this.deletebrands,
         method: 'delete'
       }).then(response => {
@@ -143,7 +143,7 @@ export default {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
-    axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
       this.items = response.data.data.brand_group_list
       this.$refs.table.refresh()
     })

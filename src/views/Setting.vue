@@ -75,7 +75,7 @@ export default {
         data: {}
       }
       console.log('test post')
-      axios.post('http://192.168.43.190:1308/setting', this.datas).then(response => {
+      axios.post('http://192.168.10.2:1308/setting', this.datas).then(response => {
         console.log('res')
         console.log(response)
         this.dataSetting = {
@@ -128,7 +128,7 @@ export default {
         // product: this.product
       }
       console.log(settingCode)
-      axios.all([axios.patch('http://192.168.43.190:1308/setting/saler/update_sales_target', settingCode)]).then(axios.spread((resSetting) => {
+      axios.all([axios.patch('http://192.168.10.2:1308/setting/saler/update_sales_target', settingCode)]).then(axios.spread((resSetting) => {
         console.log(resSetting)
       }))
     },
@@ -142,7 +142,7 @@ export default {
         }
         // product: this.product
       }
-      axios.all([axios.patch('http://192.168.43.190:1308/setting/monthly_sales_target', settingMonthly)]).then(axios.spread((resSetting) => {
+      axios.all([axios.patch('http://192.168.10.2:1308/setting/monthly_sales_target', settingMonthly)]).then(axios.spread((resSetting) => {
         console.log(resSetting)
       }))
     }

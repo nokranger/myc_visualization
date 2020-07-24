@@ -187,7 +187,7 @@ export default {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
-    axios.post('http://192.168.43.190:1308/setting', this.settings).then(response => {
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
       this.cus_code_location = response.data.data.cus_location_list
       this.cus_name_location = response.data.data.cus_name_list
       for (let i = 0; i < this.cus_code_location.length; i++) {
@@ -219,7 +219,7 @@ export default {
         }
       }
       console.log(this.newItems)
-      axios.post('http://192.168.43.190:1308/setting/cus_location/add', this.newItems).then(response => {
+      axios.post('http://192.168.10.2:1308/setting/cus_location/add', this.newItems).then(response => {
         this.cus_code_location = response.data.data.cus_location_list
         for (let i = 0; i < this.cus_code_location.length; i++) {
           // console.log('lllllllllllllll')
@@ -250,7 +250,7 @@ export default {
           cus_code: this.items.customers_code
         }
       }
-      axios('http://192.168.43.190:1308/setting/cus_location/delete', {
+      axios('http://192.168.10.2:1308/setting/cus_location/delete', {
         data: this.deletecustomer,
         method: 'delete'
       }).then(response => {
@@ -286,7 +286,7 @@ export default {
           lng: this.$refs[uplng].localValue
         }
       }
-      axios('http://192.168.43.190:1308/setting/cus_location/update_location', {
+      axios('http://192.168.10.2:1308/setting/cus_location/update_location', {
         data: this.edit,
         method: 'patch'
       }).then(response => {

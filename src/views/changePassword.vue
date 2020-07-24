@@ -120,7 +120,7 @@ export default {
         oldpassword: md5(this.form.oldpassword),
         newpassword: md5(this.form.newpassword)
       }
-      axios('http://192.168.43.190:1308/change_password', {
+      axios('http://192.168.10.2:1308/change_password', {
         data: this.edit,
         method: 'patch'
       }).then(response => {
