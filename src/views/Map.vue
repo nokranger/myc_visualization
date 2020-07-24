@@ -2,6 +2,9 @@
 <div>
   <div v-if="local == '1'">
     Map Admin
+    <div>
+      <iframe width="1020" height="680" :src="iframe.src" frameborder="0" allowFullScreen="true"></iframe>
+    </div>
   </div>
   <div v-else-if="local == '0'">
     Map User
@@ -26,6 +29,14 @@ export default {
         src: ''
       },
       data: []
+    }
+  },
+  beforeCreate () {
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      // location.replace('/sale')
+    } else {
+      location.replace('/')
     }
   },
   mounted () {

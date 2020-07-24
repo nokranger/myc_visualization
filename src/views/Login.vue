@@ -4,7 +4,6 @@
     <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
     <br>
     <br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <b-container>
       <b-row>
         <b-col cols="12" sm="12" md="12" lg="3" xl="3"></b-col>
@@ -91,11 +90,19 @@ export default {
       data: []
     }
   },
-  mounted () {
-    console.log()
-    if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
+  beforeCreate () {
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
       location.replace('/sale')
+    } else {
+      location.replace('/')
     }
+  },
+  mounted () {
+    // console.log()
+    // if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
+    //   location.replace('/sale')
+    // }
   },
   methods: {
     postLogin () {

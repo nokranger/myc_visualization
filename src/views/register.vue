@@ -103,6 +103,14 @@ export default {
       show: true
     }
   },
+  beforeCreate () {
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      // location.replace('/sale')
+    } else {
+      location.replace('/')
+    }
+  },
   metaInfo () {
     return {
       title: 'Register',

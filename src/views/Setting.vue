@@ -57,16 +57,16 @@ export default {
       local: ''
     }
   },
-  mounted () {
-    // setInterval(this.timer, 900000)
-    // console.log(localStorage.login)
-    if (sessionStorage.getItem('login') === null) {
+  beforeCreate () {
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      // location.replace('/sale')
+    } else {
       location.replace('/')
-      // console.log('testL')
-      // console.log(this.$refs.bb.localValue)
     }
+  },
+  mounted () {
     this.local = sessionStorage.getItem('level')
-    // setTimeout(this.getSetting, 3000)
   },
   methods: {
     getSetting () {

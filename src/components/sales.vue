@@ -138,9 +138,9 @@ export default {
         }
       }
       // console.log(this.edit)
-      axios.post('http://192.168.43.190:1308/setting/saler/update_sales_target', {
+      axios('http://192.168.43.190:1308/setting/saler/update_sales_target', {
         data: this.edit,
-        _method: 'patch'
+        method: 'patch'
       }).then(response => {
         this.items = response.data.data.saler_list
         this.$refs.table.refresh()
@@ -156,9 +156,9 @@ export default {
           code: this.items[index].code
         }
       }
-      axios.post('http://192.168.43.190:1308/setting/saler/delete', {
+      axios('http://192.168.43.190:1308/setting/saler/delete', {
         data: this.deleteseller,
-        _method: 'delete'
+        method: 'delete'
       }).then(response => {
         this.items = response.data.data.saler_list
         this.$refs.table.refresh()

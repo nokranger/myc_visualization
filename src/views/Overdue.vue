@@ -1,6 +1,9 @@
 <template>
   <div>
-    {{timestamp}}
+    <div>
+      <iframe width="1020" height="680" :src="iframe.src" frameborder="0" allowFullScreen="true"></iframe>
+    </div>
+    <!-- {{timestamp}}
     <b-container>
       <br>
       <b-row>
@@ -9,7 +12,7 @@
           </div>
         </b-col>
         <b-col cols="8">
-          <!-- <b-progress :value="value" :max="max" height="3rem" show-progress animated></b-progress> -->
+          <b-progress :value="value" :max="max" height="3rem" show-progress animated></b-progress>
           <b-progress :max="max" height="3rem" show-progress animated>
             <b-progress-bar :value="value" :label="`${((value))}`"></b-progress-bar>
           </b-progress>
@@ -18,7 +21,7 @@
           Sale Amount
         </b-col>
       </b-row>
-    </b-container>
+    </b-container> -->
   </div>
 </template>
 <script>
@@ -30,7 +33,19 @@ export default {
       max: 100,
       timestamp: '',
       sales: [],
-      overdue: []
+      overdue: [],
+      iframe: {
+        src: ''
+      },
+      data: []
+    }
+  },
+  beforeCreate () {
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      // location.replace('/sale')
+    } else {
+      location.replace('/')
     }
   },
   created () {
@@ -39,12 +54,21 @@ export default {
   },
   mounted () {
     // setInterval(this.timer, 900000)
-    setInterval(this.getOverdue, 10000)
-    if (sessionStorage.getItem('login') === null) {
-      location.replace('/')
-      // console.log('testL')
+    // setInterval(this.getOverdue, 10000)
+    // if (sessionStorage.getItem('login') === null) {
+    //   location.replace('/')
+    //   // console.log('testL')
+    // }
+    // setInterval(this.getNow, 1000)
+    this.data = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
     }
-    setInterval(this.getNow, 1000)
+    axios.post('http://192.168.43.190:1308/overdue', this.data).then(response => {
+      this.iframe = {
+        src: response.data.data.link
+      }
+    })
   },
   methods: {
     getNow () {

@@ -250,9 +250,9 @@ export default {
           cus_code: this.items.customers_code
         }
       }
-      axios.post('http://192.168.43.190:1308/setting/cus_location/delete', {
+      axios('http://192.168.43.190:1308/setting/cus_location/delete', {
         data: this.deletecustomer,
-        _method: 'delete'
+        method: 'delete'
       }).then(response => {
         this.cus_code_location = response.data.data.cus_location_list
         for (let i = 0; i < this.cus_code_location.length; i++) {
@@ -286,9 +286,9 @@ export default {
           lng: this.$refs[uplng].localValue
         }
       }
-      axios.post('http://192.168.43.190:1308/setting/cus_location/update_location', {
+      axios('http://192.168.43.190:1308/setting/cus_location/update_location', {
         data: this.edit,
-        _method: 'patch'
+        method: 'patch'
       }).then(response => {
         this.cus_code_location = response.data.data.cus_location_list
         for (let i = 0; i < this.cus_code_location.length; i++) {

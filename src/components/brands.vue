@@ -179,9 +179,9 @@ export default {
         }
       }
       console.log(this.edit)
-      axios.post('http://192.168.43.190:1308/setting/brand/update_sales_target', {
+      axios('http://192.168.43.190:1308/setting/brand/update_sales_target', {
         data: this.edit,
-        _method: 'patch'
+        method: 'patch'
       }).then(response => {
         console.log(response)
         this.items = response.data.data.brand_list
@@ -198,9 +198,9 @@ export default {
       }
       // console.log(this.items[index].brand)
       // console.log(this.items)
-      axios.post('http://192.168.43.190:1308/setting/brand/delete', {
+      axios('http://192.168.43.190:1308/setting/brand/delete', {
         data: this.deletebrands,
-        _method: 'delete'
+        method: 'delete'
       }).then(response => {
         this.items = response.data.data.brand_list
         // delete this.items[index]

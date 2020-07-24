@@ -93,6 +93,14 @@ export default {
       show: true
     }
   },
+  beforeCreate () {
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      // location.replace('/sale')
+    } else {
+      location.replace('/')
+    }
+  },
   metaInfo () {
     return {
       title: 'Change Password',
@@ -112,9 +120,9 @@ export default {
         oldpassword: md5(this.form.oldpassword),
         newpassword: md5(this.form.newpassword)
       }
-      axios.post('http://192.168.43.190:1308/change_password', {
+      axios('http://192.168.43.190:1308/change_password', {
         data: this.edit,
-        _method: 'patch'
+        method: 'patch'
       }).then(response => {
         console.log('done')
       }).catch(e => {

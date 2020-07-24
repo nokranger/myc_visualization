@@ -157,6 +157,14 @@ export default {
       level: []
     }
   },
+  // beforeCreate () {
+  //   var localjwt = sessionStorage.getItem('login')
+  //   if (localjwt !== null) {
+  //     location.replace('/sale')
+  //   } else {
+  //     location.replace('/')
+  //   }
+  // },
   created () {},
   methods: {
     addData () {
@@ -193,9 +201,9 @@ export default {
           username: this.items[index].username
         }
       }
-      axios.post('http://192.168.43.190:1308/account/delete', {
+      axios('http://192.168.43.190:1308/account/delete', {
         data: this.deleteaccount,
-        _method: 'delete'
+        method: 'delete'
       }).then(response => {
         this.items = response.data.data.account_list
         this.$refs.table.refresh()
@@ -218,9 +226,9 @@ export default {
           }
         }
         console.log(this.edit)
-        axios.post('http://192.168.43.190:1308/account/change_password', {
+        axios('http://192.168.43.190:1308/account/change_password', {
           data: this.edit,
-          _method: 'patch'
+          method: 'patch'
         }).then(response => {
           this.items = response.data.data.account_list
           this.$refs.table.refresh()
@@ -234,29 +242,14 @@ export default {
             level: this.$refs[ulevel].localValue
           }
         }
-        axios.post('http://192.168.43.190:1308/ccount/change_level', {
+        axios('http://192.168.43.190:1308/ccount/change_level', {
           data: this.level,
-          _method: 'patch'
+          method: 'patch'
         }).then(response => {
           this.items = response.data.data.account_list
         })
         console.log(this.level)
       }
-      // this.edit = {
-      //   session_id: JSON.parse(sessionStorage.getItem('login')),
-      //   data: {
-      //     username: this.$refs[uusername].localValue,
-      //     password: md5(this.$refs[upassword].localValue)
-      //   }
-      // }
-      // // console.log(this.edit)
-      // axios.post('http://192.168.43.190:1308/account/change_password', {
-      //   data: this.edit,
-      //   _method: 'patch'
-      // }).then(response => {
-      //   this.items = response.data.data.account_list
-      //   this.$refs.table.refresh()
-      // })
     }
   },
   mounted () {

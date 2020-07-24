@@ -129,9 +129,9 @@ export default {
           brand: this.items[index].brand
         }
       }
-      axios.post('http://192.168.43.190:1308/setting/brand_group/delete', {
+      axios('http://192.168.43.190:1308/setting/brand_group/delete', {
         data: this.deletebrands,
-        _method: 'delete'
+        method: 'delete'
       }).then(response => {
         this.items = response.data.data.brand_group_list
         this.$refs.table.refresh()
