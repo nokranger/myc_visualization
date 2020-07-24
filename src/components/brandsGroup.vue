@@ -4,6 +4,7 @@
       <div>
         Brands group
       </div>
+
       <b-table ref="table" :items="items" :fields="fields" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <!-- <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
@@ -83,17 +84,17 @@ export default {
   data () {
     return {
       isactive: [],
+      filter: null,
       isBusy: false,
-      fields: ['brand', 'group', 'function'],
-      items: [
-        { brand: 'Dickerson', group: 1100 },
-        { brand: 'Larsen', group: 1200 },
-        { brand: 'Geneva', group: 1200 },
-        { brand: 'Jami', group: 1500 }
-      ],
+      fields: ['Brand', 'Brand Group', 'function'],
+      items: [],
       newItems: [],
       deletebrands: [],
-      settings: []
+      settings: [],
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [5, 10, 15]
     }
   },
   created () {

@@ -91,12 +91,7 @@ export default {
     }
   },
   beforeCreate () {
-    var localjwt = sessionStorage.getItem('login')
-    if (localjwt !== null) {
-      location.replace('/sale')
-    } else {
-      location.replace('/')
-    }
+
   },
   mounted () {
     // console.log()

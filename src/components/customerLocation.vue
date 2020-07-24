@@ -91,7 +91,7 @@
                 </div>
                 <b-input list="customberscode" ref="customerscodes" type="text"></b-input>
                 <b-datalist id="customberscode">
-                  <option v-for="(item, index) in new_cus" :key="index" :value="item.code">{{item.name}}</option>
+                  <option v-for="(item, index) in items" :key="index" :value="item.code">{{item.name}}</option>
                 </b-datalist>
                 <!-- <div id="aa" v-for="(item, index) in items" :key="index">
                   {{index}}
@@ -131,13 +131,8 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['customers_code', 'latitude', 'longtitude', 'function'],
-      items: [
-        { customers_code: 'Dickerson', latitude: 0, longtitude: '2020-07-17' },
-        { customers_code: 'Larsen', latitude: 1, longtitude: '2020-07-17' },
-        { customers_code: 'Geneva', latitude: 1, longtitude: '2020-07-17' },
-        { customers_code: 'Jami', latitude: 1, longtitude: '2020-07-17' }
-      ],
+      fields: ['Code', 'Latitude', 'Longtitude', 'function'],
+      items: [],
       newItems: [],
       edit: [],
       deletecustomer: [],
@@ -190,11 +185,12 @@ export default {
     axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
       this.cus_code_location = response.data.data.cus_location_list
       this.cus_name_location = response.data.data.cus_name_list
+      console.log(this.cus_name_location)
       for (let i = 0; i < this.cus_code_location.length; i++) {
         // console.log('lllllllllllllll')
-        if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
+        if (this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
           // console.log('sssssssssssssssssss')
-          this.new_cus[i] = {
+          this.items[i] = {
             customers_code: this.this.cus_code_locationt[i].Code,
             name: this.cus_name_location[i].Name,
             latitude: this.this.cus_code_locationt[i].Latitude,
@@ -311,8 +307,8 @@ export default {
   mounted () {
     // console.log('cus', this.new_cus)
     // console.log(typeof (this.new_cus))
-  }
 
+  }
 }
 </script>
 <style scoped>

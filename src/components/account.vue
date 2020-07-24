@@ -138,7 +138,7 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['username', 'level', 'lastupdate', 'function'],
+      fields: ['Username', 'Level', 'Lastupdate', 'function'],
       items: [
         { username: 'Dickerson', level: 0, lastupdate: '2020-07-17' },
         { username: 'Larsen', level: 1, lastupdate: '2020-07-17' },

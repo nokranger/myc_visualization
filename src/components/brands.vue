@@ -38,7 +38,7 @@
       </b-row>
       <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-        <template v-slot:cell(target)="data">
+        <template v-slot:cell(sales_target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template>
         <template v-slot:cell(function)="data">
@@ -122,22 +122,8 @@ export default {
       isactive: [],
       filter: null,
       isBusy: false,
-      fields: [{ key: 'brand', sortable: true }, { key: 'target', sortable: false }, { key: 'last_update', sortable: true }, { key: 'function', sortable: false }],
-      items: [
-        { brand: 'Dickerson', group: '', target: 1100, last_update: '2020-07-16' },
-        { brand: 'Larsen', group: '', target: 1200, last_update: '2020-07-15' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Jami', group: '', target: 1500, last_update: '2020-07-13' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', target: 1200, last_update: '2020-07-14' }
-      ],
+      fields: [{ key: 'brand', sortable: true }, { key: 'sales_target', sortable: false }, { key: 'last_update', sortable: true }, { key: 'function', sortable: false }],
+      items: [],
       newItems: [],
       edit: [],
       deletebrands: [],
