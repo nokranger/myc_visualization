@@ -58,7 +58,7 @@
               </b-form-checkbox-group>
             </b-form-group> -->
             <div>
-            <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" v-on:click="postLogin ()">LOGIN</b-button><br>
+            <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" v-on:click="loginapi ()">LOGIN</b-button><br>
             </div>
             <div>
             </div>
@@ -100,6 +100,10 @@ export default {
     // }
   },
   methods: {
+    loginapi () {
+      // console.log('logined')
+      setTimeout(this.postLogin, 1000)
+    },
     postLogin () {
       this.data = {
         session_id: '',
@@ -109,9 +113,12 @@ export default {
         }
       }
       // console.log(this.data)
-      axios.post('http://192.168.10.2:1308/login', this.data)
+      axios('http://192.168.10.2:1308/login', {
+        data: this.data,
+        method: 'post'
+      })
         .then(response => {
-          console.log(response.data.data.session_id)
+          // console.log(response.data.data.session_id)
           if (response.data.error_code === 101) {
             console.log('ss')
             this.error = 'Username not found'
@@ -128,16 +135,6 @@ export default {
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
             console.log('cc')
-          } else if (response.data.error_code === 0) {
-            // let is_admin = 0
-            this.error = 'it correctly'
-            this.error = this.error.toUpperCase()
-            // localStorage.setItem('login', JSON.stringify('user'))
-            // localStorage.setItem('jwt', JSON.stringify('user'))
-            sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
-            sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
-            // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
-            location.replace('/sale')
           }
         }).catch(e => {
           // this.error.push(e)
