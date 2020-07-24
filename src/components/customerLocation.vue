@@ -91,7 +91,7 @@
                 </div>
                 <b-input list="customberscode" ref="customerscodes" type="text"></b-input>
                 <b-datalist id="customberscode">
-                  <option v-for="(item, index) in items" :key="index" :value="item.code">{{item.name}}</option>
+                  <option v-for="(item, index) in cus_name_location" :key="index" :value="item.No_">{{item.Name}}</option>
                 </b-datalist>
                 <!-- <div id="aa" v-for="(item, index) in items" :key="index">
                   {{index}}
@@ -183,24 +183,10 @@ export default {
       data: {}
     }
     axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
-      this.cus_code_location = response.data.data.cus_location_list
+      this.items = response.data.data.cus_location_list
       this.cus_name_location = response.data.data.cus_name_list
-      console.log(this.cus_name_location)
-      for (let i = 0; i < this.cus_code_location.length; i++) {
-        // console.log('lllllllllllllll')
-        if (this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
-          // console.log('sssssssssssssssssss')
-          this.items[i] = {
-            customers_code: this.this.cus_code_locationt[i].Code,
-            name: this.cus_name_location[i].Name,
-            latitude: this.this.cus_code_locationt[i].Latitude,
-            longtitude: this.this.cus_code_locationt[i].Longtitude
-          }
-        }
-        // this.new_cus = {}
-      }
-      this.$refs.table.refresh()
     })
+    console.log(this.items)
   },
   methods: {
     addData () {
