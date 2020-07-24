@@ -156,12 +156,12 @@ export default {
       })
     },
     onedit (index) {
-      console.log(this.items[index].target)
+      console.log(this.items[index].sales_target)
       this.edit = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
           brand: this.items[index].brand,
-          group: this.items[index].target
+          sales_target: this.items[index].sales_target
         }
       }
       console.log(this.edit)

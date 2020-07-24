@@ -81,16 +81,16 @@
                 <b-row>
                   <b-col>
                     <div>Username</div>
-                    <b-input :ref="'uusername' + data.index" type="text" v-model="items[data.index].username" readonly></b-input>
+                    <b-input :ref="'uusername' + data.index" type="text" v-model="items[data.index].Username" readonly></b-input>
                   </b-col>
                   <b-col>
                     <div>Level</div>
                     <b-input :ref="'ulevel' + data.index" type="text"></b-input>
                   </b-col>
-                  <b-col>
+                  <!-- <b-col>
                     <div>Old password</div>
                     <b-input :ref="'oldpassword' + data.index" type="password"></b-input>
-                  </b-col>
+                  </b-col> -->
                   <b-col>
                     <div>New assword</div>
                     <b-input :ref="'upassword' + data.index" type="password" v-model="user.password"></b-input>
@@ -171,7 +171,7 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['Username', 'Level', 'Lastupdate', 'function'],
+      fields: ['Username', 'Level', 'Last Update', 'function'],
       items: [],
       newItems: [],
       edit: [],
@@ -209,7 +209,7 @@ export default {
           password: md5(this.$refs.password.localValue)
         }
       }
-      axios.post('http://192.168.10.2:1308/register', this.newItems).then(response => {
+      axios.post('http://192.168.10.2:1308/account/register', this.newItems).then(response => {
         console.log(response)
         this.items = response.data.data.account_list
         this.$refs.table.refresh()
@@ -226,18 +226,19 @@ export default {
     },
     ondelete (index) {
       // delete this.items[index]
-      console.log(this.items[index].username)
+      console.log(this.items[index].Username)
       // console.log(this.items)
       this.deleteaccount = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          username: this.items[index].username
+          username: this.items[index].Username
         }
       }
       axios('http://192.168.10.2:1308/account/delete', {
         data: this.deleteaccount,
-        method: 'delete'
+        method: 'post'
       }).then(response => {
+        console.log(response)
         this.items = response.data.data.account_list
         this.$refs.table.refresh()
       })
@@ -266,7 +267,7 @@ export default {
           this.items = response.data.data.account_list
           this.$refs.table.refresh()
         })
-      } else if (this.$refs[oldpasswords].localValue === '' && this.$refs[upassword].localValue === '' && this.$refs[ucpassword].localValue === '') {
+      } else if (this.$refs[upassword].localValue === '' && this.$refs[ucpassword].localValue === '') {
         console.log('null password')
         this.level = {
           session_id: JSON.parse(sessionStorage.getItem('login')),
@@ -275,7 +276,7 @@ export default {
             level: this.$refs[ulevel].localValue
           }
         }
-        axios('http://192.168.10.2:1308/ccount/change_level', {
+        axios('http://192.168.10.2:1308/account/change_level', {
           data: this.level,
           method: 'patch'
         }).then(response => {

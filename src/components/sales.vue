@@ -39,16 +39,16 @@
       <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <template v-slot:cell(sales_target)="data">
-          <b-input style="text-align:center" type="text" v-model="items[data.index].sales_target"></b-input>
+          <b-input style="text-align:center" type="text" v-model="data.item.sales_target"></b-input>
         </template>
         <template v-slot:cell(function)="data">
           <b-button
             variant="danger"
             size="sm"
             class="mr-2"
-            v-b-modal="'sale-modal-delete' + data.index"
+            v-b-modal="'sale-modal-delete' + data.item.code"
           >Delete</b-button>
-          <b-modal :id="'sale-modal-delete' + data.index" hide-footer>
+          <b-modal :id="'sale-modal-delete' + data.item.code" hide-footer>
             <div class="align-center">
               <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
             </div>
@@ -59,13 +59,13 @@
                 </b-col>
                 <b-col>
                   <div>
-                    <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                    <b-button variant="danger" v-on:click="ondelete (data.item.code, data.item.sales_target)">Confirm</b-button>
                   </div>
                 </b-col>
               </b-row>
             </b-container>
           </b-modal>
-          <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.index)">
+          <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.item.code, data.item.sales_target)">
             Edit
           </b-button>
         </template>
@@ -124,7 +124,18 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['code', 'name', 'sales_target', 'function'],
+      fields: [{
+        key: 'code',
+        sortable: true
+      },
+      {
+        key: 'name',
+        sortable: true
+      },
+      {
+        key: 'sales_target',
+        sortable: true
+      }, 'function'],
       items: [],
       newItems: [],
       edit: [],
@@ -147,11 +158,14 @@ export default {
         data: {
           code: this.$refs.sellercode.localValue,
           name: this.$refs.sellername.localValue,
-          target: this.$refs.sellertarget.localValue
+          sales_target: this.$refs.sellertarget.localValue
         }
       }
+      console.log(this.newItems)
       axios.post('http://192.168.10.2:1308/setting/saler/add', this.newItems).then(response => {
+        console.lgo(response)
         this.items = response.data.data.saler_list
+        this.totalRows = this.items.length
         this.$refs.table.refresh()
       })
       // console.log(this.newItems)
@@ -161,39 +175,44 @@ export default {
       // console.log(this.items)
       // console.log(obj)
     },
-    onedit (index) {
-      console.log(this.items[index].sales_target)
+    onedit (indexcode, indexsale) {
+      // console.log(this.items[index].sales_target)
       this.edit = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          code: this.items[index].code,
-          sales_target: this.items[index].sales_target
+          code: indexcode,
+          sales_target: indexsale
         }
       }
-      // console.log(this.edit)
+      console.log(this.edit)
       axios('http://192.168.10.2:1308/setting/saler/update_sales_target', {
         data: this.edit,
         method: 'patch'
       }).then(response => {
         this.items = response.data.data.saler_list
+        this.totalRows = this.items.length
         this.$refs.table.refresh()
       })
     },
-    ondelete (index) {
+    ondelete (indexcode, indexsale) {
+      // console.log(index)
       // delete this.items[index]
       // console.log(this.items)
       // console.log(this.items)
       this.deleteseller = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          code: this.items[index].code
+          code: indexcode
         }
       }
+      console.log(this.deleteseller)
       axios('http://192.168.10.2:1308/setting/saler/delete', {
         data: this.deleteseller,
-        method: 'delete'
+        method: 'post'
       }).then(response => {
+        console.log(response)
         this.items = response.data.data.saler_list
+        this.totalRows = this.items.length
         this.$refs.table.refresh()
       })
     }
@@ -204,7 +223,9 @@ export default {
       data: {}
     }
     axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
+      console.log('sale', response.data.data.saler_list)
       this.items = response.data.data.saler_list
+      this.totalRows = this.items.length
       this.$refs.table.refresh()
     })
   }

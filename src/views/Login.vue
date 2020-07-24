@@ -134,7 +134,7 @@ export default {
             sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
             // localStorage.setItem('set', JSON.stringify('set'))
             // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
-            // location.replace('/sale')
+            location.replace('/sale')
             console.log('cc')
           }
         }).catch(e => {

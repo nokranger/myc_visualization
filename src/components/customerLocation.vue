@@ -34,7 +34,8 @@
           ></b-form-input>
         </b-col>
       </b-row>
-      <b-table ref="table" :items="items" :fields="fields"  class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
+      <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
+      :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
         <!-- <template v-slot:cell(target)="data">
           <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
         </template>-->
@@ -77,7 +78,7 @@
                 <b-row>
                   <b-col>
                     <div>Customers code</div>
-                    <b-input :ref="'cus_code' + data.index" type="text" v-model="items[data.index].customers_code" readonly></b-input>
+                    <b-input :ref="'cus_code' + data.index" type="text" v-model="items[data.index].Code" readonly></b-input>
                   </b-col>
                   <b-col>
                     <div>Latitude</div>
@@ -219,6 +220,7 @@ export default {
       }
       console.log(this.newItems)
       axios.post('http://192.168.10.2:1308/setting/cus_location/add', this.newItems).then(response => {
+        // console.log(response)
         this.items = response.data.data.cus_location_list
         // for (let i = 0; i < this.cus_code_location.length; i++) {
         //   // console.log('lllllllllllllll')
@@ -246,13 +248,16 @@ export default {
       this.deletecustomer = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          cus_code: this.items.customers_code
+          cus_code: this.items[index].Code
         }
       }
+      console.log(this.deletecustomer)
+
       axios('http://192.168.10.2:1308/setting/cus_location/delete', {
         data: this.deletecustomer,
-        method: 'delete'
+        method: 'post'
       }).then(response => {
+        // console.log(response)
         this.items = response.data.data.cus_location_list
         // for (let i = 0; i < this.cus_code_location.length; i++) {
         //   // console.log('lllllllllllllll')

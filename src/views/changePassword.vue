@@ -117,14 +117,17 @@ export default {
   methods: {
     postChangePassword () {
       this.edit = {
-        oldpassword: md5(this.form.oldpassword),
-        newpassword: md5(this.form.newpassword)
+        session_id: JSON.parse(sessionStorage.getItem('login')),
+        data: {
+          old_password: md5(this.form.oldpassword),
+          new_password: md5(this.form.newpassword)
+        }
       }
-      axios('http://192.168.10.2:1308/change_password', {
+      axios('http://192.168.10.2:1308/account/change_password', {
         data: this.edit,
         method: 'patch'
       }).then(response => {
-        console.log('done')
+        console.log(response)
       }).catch(e => {
       })
       console.log(this.form)
