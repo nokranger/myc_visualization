@@ -30,7 +30,12 @@ export default {
       cssProps: {
         backgroundImage: `url(${require('@/assets/Home_Manoyont.png')})`,
         width: '100%',
-        height: 'auto'
+        maxWidth: '100%',
+        backgroundPosition: 'center',
+        height: 'auto',
+        objectFit: 'contain',
+        backgroundSize: 'cover',
+        position: 'relative'
       }
     }
   },
@@ -41,24 +46,24 @@ export default {
     if (window.location.pathname === '/') {
       // console.log(screen.height)
       this.name = 'login'
-      this.cssProps.height = 1024 + 'px'
+      this.cssProps.height = 1025 + 'px'
       console.log('login')
     } else if (window.location.pathname === '/sale') {
       this.cssProps.height = '1025px'
     } else if (window.location.pathname === '/overdue') {
-      this.cssProps.height = '1024px'
+      this.cssProps.height = '1025px'
     } else if (window.location.pathname === '/map') {
-      this.cssProps.height = '1024px'
+      this.cssProps.height = '1025px'
     } else if (window.location.pathname === '/setting') {
       // console.log(scrollbars.screen)
       this.cssProps.height = 'auto'
     } else if (window.location.pathname === '/changepassword') {
       // console.log(scrollbars.screen)
-      this.cssProps.height = '1024px'
+      this.cssProps.height = '1025px'
       // this.name = 'change'
     } else if (window.location.pathname === '/register') {
       // console.log(scrollbars.screen)
-      this.cssProps.height = '1024px'
+      this.cssProps.height = '1025px'
       // this.name = 'change'
     }
     // console.log(this.name)
