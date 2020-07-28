@@ -14,7 +14,6 @@
               :options="pageOptions"
             ></b-form-select>
           </div>
-          <!-- <b-input></b-input> -->
         </b-col>
         <b-col class="my-1">
           <b-pagination
@@ -117,7 +116,7 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['Brand', 'Brand Group', 'function'],
+      fields: [{ key: 'Brand', sortable: true }, { key: 'Brand Group', sortable: true }, 'function'],
       items: [],
       newItems: [],
       deletebrands: [],
@@ -129,11 +128,33 @@ export default {
       pageOptions: [5, 10, 15]
     }
   },
+  beforeCreate () {},
   created () {
+  },
+  beforeUpdate () {},
+  updated () {},
+  beforeMount () {},
+  mounted () {
+    this.settings = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
+    }
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
+      if (response.data.error_code === 201) {
+        console.log('Session not found.')
+      } else if (response.data.error_code === 202) {
+        console.log('Permission denied.')
+      } else if (response.data.error_code === 303) {
+        console.log('Add brand fail.')
+      } else if (response.data.error_code === 0) {
+        this.items = response.data.data.brand_group_list
+        this.totalRows = this.items.length
+        this.$refs.table.refresh()
+      }
+    })
   },
   methods: {
     addData () {
-      console.log('addData')
       this.newItems = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -142,21 +163,20 @@ export default {
         }
       }
       axios.post('http://192.168.10.2:1308/setting/brand_group/add', this.newItems).then(response => {
-        this.items = response.data.data.brand_group_list
-        this.totalRows = this.items.length
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Add brand group fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.brand_group_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
-      // console.log(this.newItems)
-      // var obj = JSON.parse(this.items)
-      // this.items.push(this.newItems)
-      // this.$refs.table.refresh()
-      // console.log(this.items)
-      // console.log(obj)
     },
     ondelete (indexbrand) {
-      // delete this.items[index]
-      // console.log(this.items)
-      // console.log(this.items)
       this.deletebrands = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -167,22 +187,19 @@ export default {
         data: this.deletebrands,
         method: 'delete'
       }).then(response => {
-        this.items = response.data.data.brand_group_list
-        this.totalRows = this.items.length
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('delete brand group fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.brand_group_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
     }
-  },
-  mounted () {
-    this.settings = {
-      session_id: JSON.parse(sessionStorage.getItem('login')),
-      data: {}
-    }
-    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
-      this.items = response.data.data.brand_group_list
-      this.totalRows = this.items.length
-      this.$refs.table.refresh()
-    })
   }
 }
 </script>

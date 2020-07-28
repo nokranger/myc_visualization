@@ -3,15 +3,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
     <div v-if="name === 'login'">
     </div>
-    <!-- <div v-else-if="name === 'change'">
-    </div> -->
     <div v-else>
       <app-header></app-header>
     </div>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <router-view/>
   </div>
 </template>
@@ -32,10 +26,8 @@ export default {
         width: '100%',
         maxWidth: '100%',
         backgroundPosition: 'center',
-        height: '100%',
-        objectFit: 'contain',
-        backgroundSize: 'cover',
-        position: 'relative'
+        height: '1400px',
+        backgroundSize: 'cover'
       }
     }
   },
@@ -46,25 +38,48 @@ export default {
     if (window.location.pathname === '/') {
       // console.log(screen.height)
       this.name = 'login'
-      this.cssProps.height = 1080 + 'px'
-      console.log('login')
+      // if (screen.height >= ) {
+      //   this.cssProps.height = '1400px'
+      // } else {
+      //   this.cssProps.height = '1400px'
+      // }
     } else if (window.location.pathname === '/sale') {
-      this.cssProps.height = '1080px'
+      // if (screen.height >= 1080) {
+      //   this.cssProps.height = 'auto'
+      // } else {
+      //   this.cssProps.height = '1400px'
+      // }
     } else if (window.location.pathname === '/overdue') {
-      this.cssProps.height = '1080px'
+      // if (screen.height >= 1080) {
+      //   this.cssProps.height = 'auto'
+      // } else {
+      //   this.cssProps.height = '1400px'
+      // }
     } else if (window.location.pathname === '/map') {
-      this.cssProps.height = '1080px'
+      // console.log(screen.height)
+      // if (screen.height >= 1080) {
+      //   this.cssProps.height = 'auto'
+      // } else {
+      //   this.cssProps.height = '1400px'
+      // }
     } else if (window.location.pathname === '/setting') {
-      // console.log(scrollbars.screen)
-      this.cssProps.height = '1080px'
+      // if (screen.height >= 1080) {
+      //   this.cssProps.height = 'auto'
+      // } else {
+      //   this.cssProps.height = '1400px'
+      // }
     } else if (window.location.pathname === '/changepassword') {
-      // console.log(scrollbars.screen)
-      this.cssProps.height = '1080px'
-      // this.name = 'change'
+      // if (screen.height >= 1080) {
+      //   this.cssProps.height = 'auto'
+      // } else {
+      //   this.cssProps.height = '1400px'
+      // }
     } else if (window.location.pathname === '/register') {
-      // console.log(scrollbars.screen)
-      this.cssProps.height = '1080px'
-      // this.name = 'change'
+      // if (screen.height >= 1080) {
+      //   this.cssProps.height = 'auto'
+      // } else {
+      //   this.cssProps.height = '1400px'
+      // }
     }
     // console.log(this.name)
   },

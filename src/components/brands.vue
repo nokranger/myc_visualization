@@ -14,7 +14,6 @@
               :options="pageOptions"
             ></b-form-select>
           </div>
-          <!-- <b-input></b-input> -->
         </b-col>
         <b-col class="my-1">
           <b-pagination
@@ -96,10 +95,6 @@
                 <b-input ref="brandstarget" type="text"></b-input>
               </b-col>
               <b-col>
-                <!-- <div>
-                  Date
-                </div>
-                <b-input type="date"></b-input> -->
                 <div>
                   <div style="margin-top:-1px;">
                     <br>
@@ -123,7 +118,21 @@ export default {
       filter: null,
       isBusy: false,
       fields: [{ key: 'brand', sortable: true }, { key: 'sales_target', sortable: false }, { key: 'last_update', sortable: true }, { key: 'function', sortable: false }],
-      items: [],
+      items: [
+        { brand: 'Dickerson', group: '', sales_target: 1100, last_update: '2020-07-16' },
+        { brand: 'Larsen', group: '', sales_target: 1200, last_update: '2020-07-15' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Jami', group: '', sales_target: 1500, last_update: '2020-07-13' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
+        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' }
+      ],
       newItems: [],
       edit: [],
       deletebrands: [],
@@ -136,6 +145,8 @@ export default {
   },
   beforeCreate () {},
   created () {},
+  beforeUpdate () {},
+  updated () {},
   beforeMount () {},
   mounted () {
     this.settings = {
@@ -158,7 +169,6 @@ export default {
   },
   methods: {
     addData () {
-      console.log('addData')
       this.newItems = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
