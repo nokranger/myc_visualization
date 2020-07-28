@@ -160,7 +160,7 @@ export default {
       } else if (response.data.error_code === 202) {
         console.log('Permission denied.')
       } else if (response.data.error_code === 303) {
-        console.log('Add brand fail.')
+        console.log('get brand fail.')
       } else if (response.data.error_code === 0) {
         this.items = response.data.data.saler_list
         this.totalRows = this.items.length

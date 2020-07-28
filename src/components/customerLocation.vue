@@ -12,7 +12,6 @@
               :options="pageOptions"
             ></b-form-select>
           </div>
-          <!-- <b-input></b-input> -->
         </b-col>
         <b-col class="my-1">
           <b-pagination
@@ -36,17 +35,14 @@
       </b-row>
       <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-        <!-- <template v-slot:cell(target)="data">
-          <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
-        </template>-->
         <template v-slot:cell(function)="data">
           <b-button
             variant="danger"
             size="sm"
             class="mr-2"
-            v-b-modal="'modal-delete-location' + data.index"
+            v-b-modal="'modal-delete-location' + data.item.Code"
           >Delete</b-button>
-          <b-modal :id="'modal-delete-location' + data.index" hide-footer>
+          <b-modal :id="'modal-delete-location' + data.item.Code" hide-footer>
             <div class="align-center">
               <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
             </div>
@@ -57,7 +53,7 @@
                 </b-col>
                 <b-col>
                   <div>
-                    <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                    <b-button variant="danger" v-on:click="ondelete (data.item.Code)">Confirm</b-button>
                   </div>
                 </b-col>
               </b-row>
@@ -67,9 +63,9 @@
             variant="primary"
             size="sm"
             class="mr-2"
-            v-b-modal="'modal-edit-location' + data.index"
+            v-b-modal="'modal-edit-location' + data.item.Code"
           >Edit</b-button>
-          <b-modal :id="'modal-edit-location' + data.index" size="xl" hide-footer>
+          <b-modal :id="'modal-edit-location' + data.item.Code" size="xl" hide-footer>
             <div class="align-center">
               <p style="font-weight: bold;font-size:20px;" class="my-4">Update Location</p>
             </div>
@@ -78,26 +74,22 @@
                 <b-row>
                   <b-col>
                     <div>Customers code</div>
-                    <b-input :ref="'cus_code' + data.index" type="text" v-model="items[data.index].Code" readonly></b-input>
+                    <b-input :ref="'cus_code' + data.item.Code" type="text" v-model="data.item.Code" readonly></b-input>
                   </b-col>
                   <b-col>
                     <div>Latitude</div>
-                    <b-input :ref="'uplat' + data.index" type="text"></b-input>
+                    <b-input :ref="'uplat' + data.item.Code" type="text"></b-input>
                   </b-col>
                   <b-col>
                     <div>Longtitude</div>
-                    <b-input :ref="'uplng' + data.index" type="text"></b-input>
+                    <b-input :ref="'uplng' + data.item.Code" type="text"></b-input>
                   </b-col>
                   <b-col>
-                    <!-- <div>
-                        Date
-                        </div>
-                    <b-input type="date"></b-input>-->
                     <div>
                       <div style="margin-top:-1px;">
                         <br />
                       </div>
-                      <b-button variant="success" v-on:click="updatecustomer ('cus_code' + data.index, 'uplat' + data.index, 'uplng' + data.index, data.index)">Update</b-button>
+                      <b-button variant="success" v-on:click="updatecustomer ('cus_code' + data.item.Code, 'uplat' + data.item.Code, 'uplng' + data.item.Code, data.item.Code)">Update</b-button>
                     </div>
                   </b-col>
                 </b-row>
@@ -126,9 +118,6 @@
                 <b-datalist id="customberscode">
                   <option v-for="(item, index) in cus_name_location" :key="index" :value="item.No_">{{item.Name}}</option>
                 </b-datalist>
-                <!-- <div id="aa" v-for="(item, index) in items" :key="index">
-                  {{index}}
-                </div> -->
               </b-col>
               <b-col>
                 <div>Latitude</div>
@@ -139,15 +128,11 @@
                 <b-input ref="longtitude" type="text"></b-input>
               </b-col>
               <b-col>
-                <!-- <div>
-                  Date
-                </div>
-                <b-input type="date"></b-input>-->
                 <div>
                   <div style="margin-top:-1px;">
                     <br />
                   </div>
-                  <b-button variant="success" v-on:click="addData ()">Add data</b-button>
+                  <b-button variant="success" v-on:click="addData ()">Add Data</b-button>
                 </div>
               </b-col>
             </b-row>
@@ -164,7 +149,7 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['Code', 'Latitude', 'Longtitude', 'function'],
+      fields: [{ key: 'Code', sortable: true }, 'Latitude', 'Longtitude', 'function'],
       items: [],
       newItems: [],
       edit: [],
@@ -181,35 +166,36 @@ export default {
       pageOptions: [5, 10, 15]
     }
   },
+  beforeCreate () {
+  },
   created () {
-    // for (let i = 0; i < this.cus_location_list.length; i++) {
-    //   // console.log('lllllllllllllll')
-    //   if (this.cus_location_list[i].Code === this.cus_name_list[i].CustomerCode) {
-    //     // console.log('sssssssssssssssssss')
-    //     this.new_cus[i] = {
-    //       code: this.cus_location_list[i].Code,
-    //       name: this.cus_name_list[i].Name,
-    //       latitude: this.cus_location_list[i].Latitude,
-    //       longtitude: this.cus_location_list[i].Longtitude
-    //     }
-    //   }
-    //   // this.new_cus = {}
-    // }
     this.settings = {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
     axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
-      this.items = response.data.data.cus_location_list
-      this.totalRows = this.items.length
-      this.cus_name_location = response.data.data.cus_name_list
+      if (response.data.error_code === 201) {
+        console.log('Session not found.')
+      } else if (response.data.error_code === 202) {
+        console.log('Permission denied.')
+      } else if (response.data.error_code === 303) {
+        console.log('get customer location fail.')
+      } else if (response.data.error_code === 0) {
+        this.items = response.data.data.cus_location_list
+        this.cus_name_location = response.data.data.cus_name_list
+        this.totalRows = this.items.length
+        this.$refs.table.refresh()
+      }
     })
-    // console.log(this.items)
+  },
+  beforeUpdate () {},
+  updated () {},
+  beforeMount () {
+  },
+  mounted () {
   },
   methods: {
     addData () {
-      console.log('addData')
-      // console.log(this.$refs.customerscodes.localValue)
       this.newItems = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -218,70 +204,51 @@ export default {
           lng: this.$refs.longtitude.localValue
         }
       }
-      console.log(this.newItems)
       axios.post('http://192.168.10.2:1308/setting/cus_location/add', this.newItems).then(response => {
-        // console.log(response)
-        this.items = response.data.data.cus_location_list
-        // for (let i = 0; i < this.cus_code_location.length; i++) {
-        //   // console.log('lllllllllllllll')
-        //   if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
-        //     // console.log('sssssssssssssssssss')
-        //     this.new_cus[i] = {
-        //       customers_code: this.this.cus_code_locationt[i].Code,
-        //       name: this.cus_name_location[i].Name,
-        //       latitude: this.this.cus_code_locationt[i].Latitude,
-        //       longtitude: this.this.cus_code_locationt[i].Longtitude
-        //     }
-        //   }
-        //   // this.new_cus = {}
-        // }
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('add customer location fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.cus_location_list
+          this.cus_name_location = response.data.data.cus_name_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+          this.$refs.customerscodes.localValue = ''
+          this.$refs.latitude.localValue = ''
+          this.$refs.longtitude.localValue = ''
+        }
       })
     },
     onedit (index) {
-      // console.log(this.items[index].target)
     },
     ondelete (index) {
-      // delete this.items[index]
-      // console.log(this.items)
-      // console.log(this.items)
       this.deletecustomer = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          cus_code: this.items[index].Code
+          cus_code: index
         }
       }
-      console.log(this.deletecustomer)
-
       axios('http://192.168.10.2:1308/setting/cus_location/delete', {
         data: this.deletecustomer,
         method: 'post'
       }).then(response => {
-        // console.log(response)
-        this.items = response.data.data.cus_location_list
-        // for (let i = 0; i < this.cus_code_location.length; i++) {
-        //   // console.log('lllllllllllllll')
-        //   if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
-        //     // console.log('sssssssssssssssssss')
-        //     this.new_cus[i] = {
-        //       customers_code: this.this.cus_code_locationt[i].Code,
-        //       name: this.cus_name_location[i].Name,
-        //       latitude: this.this.cus_code_locationt[i].Latitude,
-        //       longtitude: this.this.cus_code_locationt[i].Longtitude
-        //     }
-        //   }
-        //   // this.new_cus = {}
-        // }
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('delete customer location fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.cus_location_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
     },
     updatecustomer (customCode, uplat, uplng, index) {
-      // console.log(this.items[index].customers_code === this.$refs[customCode].localValue)
-      // for (let i = 0; i < this.items.length; i++) {
-      //   if (this.items[index].customers_code === this.$refs[customCode].localValue) {
-      //     this.items[index].latitude = this.$refs[uplat].localValue
-      //   }
-      // }
       this.edit = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -290,32 +257,25 @@ export default {
           lng: this.$refs[uplng].localValue
         }
       }
+      console.log(this.edit)
       axios('http://192.168.10.2:1308/setting/cus_location/update_location', {
         data: this.edit,
         method: 'patch'
       }).then(response => {
-        this.items = response.data.data.cus_location_list
-        // for (let i = 0; i < this.cus_code_location.length; i++) {
-        //   // console.log('lllllllllllllll')
-        //   if (this.this.cus_code_location[i].Code === this.cus_name_location[i].CustomerCode) {
-        //     // console.log('sssssssssssssssssss')
-        //     this.new_cus[i] = {
-        //       customers_code: this.this.cus_code_locationt[i].Code,
-        //       name: this.cus_name_location[i].Name,
-        //       latitude: this.this.cus_code_locationt[i].Latitude,
-        //       longtitude: this.this.cus_code_locationt[i].Longtitude
-        //     }
-        //   }
-        //   // this.new_cus = {}
-        // }
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('update customer location fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.cus_location_list
+          this.$refs.table.refresh()
+          this.$refs[uplat].localValue = ''
+          this.$refs[uplng].localValue = ''
+        }
       })
     }
-  },
-  mounted () {
-    // console.log('cus', this.new_cus)
-    // console.log(typeof (this.new_cus))
-
   }
 }
 </script>

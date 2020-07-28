@@ -135,7 +135,7 @@ export default {
       } else if (response.data.error_code === 202) {
         console.log('Permission denied.')
       } else if (response.data.error_code === 303) {
-        console.log('Add brand fail.')
+        console.log('get brand fail.')
       } else if (response.data.error_code === 0) {
         this.items = response.data.data.brand_group_list
         this.totalRows = this.items.length
@@ -158,7 +158,7 @@ export default {
         } else if (response.data.error_code === 202) {
           console.log('Permission denied.')
         } else if (response.data.error_code === 303) {
-          console.log('Add brand group fail.')
+          console.log('add brand group fail.')
         } else if (response.data.error_code === 0) {
           this.items = response.data.data.brand_group_list
           this.totalRows = this.items.length

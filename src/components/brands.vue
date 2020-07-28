@@ -118,21 +118,7 @@ export default {
       filter: null,
       isBusy: false,
       fields: [{ key: 'brand', sortable: true }, { key: 'sales_target', sortable: false }, { key: 'last_update', sortable: true }, { key: 'function', sortable: false }],
-      items: [
-        { brand: 'Dickerson', group: '', sales_target: 1100, last_update: '2020-07-16' },
-        { brand: 'Larsen', group: '', sales_target: 1200, last_update: '2020-07-15' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Jami', group: '', sales_target: 1500, last_update: '2020-07-13' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' },
-        { brand: 'Geneva', group: '', sales_target: 1200, last_update: '2020-07-14' }
-      ],
+      items: [],
       newItems: [],
       edit: [],
       deletebrands: [],
@@ -159,7 +145,7 @@ export default {
       } else if (response.data.error_code === 202) {
         console.log('Permission denied.')
       } else if (response.data.error_code === 303) {
-        console.log('Add brand fail.')
+        console.log('get brand fail.')
       } else if (response.data.error_code === 0) {
         this.items = response.data.data.brand_list
         this.totalRows = this.items.length

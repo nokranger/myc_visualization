@@ -96,21 +96,23 @@ export default {
   beforeCreate () {
     var localjwt = sessionStorage.getItem('login')
     if (localjwt !== null) {
-      // location.replace('/sale')
     } else {
       location.replace('/')
     }
   },
+  created () {},
+  beforeUpdate () {},
+  updated () {},
   metaInfo () {
     return {
       title: 'Change Password',
       titleTemplate: '%s - MYC'
     }
   },
+  beforeMount () {},
   mounted () {
     if (sessionStorage.getItem('login') === null) {
       location.replace('/')
-      // console.log('testL')
     }
     this.form.username = JSON.parse(sessionStorage.getItem('login'))
   },
