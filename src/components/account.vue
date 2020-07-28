@@ -198,7 +198,9 @@ export default {
   //     location.replace('/')
   //   }
   // },
-  created () {},
+  created () {
+    console.log('account')
+  },
   methods: {
     addData () {
       console.log('addData')

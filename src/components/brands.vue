@@ -134,13 +134,31 @@ export default {
       pageOptions: [5, 10, 15]
     }
   },
-  created () {
-    // console.log(this.items)
+  beforeCreate () {},
+  created () {},
+  beforeMount () {},
+  mounted () {
+    this.settings = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
+    }
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
+      if (response.data.error_code === 201) {
+        console.log('Session not found.')
+      } else if (response.data.error_code === 202) {
+        console.log('Permission denied.')
+      } else if (response.data.error_code === 303) {
+        console.log('Add brand fail.')
+      } else if (response.data.error_code === 0) {
+        this.items = response.data.data.brand_list
+        this.totalRows = this.items.length
+        this.$refs.table.refresh()
+      }
+    })
   },
   methods: {
     addData () {
       console.log('addData')
-      // console.log(this.$$refs.brandsgroup.localValue)
       this.newItems = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -151,13 +169,20 @@ export default {
       }
       console.log(this.newItems)
       axios.post('http://192.168.10.2:1308/setting/brand/add', this.newItems).then(response => {
-        this.items = response.data.data.brand_list
-        this.totalRows = this.items.length
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Add brand fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.brand_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
     },
     onedit (indexbrand, indexsale) {
-      // console.log(this.items[index].sales_target)
       this.edit = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -170,56 +195,43 @@ export default {
         data: this.edit,
         method: 'patch'
       }).then(response => {
-        console.log(response)
-        this.items = response.data.data.brand_list
-        this.totalRows = this.items.length
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Update Brands sales target fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.brand_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
     },
     ondelete (index) {
-      // delete this.items[index]
       this.deletebrands = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
           brand: index
         }
       }
-      // console.log(this.items[index].brand)
-      // console.log(this.items)
       axios('http://192.168.10.2:1308/setting/brand/delete', {
         data: this.deletebrands,
         method: 'delete'
       }).then(response => {
-        this.items = response.data.data.brand_list
-        this.totalRows = this.items.length
-        // delete this.items[index]
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Delete brand fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.brand_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
-      // axios.delete()
-      // this.$refs.table.refresh()
     }
-  },
-  computed: {
-    sortOptions () {
-      // Create an options list from our fields
-      return this.fields
-        .filter(f => f.sortable)
-        .map(f => {
-          return { text: f.label, value: f.key }
-        })
-    }
-  },
-  mounted () {
-    this.settings = {
-      session_id: JSON.parse(sessionStorage.getItem('login')),
-      data: {}
-    }
-    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
-      this.items = response.data.data.brand_list
-      console.log(this.items)
-      this.totalRows = this.items.length
-      this.$refs.table.refresh()
-    })
   }
 }
 </script>

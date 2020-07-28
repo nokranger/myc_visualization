@@ -38,11 +38,6 @@
                     <label>Password</label>
                   </div>
                 </b-col>
-                <!-- <b-col>
-                  <div class="align-right">
-                    <a href="/changepassword">Change Password ?</a>
-                  </div>
-                </b-col> -->
               </b-row>
               <b-form-input
                 id="input-2"
@@ -52,11 +47,6 @@
                 placeholder="Enter password"
               ></b-form-input>
             </b-form-group>
-            <!-- <b-form-group id="input-group-4">
-              <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-                <b-form-checkbox value="me">remember me</b-form-checkbox>
-              </b-form-checkbox-group>
-            </b-form-group> -->
             <div>
             <b-button style="margin: 6px!important;padding: 13.44px 34.24px!important;" class="btn-block" variant="success" type="submit" v-on:click="postLogin ()">LOGIN</b-button><br>
             </div>
@@ -83,7 +73,6 @@ export default {
       },
       show: true,
       error: '',
-      aa: 55,
       login: [],
       jwt: [],
       set: [],
@@ -91,13 +80,9 @@ export default {
     }
   },
   beforeCreate () {
-
   },
+  created () {},
   mounted () {
-    // console.log()
-    // if (JSON.parse(sessionStorage.getItem('login')) === 'admin' || JSON.parse(sessionStorage.getItem('login')) === 'user') {
-    //   location.replace('/sale')
-    // }
   },
   methods: {
     loginapi () {
@@ -113,7 +98,6 @@ export default {
           password: md5(this.form.password)
         }
       }
-      // console.log(this.data)
       axios('http://192.168.10.2:1308/login', {
         data: this.data,
         method: 'post'
@@ -128,17 +112,12 @@ export default {
             console.log('ssssss')
             this.error = 'it correctly'
             this.error = this.error.toUpperCase()
-            // localStorage.setItem('login', JSON.stringify('admin'))
-            // localStorage.setItem('jwt', JSON.stringify('admin'))
             sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
             sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
-            // localStorage.setItem('set', JSON.stringify('set'))
-            // location.replace('/' + JSON.parse(localStorage.getItem('login')) + '/sale')
             location.replace('/sale')
             console.log('cc')
           }
         }).catch(e => {
-          // this.error.push(e)
         })
     }
   },
@@ -147,8 +126,6 @@ export default {
       title: 'Login',
       titleTemplate: '%s - MYC'
     }
-  },
-  created () {
   }
 }
 </script>

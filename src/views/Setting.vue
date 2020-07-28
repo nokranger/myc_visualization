@@ -1,18 +1,32 @@
 <template>
 <div>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
   <div v-if="local === '1'">
     <div>
       Setting
     </div>
-    <app-brands></app-brands>
-    <br>
-    <app-brandsg></app-brandsg>
-    <br>
-    <app-sale></app-sale>
-    <br>
-    <app-account></app-account>
-    <br>
-    <app-location></app-location>
+    <div>
+      <b-container>
+          <b-tabs content-class="mt-3" fill>
+          <b-tab title="Brand" active>
+            <app-brands></app-brands>
+          </b-tab>
+          <b-tab title="Brand Group">
+            <app-brandsg></app-brandsg>
+          </b-tab>
+          <b-tab title="Seller">
+            <app-sale></app-sale>
+          </b-tab>
+          <b-tab title="Account">
+            <app-account></app-account>
+          </b-tab>
+          <b-tab title="Custimer Location">
+            <app-location></app-location>
+          </b-tab>
+        </b-tabs>
+      </b-container>
+    </div>
   </div>
   <div v-if="local === '0'">
     <app-changepassword></app-changepassword>
@@ -20,7 +34,7 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import changePassword from './changePassword'
 import brands from '../components/brands'
 import brandsg from '../components/brandsGroup'
@@ -60,7 +74,6 @@ export default {
   beforeCreate () {
     var localjwt = sessionStorage.getItem('login')
     if (localjwt !== null) {
-      // location.replace('/sale')
     } else {
       location.replace('/')
     }
@@ -69,83 +82,6 @@ export default {
     this.local = sessionStorage.getItem('level')
   },
   methods: {
-    getSetting () {
-      this.datas = {
-        session_id: JSON.parse(sessionStorage.getItem('login')),
-        data: {}
-      }
-      console.log('test post')
-      axios.post('http://192.168.10.2:1308/setting', this.datas).then(response => {
-        console.log('res')
-        console.log(response)
-        this.dataSetting = {
-          monthly_sales_target: response.data.data.monthly_sales_target,
-          saler_list: response.data.data.saler_list
-        }
-      })
-    },
-    getSalerNo () {
-      console.log(this.$refs.salerno.localValue)
-      // console.log(this.$refs.aa)
-      this.saler = parseInt(this.$refs.salerno.localValue, 10)
-    },
-    getSalerName () {
-      console.log('bb', this.salersName[0])
-      // console.log(this.$refs.bb[0].localValue)
-      // console.log(this.$refs.bb[1].localValue)
-      // console.log('aa', parseInt(this.$refs.aa.localValue, 10))
-    },
-    getSalerValue () {
-      console.log('cc', this.salersValue[0])
-    },
-    timer () {
-      console.log('end')
-      sessionStorage.removeItem('login')
-      sessionStorage.removeItem('jwt')
-      window.location.reload()
-    },
-    patchSetting (index) {
-      // console.log(this.$refs.sellername[index].localValue)
-      // console.log(this.$refs.sellercode[index].localValue)
-      // console.log(this.$refs.sellervalue[index].localValue)
-      let settingCode = []
-      // settingCode = {
-      //   session_id: JSON.parse(sessionStorage.getItem('login')),
-      //   monthly_sales_target: this.dataSetting.monthly_sales_target,
-      //   saler_list: [{
-      //     code: this.$refs.sellercode[index].localValue,
-      //     value: 22,
-      //     salersValue: this.salersValue
-      //   }]
-      //   // product: this.product
-      // }
-      settingCode = {
-        session_id: JSON.parse(sessionStorage.getItem('login')),
-        data: {
-          code: this.$refs.sellercode[index].localValue,
-          sales_target: this.$refs.sellervalue[index].localValue
-        }
-        // product: this.product
-      }
-      console.log(settingCode)
-      axios.all([axios.patch('http://192.168.10.2:1308/setting/saler/update_sales_target', settingCode)]).then(axios.spread((resSetting) => {
-        console.log(resSetting)
-      }))
-    },
-    patchMonthly () {
-      console.log(this.$refs.monthly.localValue)
-      let settingMonthly = []
-      settingMonthly = {
-        session_id: JSON.parse(sessionStorage.getItem('login')),
-        data: {
-          monthly_sales_target: this.$refs.monthly.localValue
-        }
-        // product: this.product
-      }
-      axios.all([axios.patch('http://192.168.10.2:1308/setting/monthly_sales_target', settingMonthly)]).then(axios.spread((resSetting) => {
-        console.log(resSetting)
-      }))
-    }
   },
   metaInfo () {
     return {
