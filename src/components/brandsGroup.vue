@@ -37,9 +37,6 @@
       </b-row>
       <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-        <!-- <template v-slot:cell(target)="data">
-          <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
-        </template> -->
         <template v-slot:cell(function)="data">
           <b-button variant="danger" size="sm" class="mr-2" v-b-modal="'brandsG-modal-delete' + data.item.brand">
             Delete
@@ -61,9 +58,6 @@
                 </b-row>
               </b-container>
             </b-modal>
-          <!-- <b-button variant="primary" size="sm" class="mr-2" v-on:click="onedit (data.index)">
-            Edit
-          </b-button> -->
         </template>
       </b-table>
       <div>
@@ -91,10 +85,6 @@
                 <b-input ref="brandGroup" type="text"></b-input>
               </b-col>
               <b-col>
-                <!-- <div>
-                  Date
-                </div>
-                <b-input type="date"></b-input> -->
                 <div>
                   <div style="margin-top:-1px;">
                     <br>
@@ -173,6 +163,8 @@ export default {
           this.items = response.data.data.brand_group_list
           this.totalRows = this.items.length
           this.$refs.table.refresh()
+          this.$refs.brandsGname.localValue = ''
+          this.$refs.brandGroup.localValue = ''
         }
       })
     },

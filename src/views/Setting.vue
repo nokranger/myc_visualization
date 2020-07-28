@@ -21,7 +21,7 @@
           <b-tab title="Account">
             <app-account></app-account>
           </b-tab>
-          <b-tab title="Custimer Location">
+          <b-tab title="Customer Location">
             <app-location></app-location>
           </b-tab>
         </b-tabs>

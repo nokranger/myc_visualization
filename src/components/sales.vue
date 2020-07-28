@@ -14,7 +14,6 @@
               :options="pageOptions"
             ></b-form-select>
           </div>
-          <!-- <b-input></b-input> -->
         </b-col>
         <b-col class="my-1">
           <b-pagination
@@ -99,10 +98,6 @@
                 <b-input ref="sellertarget" type="text"></b-input>
               </b-col>
               <b-col>
-                <!-- <div>
-                  Date
-                </div>
-                <b-input type="date"></b-input> -->
                 <div>
                   <div style="margin-top:-1px;">
                     <br>
@@ -148,11 +143,33 @@ export default {
       pageOptions: [5, 10, 15]
     }
   },
+  beforeCreate () {},
   created () {
+  },
+  beforeUpdate () {},
+  updated () {},
+  beforeMount () {},
+  mounted () {
+    this.settings = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
+    }
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
+      if (response.data.error_code === 201) {
+        console.log('Session not found.')
+      } else if (response.data.error_code === 202) {
+        console.log('Permission denied.')
+      } else if (response.data.error_code === 303) {
+        console.log('Add brand fail.')
+      } else if (response.data.error_code === 0) {
+        this.items = response.data.data.saler_list
+        this.totalRows = this.items.length
+        this.$refs.table.refresh()
+      }
+    })
   },
   methods: {
     addData () {
-      console.log('addData')
       this.newItems = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -161,22 +178,24 @@ export default {
           sales_target: this.$refs.sellertarget.localValue
         }
       }
-      console.log(this.newItems)
       axios.post('http://192.168.10.2:1308/setting/saler/add', this.newItems).then(response => {
-        console.lgo(response)
-        this.items = response.data.data.saler_list
-        this.totalRows = this.items.length
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Add seller fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.saler_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+          this.$refs.sellercode.localValue = ''
+          this.$refs.sellername.localValue = ''
+          this.$refs.sellertarget.localValue = ''
+        }
       })
-      // console.log(this.newItems)
-      // var obj = JSON.parse(this.items)
-      // this.items.push(this.newItems)
-      // this.$refs.table.refresh()
-      // console.log(this.items)
-      // console.log(obj)
     },
     onedit (indexcode, indexsale) {
-      // console.log(this.items[index].sales_target)
       this.edit = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -184,50 +203,47 @@ export default {
           sales_target: indexsale
         }
       }
-      console.log(this.edit)
       axios('http://192.168.10.2:1308/setting/saler/update_sales_target', {
         data: this.edit,
         method: 'patch'
       }).then(response => {
-        this.items = response.data.data.saler_list
-        this.totalRows = this.items.length
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Update seller fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.saler_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
     },
     ondelete (indexcode, indexsale) {
-      // console.log(index)
-      // delete this.items[index]
-      // console.log(this.items)
-      // console.log(this.items)
       this.deleteseller = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
           code: indexcode
         }
       }
-      console.log(this.deleteseller)
       axios('http://192.168.10.2:1308/setting/saler/delete', {
         data: this.deleteseller,
         method: 'post'
       }).then(response => {
-        console.log(response)
-        this.items = response.data.data.saler_list
-        this.totalRows = this.items.length
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Delete seller fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.saler_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
     }
-  },
-  mounted () {
-    this.settings = {
-      session_id: JSON.parse(sessionStorage.getItem('login')),
-      data: {}
-    }
-    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
-      console.log('sale', response.data.data.saler_list)
-      this.items = response.data.data.saler_list
-      this.totalRows = this.items.length
-      this.$refs.table.refresh()
-    })
   }
 }
 </script>

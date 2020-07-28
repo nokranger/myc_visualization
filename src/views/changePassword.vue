@@ -127,7 +127,16 @@ export default {
         data: this.edit,
         method: 'patch'
       }).then(response => {
-        console.log(response)
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 303) {
+          console.log('Change password fail.')
+        } else if (response.data.error_code === 0) {
+          console.log(response)
+          this.form.oldpassword = ''
+          this.form.newpassword = ''
+          this.form.confirmnewpassword = ''
+        }
       }).catch(e => {
       })
       console.log(this.form)

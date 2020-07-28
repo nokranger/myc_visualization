@@ -12,7 +12,6 @@
               :options="pageOptions"
             ></b-form-select>
           </div>
-          <!-- <b-input></b-input> -->
         </b-col>
         <b-col class="my-1">
           <b-pagination
@@ -36,17 +35,14 @@
       </b-row>
       <b-table ref="table" :items="items" :fields="fields" :filter="filter" :current-page="currentPage"
       :per-page="perPage" class="mt-3" head-variant="dark" table-variant="primary" striped bordered hover fixed outlined>
-        <!-- <template v-slot:cell(target)="data">
-          <b-input style="text-align:center" type="text" v-model="items[data.index].target"></b-input>
-        </template>-->
         <template v-slot:cell(function)="data">
           <b-button
             variant="danger"
             size="sm"
             class="mr-2"
-            v-b-modal="'modal-delete' + data.index"
+            v-b-modal="'modal-delete' + data.item.Username"
           >Delete</b-button>
-          <b-modal :id="'modal-delete' + data.index" hide-footer>
+          <b-modal :id="'modal-delete' + data.item.Username" hide-footer>
             <div class="align-center">
               <p style="font-weight: bold;font-size:20px;" class="my-4">Confirm delete</p>
             </div>
@@ -57,7 +53,7 @@
                 </b-col>
                 <b-col>
                   <div>
-                    <b-button variant="danger" v-on:click="ondelete (data.index)">Confirm</b-button>
+                    <b-button variant="danger" v-on:click="ondelete (data.item.Username)">Confirm</b-button>
                   </div>
                 </b-col>
               </b-row>
@@ -81,34 +77,26 @@
                 <b-row>
                   <b-col>
                     <div>Username</div>
-                    <b-input :ref="'uusername' + data.index" type="text" v-model="items[data.index].Username" readonly></b-input>
+                    <b-input :ref="'uusername' + data.item.Username" type="text" v-model="data.item.Username" readonly></b-input>
                   </b-col>
                   <b-col>
                     <div>Level</div>
-                    <b-input :ref="'ulevel' + data.index" type="text"></b-input>
+                    <b-input :ref="'ulevel' + data.item.Username" type="text"></b-input>
                   </b-col>
-                  <!-- <b-col>
-                    <div>Old password</div>
-                    <b-input :ref="'oldpassword' + data.index" type="password"></b-input>
-                  </b-col> -->
                   <b-col>
                     <div>New assword</div>
-                    <b-input :ref="'upassword' + data.index" type="password" v-model="user.password"></b-input>
+                    <b-input :ref="'upassword' +  data.item.Username" type="password" v-model="user.password"></b-input>
                   </b-col>
                   <b-col>
                     <div>Confirm password</div>
-                    <b-input :ref="'ucpassword' + data.index" type="password" v-model="user.cpassword"></b-input>
+                    <b-input :ref="'ucpassword' +  data.item.Username" type="password" v-model="user.cpassword"></b-input>
                   </b-col>
                   <b-col>
-                    <!-- <div>
-                        Date
-                        </div>
-                    <b-input type="date"></b-input>-->
                     <div>
                       <div style="margin-top:-1px;">
                         <br />
                       </div>
-                      <b-button variant="success" v-on:click="updateuser ('uusername' + data.index, 'ulevel' + data.index, 'oldpassword' + data.index, 'upassword' + data.index, 'ucpassword' + data.index, data.index)">Update</b-button>
+                      <b-button variant="success" v-on:click="updateuser ('uusername' + data.item.Username, 'ulevel' + data.item.Username, 'oldpassword' + data.item.Username, 'upassword' + data.item.Username, 'ucpassword' + data.item.Username, data.item.Username)">Update</b-button>
                     </div>
                   </b-col>
                 </b-row>
@@ -133,8 +121,8 @@
             </div>
             <b-row>
               <b-col>
-                <div>User name</div>
-                <b-input ref="username" type="text"></b-input>
+                <div>Username</div>
+                <b-input ref="username" type="text" v-model="user.username"></b-input>
               </b-col>
               <b-col>
                 <div>Password</div>
@@ -145,10 +133,6 @@
                 <b-input ref="cpassword" type="password" v-model="user.cpassword"></b-input>
               </b-col>
               <b-col>
-                <!-- <div>
-                  Date
-                </div>
-                <b-input type="date"></b-input>-->
                 <div>
                   <div style="margin-top:-1px;">
                     <br />
@@ -171,13 +155,28 @@ export default {
     return {
       isactive: [],
       isBusy: false,
-      fields: ['Username', 'Level', 'Last Update', 'function'],
-      items: [],
+      fields: [{ key: 'Username', sortable: true }, { key: 'Level', sortable: true }, { key: 'last_update', sortable: true }, 'function'],
+      items: [
+        { Username: 'Dickerson', Level: '0', sales_target: 1100, last_update: '2020-07-16' },
+        { Username: 'Larsen', Level: '1', sales_target: 1200, last_update: '2020-07-15' },
+        { Username: 'Geneva', Level: '1', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Jami', Level: '2', sales_target: 1500, last_update: '2020-07-13' },
+        { Username: 'Geneva', Level: '3', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '0', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '1', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '2', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '0', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '1', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '3', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '2', sales_target: 1200, last_update: '2020-07-14' },
+        { Username: 'Geneva', Level: '0', sales_target: 1200, last_update: '2020-07-14' }
+      ],
       newItems: [],
       edit: [],
       deleteaccount: [],
       settings: [],
       user: [{
+        username: '',
         password: '',
         cpassword: ''
       }
@@ -190,20 +189,34 @@ export default {
       pageOptions: [5, 10, 15]
     }
   },
-  // beforeCreate () {
-  //   var localjwt = sessionStorage.getItem('login')
-  //   if (localjwt !== null) {
-  //     location.replace('/sale')
-  //   } else {
-  //     location.replace('/')
-  //   }
-  // },
+  beforeCreate () {
+  },
   created () {
-    console.log('account')
+  },
+  beforeUpdate () {},
+  updated () {},
+  beforeMount () {},
+  mounted () {
+    this.settings = {
+      session_id: JSON.parse(sessionStorage.getItem('login')),
+      data: {}
+    }
+    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
+      if (response.data.error_code === 201) {
+        console.log('Session not found.')
+      } else if (response.data.error_code === 202) {
+        console.log('Permission denied.')
+      } else if (response.data.error_code === 303) {
+        console.log('Add brand fail.')
+      } else if (response.data.error_code === 0) {
+        this.items = response.data.data.account_list
+        this.totalRows = this.items.length
+        this.$refs.table.refresh()
+      }
+    })
   },
   methods: {
     addData () {
-      console.log('addData')
       this.newItems = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
@@ -212,47 +225,48 @@ export default {
         }
       }
       axios.post('http://192.168.10.2:1308/account/register', this.newItems).then(response => {
-        console.log(response)
-        this.items = response.data.data.account_list
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Register account fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.account_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+          this.$refs.username.localValue = ''
+          this.$refs.password.localValue = ''
+          this.$refs.cpassword.localValue = ''
+        }
       })
-      // console.log(this.items)
-      // var obj = JSON.parse(this.items)
-      // this.items.push(this.newItems)
-      // this.$refs.table.refresh()
-      // console.log(this.items)
-      // console.log(obj)
     },
-    onedit (index) {
-      console.log(this.items[index].target)
-    },
-    ondelete (index) {
-      // delete this.items[index]
-      console.log(this.items[index].Username)
-      // console.log(this.items)
+    ondelete (indexusername) {
       this.deleteaccount = {
         session_id: JSON.parse(sessionStorage.getItem('login')),
         data: {
-          username: this.items[index].Username
+          username: indexusername
         }
       }
       axios('http://192.168.10.2:1308/account/delete', {
         data: this.deleteaccount,
         method: 'post'
       }).then(response => {
-        console.log(response)
-        this.items = response.data.data.account_list
-        this.$refs.table.refresh()
+        if (response.data.error_code === 201) {
+          console.log('Session not found.')
+        } else if (response.data.error_code === 202) {
+          console.log('Permission denied.')
+        } else if (response.data.error_code === 303) {
+          console.log('Delete account fail.')
+        } else if (response.data.error_code === 0) {
+          this.items = response.data.data.account_list
+          this.totalRows = this.items.length
+          this.$refs.table.refresh()
+        }
       })
     },
     updateuser (uusername, ulevel, oldpasswords, upassword, ucpassword, index) {
-      // console.log(this.items[index]._username === this.$refs[uusername].localValue)
-      // for (let i = 0; i < this.items.length; i++) {
-      //   if (this.items[index]._username === this.$refs[uusername].localValue) {
-      //     this.items[index].level = this.$refs[ulevel].localValue
-      //   }
-      // }
-      // console.log(this.$refs[ulevel].localValue)
+      console.log(this.$refs[uusername].localValue, ulevel, oldpasswords, upassword, ucpassword, index)
       if (this.$refs[ulevel].localValue === '') {
         this.edit = {
           session_id: JSON.parse(sessionStorage.getItem('login')),
@@ -261,16 +275,23 @@ export default {
             password: md5(this.$refs[upassword].localValue)
           }
         }
-        console.log(this.edit)
         axios('http://192.168.10.2:1308/account/change_password', {
           data: this.edit,
           method: 'patch'
         }).then(response => {
-          this.items = response.data.data.account_list
-          this.$refs.table.refresh()
+          if (response.data.error_code === 201) {
+            console.log('Session not found.')
+          } else if (response.data.error_code === 303) {
+            console.log('Update account password fail.')
+          } else if (response.data.error_code === 0) {
+            this.items = response.data.data.account_list
+            this.totalRows = this.items.length
+            this.$refs.table.refresh()
+            this.$refs[ucpassword].localValue = ''
+            this.$refs[upassword].localValue = ''
+          }
         })
       } else if (this.$refs[upassword].localValue === '' && this.$refs[ucpassword].localValue === '') {
-        console.log('null password')
         this.level = {
           session_id: JSON.parse(sessionStorage.getItem('login')),
           data: {
@@ -282,26 +303,24 @@ export default {
           data: this.level,
           method: 'patch'
         }).then(response => {
-          this.items = response.data.data.account_list
+          if (response.data.error_code === 201) {
+            console.log('Session not found.')
+          } else if (response.data.error_code === 202) {
+            console.log('Permission denied.')
+          } else if (response.data.error_code === 303) {
+            console.log('Update account level fail.')
+          } else if (response.data.error_code === 0) {
+            this.items = response.data.data.account_list
+            this.totalRows = this.items.length
+            this.$refs.table.refresh()
+            this.$refs[ulevel].localValue = ''
+          }
         })
-        console.log(this.level)
       }
     }
   },
-  mounted () {
-    this.settings = {
-      session_id: JSON.parse(sessionStorage.getItem('login')),
-      data: {}
-    }
-    axios.post('http://192.168.10.2:1308/setting', this.settings).then(response => {
-      this.items = response.data.data.account_list
-      this.totalRows = this.items.length
-      this.$refs.table.refresh()
-    })
-  },
   computed: {
     checkpassword () {
-      // console.log(typeof (this.user.password))
       if (this.user.cpassword !== this.user.password) {
         console.log('not same')
         return '** Passwords not match.'

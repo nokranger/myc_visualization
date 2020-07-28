@@ -189,6 +189,9 @@ export default {
           this.items = response.data.data.brand_list
           this.totalRows = this.items.length
           this.$refs.table.refresh()
+          this.$refs.brandsname.localValue = ''
+          this.$refs.brandsgroup.localValue = ''
+          this.$refs.brandstarget.localValue = ''
         }
       })
     },
