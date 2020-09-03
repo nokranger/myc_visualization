@@ -5,9 +5,12 @@
       <a class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
       <a v-if="local === '1'" class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
       <a v-if="local === '1'" class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
-      <a v-if="local === '1'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
+      <a v-if="local === '0'" class="align-left" href="/hr"><i class="fas fa-user-alt"></i> HR</a>
+      <a v-if="local === '0'" class="align-left" href="/inventory"><i class="fas fa-archive"></i> Inventory</a>
+      <!-- <a v-if="local === '1' || '0'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
       <!-- <a v-if="local !== 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
-      <a v-if="local === '0'" class="align-left" href="/changepassword"><i class="fas fa-users-cog"></i> Change password</a>
+      <!-- <a v-if="local === '0'" class="align-left" href="/changepassword"><i class="fas fa-users-cog"></i> Change password</a> -->
+      <a v-if="local === '1' || '0'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
       <!-- <a v-if="local === '1'" class="align-left" href="/register"><i class="fas fa-user-plus"></i> Register</a> -->
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
@@ -78,16 +81,18 @@ export default {
   },
   mounted () {
     console.log(JSON.parse(sessionStorage.getItem('login')))
-    console.log('aa', this.$route.params)
+    console.log(JSON.parse(sessionStorage.getItem('level')))
+    // console.log('aa', this.$route.params)
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
     if (sessionStorage.getItem('login') === null) {
       // this.local = JSON.parse(sessionStorage.login)
       console.log('null')
     } else if (sessionStorage.getItem('level') === '1') {
-      console.log('admin')
+      console.log('admin login')
       this.local = sessionStorage.getItem('level')
     } else if (sessionStorage.getItem('level') === '0') {
       this.local = sessionStorage.getItem('level')
+      console.log('userlogin')
     }
   }
 }
