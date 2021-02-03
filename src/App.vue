@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:style="cssProps">
+  <div id="app" :style="cssProps">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css"  crossorigin="anonymous">
     <div v-if="name === 'login'">
     </div>
@@ -17,27 +17,40 @@ export default {
   },
   data () {
     return {
+      windows: {
+        width: 0,
+        height: 0
+      },
       name: '',
       colors: 'radial-gradient(circle, rgba(20,94,238,0.6867121848739496) 0%, rgba(173,245,255,1) 100%)',
       heights: '1200px',
       imgH: '../assets/Page Home_Manoyont.png',
       cssProps: {
         backgroundImage: `url(${require('@/assets/Home_Manoyont.png')})`,
-        width: '100%',
-        maxWidth: '100%',
+        width: 0,
         backgroundPosition: 'center',
-        height: '1400px',
+        height: 0,
         backgroundSize: 'cover'
       }
     }
   },
   created () {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.handleResize)
   },
   mounted () {
+    console.log('aaaa', this.cssProps.height)
+    console.log('bbbb', this.cssProps.width)
+    // console.log(this.window.width)
     console.log(window.location.pathname)
     if (window.location.pathname === '/') {
       // console.log(screen.height)
       this.name = 'login'
+      // this.cssProps.height = this.window.height
+      // console.log('ssssss', this.cssProps.height)
       // if (screen.height >= ) {
       //   this.cssProps.height = '1400px'
       // } else {
@@ -86,7 +99,13 @@ export default {
   methods: {
     closeTab () {
       // localStorage.removeItem('login')
+    },
+    handleResize () {
+      this.cssProps.width = window.innerWidth + 'px'
+      this.cssProps.height = window.innerHeight + 'px'
     }
+  },
+  computed: {
   }
 }
 </script>
