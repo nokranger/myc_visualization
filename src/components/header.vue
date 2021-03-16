@@ -6,12 +6,8 @@
       <a v-if="local === '1'" class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
       <a v-if="local === '1'" class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
       <a v-if="local === '0'" class="align-left" href="/hr"><i class="fas fa-user-alt"></i> HR</a>
-      <a v-if="local === '0'" class="align-left" href="/inventory"><i class="fas fa-archive"></i> Inventory</a>
-      <!-- <a v-if="local === '1' || '0'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
-      <!-- <a v-if="local !== 'admin'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a> -->
-      <!-- <a v-if="local === '0'" class="align-left" href="/changepassword"><i class="fas fa-users-cog"></i> Change password</a> -->
+      <a v-if="local === '0' & accounting === 1" class="align-left" href="/inventory"><i class="fas fa-archive"></i> Inventory</a>
       <a v-if="local === '1' || '0'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
-      <!-- <a v-if="local === '1'" class="align-left" href="/register"><i class="fas fa-user-plus"></i> Register</a> -->
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
     <div>
@@ -35,7 +31,12 @@ export default {
       symbols: '&#9776;',
       local: '',
       set: '',
-      datas: []
+      datas: [],
+      purchase: 'purchase0',
+      management: '',
+      accounting: '',
+      marketing: 'marketing0',
+      sale: 'sale0'
     }
   },
   methods: {
@@ -80,8 +81,18 @@ export default {
     }
   },
   mounted () {
-    console.log(JSON.parse(sessionStorage.getItem('login')))
+    console.log('aaa' + JSON.parse(sessionStorage.getItem('login')))
+    console.log('username: ' + JSON.parse(sessionStorage.getItem('username')))
     console.log(JSON.parse(sessionStorage.getItem('level')))
+    // var logins = 'abc1'
+    // var logins2 = 'abc2'
+    // for (let i = 0; i < 10; i++) {
+    //   if (('abc' + i) === logins) {
+    //     console.log('this is abs1', logins + ' abc' + i)
+    //   } else if (('abc' + i) === logins2) {
+    //     console.log('this is abs2', logins2 + ' abc' + i)
+    //   }
+    // }
     // console.log('aa', this.$route.params)
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
     if (sessionStorage.getItem('login') === null) {
@@ -93,6 +104,13 @@ export default {
     } else if (sessionStorage.getItem('level') === '0') {
       this.local = sessionStorage.getItem('level')
       console.log('userlogin')
+      for (let i = 0; i < 10; i++) {
+        if (sessionStorage.getItem('username') === (this.sale + i)) {
+          console.log('usernamelogin', this.sale + i)
+        } else if (('accounting0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.accounting = 0
+        }
+      }
     }
   }
 }

@@ -114,7 +114,8 @@ export default {
             this.error = this.error.toUpperCase()
             sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
             sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
-            location.replace('/sale')
+            sessionStorage.setItem('username', JSON.stringify(this.form.username))
+            location.replace('/dashboard')
             console.log('cc')
           }
         }).catch(e => {
