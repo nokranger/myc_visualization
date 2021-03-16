@@ -72,6 +72,11 @@ const routes = [
     component: () => import('../components/DDSale')
   },
   {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('../views/dashboard')
+  },
+  {
     path: '*',
     redirect: '/'
   }
