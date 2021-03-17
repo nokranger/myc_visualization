@@ -41,12 +41,18 @@ export default {
     }
   },
   beforeCreate () {
-    // var localjwt = sessionStorage.getItem('login')
-    // if (localjwt !== null) {
-    //   // location.replace('/sale')
-    // } else {
-    //   location.replace('/')
-    // }
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      const id = JSON.parse(sessionStorage.getItem('username'))
+      if (id.includes('marketing') || JSON.parse(sessionStorage.getItem('username')) === 'admin') {
+        // console.log('accounting', JSON.parse(sessionStorage.getItem('username')).slice(0, 10))
+      } else {
+        location.replace('/dashboard')
+      }
+      // location.replace('/sale')
+    } else {
+      location.replace('/')
+    }
   },
   created () {
     this.getOverdue()
@@ -68,6 +74,7 @@ export default {
       this.iframe = {
         src: response.data.data.link
       }
+      console.log('this is overdue: ', response.data.data)
     })
   },
   methods: {
@@ -108,7 +115,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: 'Overdue',
+      title: 'Marketing',
       titleTemplate: '%s - MYC'
     }
   }

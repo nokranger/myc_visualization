@@ -42,7 +42,7 @@
               <div class="card-body">
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
-                <a href="/purchase"><h5>Purchase</h5></a>
+                <a href="/accounting"><h5>Accounting</h5></a>
                 <!-- <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p> -->
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
@@ -60,7 +60,7 @@
               <div class="card-body">
                 <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
                 <!-- <p class="card-text">{{detailOA}}</p><br> -->
-                <a href="/accounting"><h5>Accounting</h5></a>
+                <a href="/marketing"><h5>Marketing</h5></a>
                 <!-- <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p> -->
                 <div class="align-right">
                   <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
@@ -69,19 +69,6 @@
             </div>
           </b-col>
           <b-col>
-            <div class="card">
-              <!-- <img src="https://i.imgur.com/pdfcCXr.png" class="card-img-top" alt="map ckb"> -->
-              <br>
-              <div class="card-body">
-                <!-- <h5 class="card-title"><i class="fa fa-location-arrow" aria-hidden="true"></i> {{titleOA}}</h5> -->
-                <!-- <p class="card-text">{{detailOA}}</p><br> -->
-                <a href="/marketing"><h5>Marketing</h5></a>
-                <!-- <p>ลากิจ - อนุสรณ์ - ยังไม่อนุมัติ</p> -->
-                <div class="align-right">
-                  <!-- <button class="button"><a class="linkmap" target="_blank" v-bind:href="linkOA"><img style="width:50px;height:50px;" src="https://i.imgur.com/JKjVDrz.png" alt="map ckb"></a></button> -->
-                </div>
-              </div>
-            </div>
           </b-col>
           <b-col></b-col>
         </b-row>
@@ -91,6 +78,17 @@
 </template>
 <script>
 export default {
+  data () {
+    return {}
+  },
+  beforeCreate () {
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      // location.replace('/sale')
+    } else {
+      location.replace('/')
+    }
+  }
 }
 </script>
 <style scope>

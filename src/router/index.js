@@ -92,11 +92,6 @@ const routes = [
     component: () => import('../views/management')
   },
   {
-    path: '/purchase',
-    name: 'purchase',
-    component: () => import('../views/purchase')
-  },
-  {
     path: '*',
     redirect: '/'
   }

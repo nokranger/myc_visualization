@@ -41,12 +41,18 @@ export default {
     }
   },
   beforeCreate () {
-    // var localjwt = sessionStorage.getItem('login')
-    // if (localjwt !== null) {
-    //   // location.replace('/sale')
-    // } else {
-    //   location.replace('/')
-    // }
+    var localjwt = sessionStorage.getItem('login')
+    if (localjwt !== null) {
+      const id = JSON.parse(sessionStorage.getItem('username'))
+      if (id.includes('management') || JSON.parse(sessionStorage.getItem('username')) === 'admin') {
+        // console.log('accounting', JSON.parse(sessionStorage.getItem('username')).slice(0, 10))
+      } else {
+        location.replace('/dashboard')
+      }
+      // location.replace('/sale')
+    } else {
+      location.replace('/')
+    }
   },
   created () {
     this.getOverdue()
@@ -64,7 +70,7 @@ export default {
       session_id: JSON.parse(sessionStorage.getItem('login')),
       data: {}
     }
-    axios.post('http://192.168.10.2:1308/overdue', this.data).then(response => {
+    axios.post('http://192.168.10.2:1308/map', this.data).then(response => {
       this.iframe = {
         src: response.data.data.link
       }
@@ -108,7 +114,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: 'Overdue',
+      title: 'Management',
       titleTemplate: '%s - MYC'
     }
   }

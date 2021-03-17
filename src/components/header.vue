@@ -2,11 +2,16 @@
   <div>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
-      <a class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
-      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
-      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
-      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/hr"><i class="fas fa-user-alt"></i> HR</a>
-      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/inventory"><i class="fas fa-archive"></i> Inventory</a>
+      <a class="align-left" href="/dashboard"><i class="fas fa-comments-dollar"></i> Dashboard</a>
+      <a v-if="local === '0' && accounting === 1" class="align-left" href="/accounting"><i class="fas fa-user-clock"></i> Accounting</a>
+      <a v-else-if="local === '1'" class="align-left" href="/accounting"><i class="fas fa-user-clock"></i> Accounting</a>
+      <a v-if="local === '0' && management === 1" class="align-left" href="/management"><i class="fas fa-map-marked-alt"></i> Management</a>
+      <a v-else-if="local === '1'" class="align-left" href="/management"><i class="fas fa-map-marked-alt"></i> Management</a>
+      <a v-if="local === '0' && marketing === 1" class="align-left" href="/marketing"><i class="fas fa-user-alt"></i> Marketing</a>
+      <a v-else-if="local === '1'" class="align-left" href="/marketing"><i class="fas fa-user-alt"></i> Marketing</a>
+      <!-- <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/inventory"><i class="fas fa-archive"></i> Inventory</a> -->
+      <a v-if="local === '0' && sales === 1" class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
+      <a v-else-if="local === '1'" class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
       <a v-if="local === '1' || '0'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
@@ -36,7 +41,7 @@ export default {
       management: '',
       accounting: '',
       marketing: '',
-      sale: ''
+      sales: ''
     }
   },
   methods: {
@@ -84,36 +89,40 @@ export default {
     console.log('aaa' + JSON.parse(sessionStorage.getItem('login')))
     console.log('username: ' + JSON.parse(sessionStorage.getItem('username')))
     console.log(JSON.parse(sessionStorage.getItem('level')))
-    // var logins = 'abc1'
-    // var logins2 = 'abc2'
-    // for (let i = 0; i < 10; i++) {
-    //   if (('abc' + i) === logins) {
-    //     console.log('this is abs1', logins + ' abc' + i)
-    //   } else if (('abc' + i) === logins2) {
-    //     console.log('this is abs2', logins2 + ' abc' + i)
-    //   }
-    // }
-    // console.log('aa', this.$route.params)
     document.getElementById('xx').innerHTML = '<i class="fas fa-align-justify"></i>'
     if (sessionStorage.getItem('login') === null) {
       // this.local = JSON.parse(sessionStorage.login)
       console.log('null')
     } else if (sessionStorage.getItem('level') === '1') {
-      console.log('admin login')
-      this.local = sessionStorage.getItem('level')
-    } else if (sessionStorage.getItem('level') === '0') {
-      this.local = sessionStorage.getItem('level')
-      console.log('userlogin')
       for (let i = 0; i < 10; i++) {
-        if (('sale0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
-          this.sale = 1
+        if (('sales0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.sales = 1
+          console.log('this is sales0' + i)
         } else if (('accounting0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
           this.accounting = 1
         } else if (('purchase0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
           this.purchase = 1
         } else if (('management0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
           this.management = 1
-        } else if (('marketing' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+        } else if (('marketing0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.marketing = 1
+        }
+      }
+      console.log('admin login')
+      this.local = sessionStorage.getItem('level')
+    } else if (sessionStorage.getItem('level') === '0') {
+      this.local = sessionStorage.getItem('level')
+      console.log('userlogin')
+      for (let i = 0; i < 10; i++) {
+        if (('sales0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.sales = 1
+        } else if (('accounting0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.accounting = 1
+        } else if (('purchase0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.purchase = 1
+        } else if (('management0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.management = 1
+        } else if (('marketing0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
           this.marketing = 1
         }
       }
