@@ -88,6 +88,12 @@ export default {
     } else {
       location.replace('/')
     }
+  },
+  metaInfo () {
+    return {
+      title: 'Dashboard',
+      titleTemplate: '%s - MYC'
+    }
   }
 }
 </script>
