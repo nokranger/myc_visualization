@@ -77,6 +77,26 @@ const routes = [
     component: () => import('../views/dashboard')
   },
   {
+    path: '/marketing',
+    name: 'marketing',
+    component: () => import('../views/marketing')
+  },
+  {
+    path: '/accounting',
+    name: 'accounting',
+    component: () => import('../views/accounting')
+  },
+  {
+    path: '/management',
+    name: 'management',
+    component: () => import('../views/management')
+  },
+  {
+    path: '/purchase',
+    name: 'purchase',
+    component: () => import('../views/purchase')
+  },
+  {
     path: '*',
     redirect: '/'
   }

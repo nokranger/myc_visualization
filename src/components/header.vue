@@ -3,10 +3,10 @@
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
-      <a v-if="local === '1'" class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
-      <a v-if="local === '1'" class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
-      <a v-if="local === '0'" class="align-left" href="/hr"><i class="fas fa-user-alt"></i> HR</a>
-      <a v-if="local === '0' & accounting === 1" class="align-left" href="/inventory"><i class="fas fa-archive"></i> Inventory</a>
+      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/overdue"><i class="fas fa-user-clock"></i> Overdue</a>
+      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/map"><i class="fas fa-map-marked-alt"></i> Map</a>
+      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/hr"><i class="fas fa-user-alt"></i> HR</a>
+      <a v-if="local === '0' || '1' && (accounting === 1 || marketing === 1 || purchase === 1 || management === 1)" class="align-left" href="/inventory"><i class="fas fa-archive"></i> Inventory</a>
       <a v-if="local === '1' || '0'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
       <a class="align-left" href="#" v-on:click="logOut"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
@@ -32,11 +32,11 @@ export default {
       local: '',
       set: '',
       datas: [],
-      purchase: 'purchase0',
+      purchase: '',
       management: '',
       accounting: '',
-      marketing: 'marketing0',
-      sale: 'sale0'
+      marketing: '',
+      sale: ''
     }
   },
   methods: {
@@ -105,10 +105,16 @@ export default {
       this.local = sessionStorage.getItem('level')
       console.log('userlogin')
       for (let i = 0; i < 10; i++) {
-        if (sessionStorage.getItem('username') === (this.sale + i)) {
-          console.log('usernamelogin', this.sale + i)
+        if (('sale0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.sale = 1
         } else if (('accounting0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
-          this.accounting = 0
+          this.accounting = 1
+        } else if (('purchase0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.purchase = 1
+        } else if (('management0' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.management = 1
+        } else if (('marketing' + i) === JSON.parse(sessionStorage.getItem('username'))) {
+          this.marketing = 1
         }
       }
     }
