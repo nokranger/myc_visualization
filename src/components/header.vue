@@ -2,7 +2,7 @@
   <div>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
-      <a class="align-left" href="/dashboard"><i class="fas fa-comments-dollar"></i> Dashboard</a>
+      <a class="align-left" href="/dashboard"><i class="fas fa-columns"></i> Dashboard</a>
       <a v-if="local === '0' && accounting === 1" class="align-left" href="/accounting"><i class="fas fa-user-clock"></i> Accounting</a>
       <a v-else-if="local === '1'" class="align-left" href="/accounting"><i class="fas fa-user-clock"></i> Accounting</a>
       <a v-if="local === '0' && management === 1" class="align-left" href="/management"><i class="fas fa-map-marked-alt"></i> Management</a>
