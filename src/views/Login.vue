@@ -114,7 +114,7 @@ export default {
             this.error = this.error.toUpperCase()
             sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
             sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
-            sessionStorage.setItem('username', JSON.stringify(this.form.username))
+            sessionStorage.setItem('username', JSON.stringify(this.form.username.toLowerCase()))
             location.replace('/dashboard')
             console.log('cc')
           }
