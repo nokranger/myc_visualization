@@ -49,6 +49,7 @@ export default {
     if (window.location.pathname === '/') {
       // console.log(screen.height)
       this.name = 'login'
+      this.handleResize()
       // this.cssProps.height = this.window.height
       // console.log('ssssss', this.cssProps.height)
       // if (screen.height >= ) {
@@ -57,18 +58,21 @@ export default {
       //   this.cssProps.height = '1400px'
       // }
     } else if (window.location.pathname === '/sale') {
+      this.handleResize()
       // if (screen.height >= 1080) {
       //   this.cssProps.height = 'auto'
       // } else {
       //   this.cssProps.height = '1400px'
       // }
     } else if (window.location.pathname === '/overdue') {
+      this.handleResize()
       // if (screen.height >= 1080) {
       //   this.cssProps.height = 'auto'
       // } else {
       //   this.cssProps.height = '1400px'
       // }
     } else if (window.location.pathname === '/map') {
+      this.handleResize()
       // console.log(screen.height)
       // if (screen.height >= 1080) {
       //   this.cssProps.height = 'auto'
@@ -76,18 +80,21 @@ export default {
       //   this.cssProps.height = '1400px'
       // }
     } else if (window.location.pathname === '/setting') {
+      this.handleResize()
       // if (screen.height >= 1080) {
       //   this.cssProps.height = 'auto'
       // } else {
       //   this.cssProps.height = '1400px'
       // }
     } else if (window.location.pathname === '/changepassword') {
+      this.handleResize()
       // if (screen.height >= 1080) {
       //   this.cssProps.height = 'auto'
       // } else {
       //   this.cssProps.height = '1400px'
       // }
     } else if (window.location.pathname === '/register') {
+      this.handleResize()
       // if (screen.height >= 1080) {
       //   this.cssProps.height = 'auto'
       // } else {
