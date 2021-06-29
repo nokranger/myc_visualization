@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <iframe width="1140" height="680" :src="iframe.src" frameborder="0" allowFullScreen="true"></iframe>
+      <iframe width="1140" height="620" :src="iframe.src" frameborder="0" allowFullScreen="true"></iframe>
     </div>
     <!-- {{timestamp}}
     <b-container>
@@ -25,10 +25,12 @@
   </div>
 </template>
 <script>
+import apiURL from '../assets/js/connectionAPI'
 import axios from 'axios'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       value: 20,
       max: 100,
       timestamp: '',
@@ -41,18 +43,18 @@ export default {
     }
   },
   beforeCreate () {
-    var localjwt = sessionStorage.getItem('login')
-    if (localjwt !== null) {
-      const id = JSON.parse(sessionStorage.getItem('username'))
-      if (id.includes('management') || JSON.parse(sessionStorage.getItem('username')) === 'admin') {
-        // console.log('accounting', JSON.parse(sessionStorage.getItem('username')).slice(0, 10))
-      } else {
-        location.replace('/dashboard')
-      }
-      // location.replace('/sale')
-    } else {
-      location.replace('/')
-    }
+    // var localjwt = sessionStorage.getItem('login')
+    // if (localjwt !== null) {
+    //   const id = JSON.parse(sessionStorage.getItem('username'))
+    //   if (id.includes('management') || JSON.parse(sessionStorage.getItem('username')) === 'admin') {
+    //     // console.log('accounting', JSON.parse(sessionStorage.getItem('username')).slice(0, 10))
+    //   } else {
+    //     location.replace('/dashboard')
+    //   }
+    //   // location.replace('/sale')
+    // } else {
+    //   location.replace('/')
+    // }
   },
   created () {
     this.getOverdue()
@@ -67,10 +69,10 @@ export default {
     // }
     // setInterval(this.getNow, 1000)
     this.data = {
-      session_id: JSON.parse(sessionStorage.getItem('login')),
+      session_id: 2,
       data: {}
     }
-    axios.post('http://192.168.10.2:1308/map', this.data).then(response => {
+    axios.post(this.apiURL + '/emp/management', this.data).then(response => {
       this.iframe = {
         src: response.data.data.link
       }

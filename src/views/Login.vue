@@ -13,7 +13,7 @@
             <br>
             <br>
             <br><br>
-            <p v-if="error == 'USERNAME NOT FOUND'" style="color:red">{{error}}</p>
+            <p v-if="error == 'INVALID USERNAME OR PASSWORD'" style="color:red">{{error}}</p>
             <p v-if="error == 'IT CORRECTLY'" style="color:green">{{error}}</p>
           </div>
           <br>
@@ -62,11 +62,13 @@
 </template>
 
 <script>
+import apiURL from '../assets/js/connectionAPI'
 import axios from 'axios'
 import md5 from 'md5'
 export default {
   data () {
     return {
+      apiURL: apiURL,
       form: {
         username: '',
         password: ''
@@ -83,6 +85,7 @@ export default {
   },
   created () {},
   mounted () {
+    console.log(this.apiURL)
   },
   methods: {
     loginapi () {
@@ -98,21 +101,22 @@ export default {
           password: md5(this.form.password)
         }
       }
-      axios('http://192.168.10.2:1308/login', {
+      axios(this.apiURL + '/emp/login', {
         data: this.data,
         method: 'post'
       })
         .then(response => {
+          console.log('data', response.data.data.username)
           console.log(response.data.data.session_id)
           if (response.data.error_code === 101) {
             console.log('ss')
-            this.error = 'Username not found'
+            this.error = 'Invalid Username or Password'
             this.error = this.error.toUpperCase()
           } else if (response.data.error_code === 0) {
             console.log('ssssss')
             this.error = 'it correctly'
             this.error = this.error.toUpperCase()
-            sessionStorage.setItem('login', JSON.stringify(response.data.data.session_id))
+            sessionStorage.setItem('login', JSON.stringify(response.data.data.department))
             sessionStorage.setItem('level', JSON.stringify(response.data.data.level))
             sessionStorage.setItem('username', JSON.stringify(this.form.username.toLowerCase()))
             location.replace('/dashboard')
