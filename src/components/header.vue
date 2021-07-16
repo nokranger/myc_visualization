@@ -4,6 +4,7 @@
       <a href="javascript:void(0)" class="closebtn" v-on:click="openNav ()">&times;</a>
       <a class="align-left" href="/dashboard"><i class="fas fa-columns"></i> Dashboard</a>
       <a v-if="management === 2" class="align-left" href="/management"><i class="fas fa-map-marked-alt"></i> Management</a>
+      <a v-if="management === 2" class="align-left" href="/monthly"><i class="fas fa-map-marked-alt"></i> Monthly</a>
       <a v-if="marketing === 3" class="align-left" href="/marketing"><i class="fas fa-user-alt"></i> Marketing</a>
       <a v-if="sales === 1" class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
       <a v-if="local === '1' || '0'" class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>
@@ -26,6 +27,7 @@
       <a class="align-left" href="/dashboard"><i class="fas fa-columns"></i> Dashboard</a>
       <!-- <a class="align-left" href="/accounting"><i class="fas fa-user-clock"></i> Accounting</a> -->
       <a class="align-left" href="/management"><i class="fas fa-map-marked-alt"></i> Management</a>
+      <a class="align-left" href="/monthly"><i class="fas fa-map-marked-alt"></i> Monthly</a>
       <a class="align-left" href="/marketing"><i class="fas fa-user-alt"></i> Marketing</a>
       <a class="align-left" href="/sale"><i class="fas fa-comments-dollar"></i> Sale</a>
       <a class="align-left" href="/setting"><i class="fas fa-cog"></i> Setting</a>

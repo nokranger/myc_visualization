@@ -92,6 +92,11 @@ const routes = [
     component: () => import('../views/management')
   },
   {
+    path: '/monthly',
+    name: 'managements',
+    component: () => import('../views/management_monthly')
+  },
+  {
     path: '*',
     redirect: '/'
   }
