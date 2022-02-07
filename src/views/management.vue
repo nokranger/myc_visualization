@@ -76,6 +76,7 @@ export default {
       this.iframe = {
         src: response.data.data.link
       }
+      console.log('mane', this.iframe)
     })
   },
   methods: {
